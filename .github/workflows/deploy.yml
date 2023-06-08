@@ -1,0 +1,45 @@
+name: Deploy to Netlify
+
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch:
+    inputs:
+      deploy-msg:
+        description: 'Deploy to Production'
+        required: true
+
+jobs:
+  deploy:
+    name: Build and Deploy to Netlify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v3.2.0
+
+      - name: Install modules
+        run: npm ci
+
+      - name: Decode .env file
+        run: echo "${{ secrets.ENV_FILE_CONTENT }}" | base64 -d > .env
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v2.0
+        with:
+          publish-dir: './build'
+          deploy-message: 'Deploy from GitHub Actions: ${{ github.event.inputs.deploy-msg }}'
+          production-deploy: true
+          github-token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+          enable-commit-comment: false
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 1
