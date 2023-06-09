@@ -31,9 +31,6 @@
     "cypress:run": "cypress run",
     "cypress:open": "cypress open"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -47,9 +44,9 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.0-placeholder-for-preset-env.2",
+    "@babel/plugin-proposal-private-property-in-object": "7.21.0-placeholder-for-preset-env.2",
     "@cypress/browserify-preprocessor": "3.0.2",
-    "@cypress/code-coverage": "^3.9.12",
+    "@cypress/code-coverage": "3.9.12",
     "@cypress/instrument-cra": "^1.4.0",
     "@nimblehq/eslint-config-nimble-react": "^1.2.0",
     "@nimblehq/eslint-config-nimble-testing": "^1.1.0",
