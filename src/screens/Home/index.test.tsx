@@ -11,6 +11,6 @@ describe('HomeScreen', () => {
     const linkElement = screen.getByTestId('app-link');
 
     expect(linkElement).toBeInTheDocument();
-    expect(linkElement).toHaveTextContent('sample_page.learn_react');
+    expect(linkElement).toHaveTextContent('Learn React');
   });
 });
