@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['@nimblehq/eslint-config-nimble-react'],
+  extends: ['@nimblehq/eslint-config-nimble-react', '@nimblehq/eslint-config-nimble-testing'],
 };
