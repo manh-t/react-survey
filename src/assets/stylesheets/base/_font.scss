@@ -1,0 +1,20 @@
+@font-face {
+  font-family: 'Neuzeit';
+  font-style: normal;
+  font-display: swap;
+
+  src: url('/assets/fonts/Neuzeit-S-LT-Std.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Neuzeit';
+  font-weight: bold;
+  font-display: swap;
+
+  src: url('/assets/fonts/Neuzeit-S-LT-Std-Bold.ttf') format('truetype');
+}
+
+html,
+body {
+  font-family: 'Neuzeit', sans-serif;
+}

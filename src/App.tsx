@@ -4,7 +4,7 @@ import { useRoutes } from 'react-router-dom';
 import 'dummy.scss';
 import 'assets/stylesheets/application.scss';
 
-import routes from 'routes';
+import routes from './routes';
 
 const App = (): JSX.Element => {
   const appRoutes = useRoutes(routes);
