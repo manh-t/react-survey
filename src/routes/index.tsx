@@ -1,12 +1,12 @@
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 
-import HomeScreen from 'screens/Home';
+import SignInScreen from 'screens/SignIn';
 
 const routes: RouteObject[] = [
   {
     path: '/',
-    element: <HomeScreen />,
+    element: <SignInScreen />,
   },
 ];
 
