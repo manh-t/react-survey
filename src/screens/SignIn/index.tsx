@@ -2,6 +2,7 @@ import React from 'react';
 
 import nimbleLogoWhite from 'assets/images/icons/nimble-logo-white.svg';
 import background from 'assets/images/illustrations/background-sign-in.png';
+import ElevatedButton from 'components/ElevatedButton';
 import TextInput from 'components/TextInput';
 
 const SignInScreen = (): JSX.Element => {
@@ -37,12 +38,9 @@ const SignInScreen = (): JSX.Element => {
           </span>
           <button className="text-white text-opacity-50 text-small absolute right-3 bottom-4">Forgot?</button>
         </div>
-        <button
-          className="bg-white text-black-chinese font-bold text-regular rounded-[10px] focus:outline-none focus:shadow-outline w-full h-14"
-          type="submit"
-        >
+        <ElevatedButton isFullSize={true} type="submit">
           Sign In
-        </button>
+        </ElevatedButton>
       </form>
     </div>
   );
