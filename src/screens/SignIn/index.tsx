@@ -11,7 +11,7 @@ const SignInScreen = (): JSX.Element => {
       style={{ backgroundImage: 'url(' + background + ')' }}
     >
       <img className="mx-auto" src={nimbleLogoWhite} alt="nimble logo" data-test-id="nimble-logo-img" />
-      <div className="mt-6 mb-8 text-white opacity-60 text-[17px]">Sign in to Nimble</div>
+      <div className="mt-6 mb-8 text-white opacity-60 text-regular">Sign in to Nimble</div>
       <form className="w-80">
         <div className="mb-6">
           <TextInput
@@ -23,19 +23,23 @@ const SignInScreen = (): JSX.Element => {
             }}
           />
         </div>
-        <div className="mb-6">
-          <TextInput
-            label="Password"
-            inputAttributes={{
-              id: 'form-sign-in-password',
-              required: true,
-              type: 'password',
-            }}
-          />
+        <div className="mb-6 relative">
+          <span className="block w-full">
+            <TextInput
+              label="Password"
+              inputAttributes={{
+                id: 'form-sign-in-password',
+                required: true,
+                type: 'password',
+              }}
+              extraClassName="pr-16"
+            />
+          </span>
+          <button className="text-white text-opacity-50 text-small absolute right-3 bottom-4">Forgot?</button>
         </div>
         <button
-          className="bg-white text-[#15151A] font-bold text-[17px] rounded-[10px] focus:outline-none focus:shadow-outline w-full h-14"
-          type="button"
+          className="bg-white text-black-chinese font-bold text-regular rounded-[10px] focus:outline-none focus:shadow-outline w-full h-14"
+          type="submit"
         >
           Sign In
         </button>

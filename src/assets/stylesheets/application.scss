@@ -1,9 +1,12 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 // Base
 @import './base';
 
-// Layouts
-@import 'layouts/main';
+@layer base {
+  body {
+    @apply font-neuzeit;
+  }
+}
