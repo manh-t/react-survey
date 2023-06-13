@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface TextInputProps {
+type TextInputProps = {
   label?: string;
   inputAttributes: {
     id: string;
@@ -10,7 +10,8 @@ interface TextInputProps {
     'data-test-id'?: string;
   };
   extraClassName?: string;
-}
+};
+
 const TextInput = ({ label, inputAttributes, extraClassName }: TextInputProps): JSX.Element => {
   return (
     <div>
