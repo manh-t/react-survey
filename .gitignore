@@ -13,9 +13,11 @@
 
 # production
 /build
+.netlify/
 
 # misc
 .DS_Store
+.env
 .env.local
 .env.development
 .env.development.local
