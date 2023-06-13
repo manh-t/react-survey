@@ -2,6 +2,7 @@ import React from 'react';
 
 type TextInputProps = {
   label?: string;
+  labelDataTestId?: string;
   inputAttributes: {
     id: string;
     type: string;
@@ -12,11 +13,11 @@ type TextInputProps = {
   extraClassName?: string;
 };
 
-const TextInput = ({ label, inputAttributes, extraClassName }: TextInputProps): JSX.Element => {
+const TextInput = ({ label, labelDataTestId, inputAttributes, extraClassName }: TextInputProps): JSX.Element => {
   return (
     <div>
       {label !== null && (
-        <label className="text-white text-small font-extrabold" htmlFor={inputAttributes.id}>
+        <label className="text-white text-small font-extrabold" htmlFor={inputAttributes.id} data-test-id={labelDataTestId}>
           {label}
         </label>
       )}
