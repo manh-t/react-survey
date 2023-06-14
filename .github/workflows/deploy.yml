@@ -9,24 +9,20 @@ on:
         description: 'Deploy to Production'
         required: true
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
     name: Build and Deploy to Netlify
     runs-on: ubuntu-latest
     steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.10.0
-        with:
-          access_token: ${{ github.token }}
-
       - name: Checkout repository
         uses: actions/checkout@v3.2.0
 
       - name: Install modules
         run: npm ci
-
-      - name: Decode .env file
-        run: echo "${{ secrets.ENV_FILE_CONTENT }}" | base64 -d > .env
 
       - name: Build
         run: npm run build
@@ -42,4 +38,4 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        timeout-minutes: 1
+        timeout-minutes: 5
