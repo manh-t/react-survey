@@ -26,7 +26,7 @@ jobs:
       - name: Run linter
         run: npm run codebase:lint
 
-      - name: Run unit tests an integration tests then generate code coverage reports
+      - name: Run unit tests and integration tests then generate code coverage reports
         run: npm run test:coverage
 
       - name: Danger
