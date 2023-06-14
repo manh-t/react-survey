@@ -16,11 +16,17 @@ export const signInScreenTestIds = {
 };
 
 const SignInScreen = (): JSX.Element => {
+  const handleSubmit = async (event: React.SyntheticEvent) => {
+    event.preventDefault();
+
+    // TODO: call signIn
+  };
+
   return (
     <div className="sign-in bg-cover min-h-screen flex flex-col justify-center items-center bg-sign-in">
       <img className="mx-auto" src={nimbleLogoWhite} alt="nimble logo" data-test-id={signInScreenTestIds.nimbleLogo} />
       <div className="mt-6 mb-8 text-white opacity-60 text-regular tracking-survey-tight">Sign in to Nimble</div>
-      <form className="w-80" data-test-id={signInScreenTestIds.signInForm}>
+      <form className="w-80" onSubmit={handleSubmit} data-test-id={signInScreenTestIds.signInForm}>
         <div className="mb-6">
           <TextInput
             label="Email"
@@ -49,6 +55,7 @@ const SignInScreen = (): JSX.Element => {
           </span>
           <button
             className="text-white text-opacity-50 text-small tracking-survey-normal absolute right-3 bottom-4"
+            type="button"
             data-test-id={signInScreenTestIds.forgotButton}
           >
             Forgot?
