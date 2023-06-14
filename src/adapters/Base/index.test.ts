@@ -1,0 +1,53 @@
+/* eslint-disable camelcase */
+import requestManager from 'lib/requestManager';
+
+import baseAdapter from '.';
+
+jest.mock('lib/requestManager');
+
+describe('BaseAdapter', () => {
+  const apiPath = '/sample';
+  const params = {
+    testKey: 'test value',
+  };
+
+  beforeEach(() => {
+    (requestManager as jest.Mock).mockImplementation(() => jest.fn());
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('get', () => {
+    describe('given only the api path', () => {
+      it('calls the GET method from request manager with the path and no params', () => {
+        baseAdapter.get(apiPath);
+
+        expect(requestManager).toHaveBeenCalledWith('get', apiPath, {});
+      });
+    });
+
+    describe('given the api path and url params', () => {
+      it('calls the get method from request manager with the path and params with snake case keys', () => {
+        baseAdapter.get(apiPath, params);
+
+        expect(requestManager).toHaveBeenCalledWith('get', apiPath, {
+          params: { test_key: params.testKey },
+        });
+      });
+    });
+  });
+
+  describe('post', () => {
+    describe('given the path and url params', () => {
+      it('calls the post method from request manager with the path and data with snake case key', () => {
+        baseAdapter.post(apiPath, params);
+
+        expect(requestManager).toHaveBeenCalledWith('post', apiPath, {
+          data: { test_key: params.testKey },
+        });
+      });
+    });
+  });
+});

@@ -1,8 +1,25 @@
-import axios, { Method as HTTPMethod, ResponseType, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { Method as HTTPMethod, ResponseType, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
-export const defaultOptions: { responseType: ResponseType } = {
-  responseType: 'json',
+import { Config } from 'config';
+import { JSONValue, keysToCamelCase } from 'helpers/json';
+
+export const successResponseInterceptor = (
+  response: AxiosResponse<unknown>
+): AxiosResponse<unknown> | Promise<AxiosResponse<unknown>> => {
+  const responseData = response.data as JSONValue;
+  const formattedData = keysToCamelCase(responseData);
+  response.data = formattedData;
+
+  return response;
 };
+
+export const defaultOptions = (): { responseType: ResponseType; baseURL: string; headers?: { [key: string]: string } } => ({
+  responseType: 'json',
+  baseURL: `${Config.apiBaseUrl}/api/v1`,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
 /**
  * The main API access function that comes preconfigured with useful defaults.
@@ -22,13 +39,20 @@ const requestManager = (
   const requestParams: AxiosRequestConfig = {
     method,
     url: endpoint,
-    ...defaultOptions,
+    ...defaultOptions(),
     ...requestOptions,
   };
 
-  return axios.request(requestParams).then((response: AxiosResponse) => {
-    return response.data;
-  });
+  axios.interceptors.response.use(successResponseInterceptor);
+
+  return axios
+    .request(requestParams)
+    .then((response: AxiosResponse) => {
+      return response.data;
+    })
+    .catch((error: AxiosError) => {
+      throw error;
+    });
 };
 
 export default requestManager;
