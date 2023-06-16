@@ -3,6 +3,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import { useAppDispatch, useAppSelector } from 'hooks';
+import { paths } from 'routes';
 import { AuthenticationState } from 'store/reducers/Authentication';
 import TestWrapper from 'tests/TestWrapper';
 
@@ -118,7 +119,7 @@ describe('SignInScreen', () => {
     it('navigates to the Dashboard screen', () => {
       render(<TestComponent />);
 
-      expect(mockUseNavigate).toHaveBeenCalledWith('/dashboard', { replace: true });
+      expect(mockUseNavigate).toHaveBeenCalledWith(paths.root, { replace: true });
     });
   });
 });

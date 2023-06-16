@@ -40,7 +40,7 @@ const SignInScreen = (): JSX.Element => {
 
   useEffect(() => {
     if (success) {
-      navigate(paths.dashboard, { replace: true });
+      navigate(paths.root, { replace: true });
     }
   }, [navigate, success]);
 
