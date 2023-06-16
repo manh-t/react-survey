@@ -13,6 +13,16 @@ export const successResponseInterceptor = (
   return response;
 };
 
+export const errorInterceptor = async (error: AxiosError<unknown>): Promise<unknown> => {
+  if (error.response) {
+    const errorData = error.response.data as JSONValue;
+    const formattedData = keysToCamelCase(errorData);
+    error.response.data = formattedData;
+  }
+
+  return Promise.reject(error);
+};
+
 export const defaultOptions = (): { responseType: ResponseType; baseURL: string; headers?: { [key: string]: string } } => ({
   responseType: 'json',
   baseURL: `${Config.apiBaseUrl}/api/v1`,
@@ -43,7 +53,7 @@ const requestManager = (
     ...requestOptions,
   };
 
-  axios.interceptors.response.use(successResponseInterceptor);
+  axios.interceptors.response.use(successResponseInterceptor, errorInterceptor);
 
   return axios
     .request(requestParams)

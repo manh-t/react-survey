@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
 import nimbleLogoWhite from 'assets/images/icons/nimble-logo-white.svg';
 import background from 'assets/images/illustrations/background-sign-in.png';
+import Alert from 'components/Alert';
 import ElevatedButton from 'components/ElevatedButton';
+import LoadingDialog from 'components/LoadingDialog';
 import TextInput from 'components/TextInput';
+import { useAppDispatch, useAppSelector } from 'hooks';
+import { paths } from 'routes';
+import { signIn } from 'store/reducers/authSlice';
 
 export const signInScreenTestIds = {
   nimbleLogo: 'sign-in__nimble-logo',
@@ -17,10 +23,16 @@ export const signInScreenTestIds = {
 };
 
 const SignInScreen = (): JSX.Element => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { loading, errors, success } = useAppSelector((state) => state.auth);
+
+  const dispatch = useAppDispatch();
+
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
 
-    // TODO: call signIn
+    dispatch(signIn({ email, password }));
   };
 
   return (
@@ -29,8 +41,11 @@ const SignInScreen = (): JSX.Element => {
       style={{ backgroundImage: 'url(' + background + ')' }}
     >
       <img className="mx-auto" src={nimbleLogoWhite} alt="nimble logo" data-test-id={signInScreenTestIds.nimbleLogo} />
-      <div className="mt-6 mb-8 text-white opacity-60 text-regular">Sign in to Nimble</div>
-      <form className="w-80" onSubmit={handleSubmit} data-test-id={signInScreenTestIds.signInForm}>
+      <div className="mt-6 text-white opacity-60 text-regular">Sign in to Nimble</div>
+
+      <div className="mt-6">{errors && <Alert errors={errors} />}</div>
+
+      <form className="w-80 mt-8" onSubmit={handleSubmit} data-test-id={signInScreenTestIds.signInForm}>
         <div className="mb-6">
           <TextInput
             label="Email"
@@ -40,6 +55,7 @@ const SignInScreen = (): JSX.Element => {
               required: true,
               type: 'email',
               'data-test-id': signInScreenTestIds.emailField,
+              onChange: (event) => setEmail(event.target.value),
             }}
           />
         </div>
@@ -53,6 +69,7 @@ const SignInScreen = (): JSX.Element => {
                 required: true,
                 type: 'password',
                 'data-test-id': signInScreenTestIds.passwordField,
+                onChange: (event) => setPassword(event.target.value),
               }}
               extraClassName="pr-16"
             />
@@ -69,6 +86,10 @@ const SignInScreen = (): JSX.Element => {
           Sign In
         </ElevatedButton>
       </form>
+
+      {success && <Navigate replace to={paths.dashboard} />}
+
+      {loading && <LoadingDialog />}
     </div>
   );
 };
