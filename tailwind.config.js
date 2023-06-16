@@ -8,8 +8,10 @@ module.exports = {
       },
       colors: {
         'black-chinese': '#15151A',
+        'black-raisin': '#252525',
       },
       fontSize: {
+        xSmall: ['13px', '18px'],
         small: ['15px', '20px'],
         regular: ['17px', '22px'],
       },
