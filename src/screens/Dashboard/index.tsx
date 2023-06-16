@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { getToken } from 'helpers/authentication';
+import { paths } from 'routes';
 
 import BackgroundImage from 'components/BackgroundImage';
 import DashboardContent from 'components/Dashboard/Content';
@@ -10,6 +14,15 @@ const DashBoardScreen = (): JSX.Element => {
   const { surveys, currentPosition } = useAppSelector((state) => state.surveys);
 
   const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = getToken();
+    if (!token) {
+      navigate(paths.signIn);
+    }
+  }, [navigate]);
 
   return (
     <BackgroundImage backgroundUrl={surveys[currentPosition].coverImageUrl}>
