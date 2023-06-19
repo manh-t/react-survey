@@ -2,11 +2,21 @@ import React from 'react';
 
 import { render, screen } from '@testing-library/react';
 
+import TestWrapper from 'tests/TestWrapper';
+
 import SignInScreen, { signInScreenTestIds } from '.';
 
 describe('SignInScreen', () => {
+  const TestComponent = (): JSX.Element => {
+    return (
+      <TestWrapper>
+        <SignInScreen />
+      </TestWrapper>
+    );
+  };
+
   it('renders Sign In form and its components', () => {
-    render(<SignInScreen />);
+    render(<TestComponent />);
     const emailLabel = screen.getByTestId(signInScreenTestIds.emailLabel);
     const emailField = screen.getByTestId(signInScreenTestIds.emailField);
     const passwordLabel = screen.getByTestId(signInScreenTestIds.passwordLabel);

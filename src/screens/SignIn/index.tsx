@@ -8,7 +8,7 @@ import LoadingDialog from 'components/LoadingDialog';
 import TextInput from 'components/TextInput';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { paths } from 'routes';
-import { signIn } from 'store/reducers/authSlice';
+import { signIn } from 'store/reducers/Authentication';
 
 export const signInScreenTestIds = {
   nimbleLogo: 'sign-in__nimble-logo',
