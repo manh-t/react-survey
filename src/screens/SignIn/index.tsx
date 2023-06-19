@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import nimbleLogoWhite from 'assets/images/icons/nimble-logo-white.svg';
 import Alert from 'components/Alert';
@@ -26,6 +26,8 @@ const SignInScreen = (): JSX.Element => {
   const [password, setPassword] = useState('');
   const { loading, errors, success } = useAppSelector((state) => state.auth);
 
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
@@ -33,6 +35,12 @@ const SignInScreen = (): JSX.Element => {
 
     dispatch(signIn({ email, password }));
   };
+
+  useEffect(() => {
+    if (success) {
+      navigate(paths.dashboard, { replace: true });
+    }
+  }, [navigate, success]);
 
   return (
     <div className="sign-in bg-cover min-h-screen flex flex-col justify-center items-center bg-sign-in">
@@ -82,8 +90,6 @@ const SignInScreen = (): JSX.Element => {
           Sign in
         </ElevatedButton>
       </form>
-
-      {success && <Navigate replace to={paths.dashboard} />}
 
       {loading && <LoadingDialog />}
     </div>
