@@ -4,9 +4,10 @@ import { ReactComponent as AlertIcon } from 'assets/images/icons/alert.svg';
 
 interface AlertProps {
   errors: string[];
+  'data-test-id'?: string;
 }
-const Alert = ({ errors }: AlertProps): JSX.Element => (
-  <div role="alert">
+const Alert = ({ errors, ...htmlAttributes }: AlertProps): JSX.Element => (
+  <div role="alert" {...htmlAttributes}>
     <div className="bg-black-raisin bg-opacity-60 rounded-xl px-4 py-4 flex flex-row">
       <AlertIcon className="mr-[19px]" />
       <div>
