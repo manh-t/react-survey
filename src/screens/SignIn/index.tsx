@@ -19,6 +19,8 @@ export const signInScreenTestIds = {
   passwordField: 'sign-in-form__input-password',
   forgotButton: 'sign-in-form__forgot-button',
   signInButton: 'sign-in-form__button',
+  errorAlert: 'sign-in__error-alert',
+  loadingDialog: 'sign-in__loading-dialog',
 };
 
 const SignInScreen = (): JSX.Element => {
@@ -47,7 +49,7 @@ const SignInScreen = (): JSX.Element => {
       <img className="mx-auto" src={nimbleLogoWhite} alt="nimble logo" data-test-id={signInScreenTestIds.nimbleLogo} />
       <div className="mt-6 text-white opacity-60 text-regular tracking-survey-tight">Sign in to Nimble</div>
 
-      <div className="mt-6">{errors && <Alert errors={errors} />}</div>
+      <div className="mt-6">{errors && <Alert errors={errors} data-test-id={signInScreenTestIds.errorAlert} />}</div>
 
       <form className="w-80 mt-8" onSubmit={handleSubmit} data-test-id={signInScreenTestIds.signInForm}>
         <div className="mb-6">
@@ -91,7 +93,7 @@ const SignInScreen = (): JSX.Element => {
         </ElevatedButton>
       </form>
 
-      {loading && <LoadingDialog />}
+      {loading && <LoadingDialog data-test-id={signInScreenTestIds.loadingDialog} />}
     </div>
   );
 };
