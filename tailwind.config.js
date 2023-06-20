@@ -13,6 +13,9 @@ module.exports = {
         small: ['15px', '20px'],
         regular: ['17px', '22px'],
       },
+      backgroundImage: {
+        'sign-in': "url('assets/images/illustrations/background-sign-in.png')",
+      },
     },
   },
   plugins: [],

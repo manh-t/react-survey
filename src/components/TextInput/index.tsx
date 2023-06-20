@@ -23,10 +23,7 @@ const TextInput = ({ label, labelDataTestId, inputAttributes, extraClassName }: 
       )}
       <input
         {...inputAttributes}
-        className={
-          'block appearance-none bg-white bg-opacity-[.18] rounded-[12px] w-full h-14 focus:outline-none focus:ring-transparent px-3 text-white text-regular ' +
-          extraClassName
-        }
+        className={`block appearance-none bg-white bg-opacity-[.18] rounded-[12px] w-full h-14 focus:outline-none focus:ring-transparent px-3 text-white text-regular focus:bg-opacity-30 ${extraClassName}`}
         placeholder={inputAttributes.placeholder}
       />
     </div>

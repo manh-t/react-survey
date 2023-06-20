@@ -6,13 +6,11 @@ interface ElevatedButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
 }
 
 const ElevatedButton = ({ children, isFullSize, ...attributes }: ElevatedButtonProps): JSX.Element => {
+  const fullWidth = isFullSize ? 'w-full' : '';
   return (
     <button
       type="button"
-      className={
-        'bg-white text-black-chinese font-bold text-regular rounded-[10px] focus:outline-none focus:shadow-outline h-14' +
-        (isFullSize ? ' w-full' : '')
-      }
+      className={`bg-white text-black-chinese font-bold text-regular rounded-[10px] focus:outline-none focus:shadow-outline h-14 ${fullWidth}`}
       {...attributes}
     >
       {children}

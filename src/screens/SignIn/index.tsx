@@ -1,7 +1,6 @@
 import React from 'react';
 
 import nimbleLogoWhite from 'assets/images/icons/nimble-logo-white.svg';
-import background from 'assets/images/illustrations/background-sign-in.png';
 import ElevatedButton from 'components/ElevatedButton';
 import TextInput from 'components/TextInput';
 
@@ -18,10 +17,7 @@ export const signInScreenTestIds = {
 
 const SignInScreen = (): JSX.Element => {
   return (
-    <div
-      className="sign-in bg-cover min-h-screen flex flex-col justify-center items-center"
-      style={{ backgroundImage: 'url(' + background + ')' }}
-    >
+    <div className="sign-in bg-cover min-h-screen flex flex-col justify-center items-center bg-sign-in">
       <img className="mx-auto" src={nimbleLogoWhite} alt="nimble logo" data-test-id={signInScreenTestIds.nimbleLogo} />
       <div className="mt-6 mb-8 text-white opacity-60 text-regular">Sign in to Nimble</div>
       <form className="w-80" data-test-id={signInScreenTestIds.signInForm}>
