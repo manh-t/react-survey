@@ -12,7 +12,7 @@ const Alert = ({ errors, ...rest }: AlertProps): JSX.Element => (
       <AlertIcon className="mr-[19px] text-white" />
       <div>
         <p className="text-small text-white font-extrabold mb-2">Error</p>
-        <ul className="list-disc list-inside text-white opacity-60 text-xSmall">
+        <ul className="list-disc list-inside text-white opacity-60 text-x-small">
           {errors.map((error, index) => (
             <li key={`${index}${error}`}>{error}</li>
           ))}

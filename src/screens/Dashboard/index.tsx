@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-import { getToken } from 'helpers/authentication';
+import DashboardEmpty from 'components/Dashboard/Empty';
+import DashboardHeader from 'components/Dashboard/Header';
 
 const DashBoardScreen = (): JSX.Element => {
-  // TODO This is a test. Will remove it later.
-  const [token, setToken] = useState('');
-
-  useEffect(() => {
-    const userToken = getToken();
-    if (userToken) {
-      setToken(userToken.accessToken);
-    }
-  }, []);
   return (
-    <div>
-      <p>Welcome to your Dashboard {token}</p>
+    <div className="bg-black w-full h-full pt-8 pl-8 pr-8">
+      <DashboardHeader dateTime="Monday, JUNE 15" daysAgo="Today" profileUrl="https://i.pravatar.cc/150?img=3">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <DashboardEmpty />
+        </div>
+      </DashboardHeader>
     </div>
   );
 };
