@@ -1,0 +1,37 @@
+name: Deploy Preview to Netlify
+
+on: pull_request
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy-preview:
+    name: Build and Deploy preview on Netlify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3.2.0
+
+      - name: Install modules
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
+          REACT_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
+          REACT_APP_CLIENT_SECRET: ${{ secrets.REACT_APP_CLIENT_SECRET }}
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v2.0
+        timeout-minutes: 5
+        with:
+          publish-dir: './build'
+          deploy-message: '#${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}'
+          github-token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+          enable-commit-comment: false
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
