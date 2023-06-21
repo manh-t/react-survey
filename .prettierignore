@@ -1,0 +1,12 @@
+**/.git
+**/.github
+**/.svn
+**/.hg
+**/node_modules
+
+# Ignore artifacts:
+build
+coverage
+
+**/*.css
+**/*.md
