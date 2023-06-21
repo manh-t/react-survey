@@ -19,7 +19,7 @@ const SignInScreen = (): JSX.Element => {
   return (
     <div className="sign-in bg-cover min-h-screen flex flex-col justify-center items-center bg-sign-in">
       <img className="mx-auto" src={nimbleLogoWhite} alt="nimble logo" data-test-id={signInScreenTestIds.nimbleLogo} />
-      <div className="mt-6 mb-8 text-white opacity-60 text-regular">Sign in to Nimble</div>
+      <div className="mt-6 mb-8 text-white opacity-60 text-regular tracking-survey-tight">Sign in to Nimble</div>
       <form className="w-80" data-test-id={signInScreenTestIds.signInForm}>
         <div className="mb-6">
           <TextInput
@@ -48,14 +48,14 @@ const SignInScreen = (): JSX.Element => {
             />
           </span>
           <button
-            className="text-white text-opacity-50 text-small absolute right-3 bottom-4"
+            className="text-white text-opacity-50 text-small tracking-survey-normal absolute right-3 bottom-4"
             data-test-id={signInScreenTestIds.forgotButton}
           >
             Forgot?
           </button>
         </div>
         <ElevatedButton isFullSize={true} type="submit" data-test-id={signInScreenTestIds.signInButton}>
-          Sign In
+          Sign in
         </ElevatedButton>
       </form>
     </div>

@@ -31,7 +31,7 @@ describe('SignInScreen', () => {
     expect(forgotButton).toHaveTextContent('Forgot?');
 
     expect(signInButton).toBeVisible();
-    expect(signInButton).toHaveTextContent('Sign In');
+    expect(signInButton).toHaveTextContent('Sign in');
 
     expect(nimbleLogo).toBeVisible();
   });

@@ -10,7 +10,7 @@ const ElevatedButton = ({ children, isFullSize, ...attributes }: ElevatedButtonP
   return (
     <button
       type="button"
-      className={`bg-white text-black-chinese font-bold text-regular rounded-[10px] focus:outline-none focus:shadow-outline h-14 ${fullWidth}`}
+      className={`bg-white text-black-chinese font-bold text-regular tracking-survey-tight rounded-[10px] focus:outline-none focus:shadow-outline h-14 ${fullWidth}`}
       {...attributes}
     >
       {children}
