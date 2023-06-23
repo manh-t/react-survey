@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { authSlice } from './reducers/Authentication';
+import { surveysSlice } from './reducers/Surveys';
 
 export const reducers = {
   auth: authSlice.reducer,
+  surveys: surveysSlice.reducer,
 };
 
 export const store = configureStore({
