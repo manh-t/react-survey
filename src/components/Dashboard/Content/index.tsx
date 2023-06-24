@@ -52,7 +52,7 @@ const DashboardContent = ({
       <div className="flex flex-row justify-between mt-[38px]">
         <div className={`flex flex-col justify-between`}>
           <p className={`text-white text-x-regular font-extrabold`}>{surveys[currentPosition].title}</p>
-          <p className="text-white text-regular leading-[-.41px] opacity-60 mt-2">{surveys[currentPosition].description}</p>
+          <p className="text-white text-regular tracking-survey-tight opacity-60 mt-2">{surveys[currentPosition].description}</p>
         </div>
         <button type="button" className="w-[56px] h-[56px] bg-white rounded-full inline-flex items-center justify-center">
           <ArrowRight />
