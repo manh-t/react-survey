@@ -1,4 +1,5 @@
-import { camelCase, snakeCase } from 'lodash';
+import camelCase from 'lodash/camelCase';
+import snakeCase from 'lodash/snakeCase';
 
 export type JSONValue = string | number | boolean | JSONObject | JSONArray;
 export type JSONArray = Array<JSONValue>;
