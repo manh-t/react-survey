@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
 import requestManager from 'lib/requestManager';
 
-import baseAdapter from '.';
+import { get, post } from '.';
 
-jest.mock('lib/requestManager');
+jest.mock('lib/requestManager', () => jest.fn());
 
 describe('BaseAdapter', () => {
   const apiPath = '/sample';
@@ -11,18 +11,14 @@ describe('BaseAdapter', () => {
     testKey: 'test value',
   };
 
-  beforeEach(() => {
-    (requestManager as jest.Mock).mockImplementation(() => jest.fn());
-  });
-
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  describe('get', () => {
+  describe('GET', () => {
     describe('given only the api path', () => {
       it('calls the GET method from request manager with the path and no params', () => {
-        baseAdapter.get(apiPath);
+        get(apiPath);
 
         expect(requestManager).toHaveBeenCalledWith('get', apiPath, {});
       });
@@ -30,7 +26,7 @@ describe('BaseAdapter', () => {
 
     describe('given the api path and url params', () => {
       it('calls the get method from request manager with the path and params with snake case keys', () => {
-        baseAdapter.get(apiPath, params);
+        get(apiPath, params);
 
         expect(requestManager).toHaveBeenCalledWith('get', apiPath, {
           params: { test_key: params.testKey },
@@ -39,10 +35,10 @@ describe('BaseAdapter', () => {
     });
   });
 
-  describe('post', () => {
+  describe('POST', () => {
     describe('given the path and url params', () => {
       it('calls the post method from request manager with the path and data with snake case key', () => {
-        baseAdapter.post(apiPath, params);
+        post(apiPath, params);
 
         expect(requestManager).toHaveBeenCalledWith('post', apiPath, {
           data: { test_key: params.testKey },

@@ -3,9 +3,7 @@ import axios, { Method as HTTPMethod, ResponseType, AxiosRequestConfig, AxiosRes
 import { Config } from 'config';
 import { JSONValue, keysToCamelCase } from 'helpers/json';
 
-export const successResponseInterceptor = (
-  response: AxiosResponse<unknown>
-): AxiosResponse<unknown> | Promise<AxiosResponse<unknown>> => {
+export const successResponseInterceptor = (response: AxiosResponse<unknown>): AxiosResponse<unknown> => {
   const responseData = response.data as JSONValue;
   const formattedData = keysToCamelCase(responseData);
   response.data = formattedData;

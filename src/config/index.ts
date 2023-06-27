@@ -1,4 +1,4 @@
-import { camelize } from 'helpers/string';
+import camelCase from 'lodash/camelCase';
 
 interface ConfigProps {
   [key: string]: string;
@@ -11,7 +11,7 @@ const convertConfig = () => {
   const config: ConfigProps = {};
 
   Object.keys(envConfig).forEach((key: string) => {
-    const newKey = camelize(key.replace(configurationPrefix, '').toLowerCase());
+    const newKey = camelCase(key.replace(configurationPrefix, '').toLowerCase());
 
     config[newKey] = envConfig[key] || '';
   });

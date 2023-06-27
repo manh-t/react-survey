@@ -1,15 +1,14 @@
-import baseAdapter from 'adapters/Base';
+import { post } from 'adapters/Base';
 import { Config } from 'config';
 
-import authenticationAdapter from '.';
+import { signIn } from '.';
 
 jest.mock('adapters/Base');
 jest.mock('config');
 
-const mockPostMethod = jest.fn();
-
 describe('AuthenticationAdapter', () => {
   beforeEach(() => {
+    (post as jest.Mock).mockImplementation(() => jest.fn());
     Config.clientId = 'client id';
     Config.clientSecret = 'client secret';
   });
@@ -21,8 +20,6 @@ describe('AuthenticationAdapter', () => {
   describe('signIn', () => {
     describe('given an email and a password', () => {
       it('calls the post method from the base adapter', () => {
-        baseAdapter.post = mockPostMethod;
-
         const email = 'test@test.com';
         const password = 'test';
 
@@ -35,9 +32,9 @@ describe('AuthenticationAdapter', () => {
           password,
         };
 
-        authenticationAdapter.signIn(email, password);
+        signIn(email, password);
 
-        expect(mockPostMethod).toHaveBeenCalledWith(expectedPath, expectedPayload);
+        expect(post).toHaveBeenCalledWith(expectedPath, expectedPayload);
       });
     });
   });
