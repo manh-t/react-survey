@@ -1,41 +1,34 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { AxiosResponse } from 'axios';
 
-import authenticationAdapter from 'adapters/Authentication';
+import { signIn as authenticationSignIn } from 'adapters/Authentication';
 import { APIError } from 'helpers/error';
 import { mockAxiosError } from 'tests/error';
 
 import { authSlice, initialState, signIn } from '.';
-import { SignInInput, signInAsync } from './actions';
+import { SignInInput } from './actions';
+
+// The AsyncThunk test is following https://github.com/reduxjs/redux-toolkit/blob/635d6d5e513e13dd59cd717f600d501b30ca2381/src/tests/createAsyncThunk.test.ts
 
 jest.mock('adapters/Authentication');
 
 describe('auth slice', () => {
   describe('signIn', () => {
-    const mockSignIn = jest.fn();
-
-    beforeEach(() => {
-      authenticationAdapter.signIn = mockSignIn;
+    afterEach(() => {
+      jest.restoreAllMocks();
     });
 
     describe('payload creator', () => {
-      const mockDispatch = jest.fn();
-      const mockRejectWithValue = jest.fn();
-      const mockThunkAPI = {
-        dispatch: mockDispatch,
-        getState: jest.fn(),
-        extra: undefined,
-        requestId: '',
-        signal: jest.fn() as unknown as AbortSignal,
-        abort: jest.fn(),
-        rejectWithValue: mockRejectWithValue,
-        fulfillWithValue: jest.fn(),
-      };
       const resourceId = 'resource id';
+      const resourceType = 'resource type';
+      const accessToken = 'access token';
+      const refreshToken = 'refresh token';
+      const tokenType = 'token type';
       const successResponse = {
         data: {
           id: resourceId,
-          type: 'resource type',
-          attributes: { accessToken: 'access token', refreshToken: 'refresh token', tokenType: 'token type' },
+          type: resourceType,
+          attributes: { accessToken: accessToken, refreshToken: refreshToken, tokenType: tokenType },
         },
       };
 
@@ -49,29 +42,75 @@ describe('auth slice', () => {
       const mockError = mockAxiosError(500, 'Internal server error', errors);
 
       it('calls signIn API successfully', async () => {
-        const payload: SignInInput = { email: 'test@test.com', password: 'password' };
+        (authenticationSignIn as jest.Mock).mockResolvedValue(successResponse as AxiosResponse);
+        const dispatch = jest.fn();
+        const input: SignInInput = { email: 'test@test.com', password: 'password' };
 
-        const authenticationMock = jest.spyOn(authenticationAdapter, 'signIn');
-        authenticationMock.mockResolvedValue(successResponse as AxiosResponse);
+        const signInFunction = signIn(input);
 
-        await signInAsync(payload, mockThunkAPI);
+        const signInPayload = await signInFunction(dispatch, () => {}, undefined);
 
-        expect(authenticationMock).toHaveBeenCalledWith(...Object.values(payload));
+        const expectedResult = {
+          accessToken: accessToken,
+          id: resourceId,
+          refreshToken: refreshToken,
+          resourceType: resourceType,
+          tokenType: tokenType,
+        };
 
-        authenticationMock.mockRestore();
+        expect(signInPayload.meta.arg).toBe(input);
+        expect(signInPayload.payload).toEqual({
+          accessToken: 'access token',
+          id: 'resource id',
+          refreshToken: 'refresh token',
+          resourceType: 'resource type',
+          tokenType: 'token type',
+        });
+
+        expect(dispatch).toHaveBeenNthCalledWith(1, signIn.pending(signInPayload.meta.requestId, input));
+        expect(dispatch).toHaveBeenNthCalledWith(2, signIn.fulfilled(expectedResult, signInPayload.meta.requestId, input));
       });
 
       it('calls signIn API unsuccessfully WITH response data', async () => {
-        const payload: SignInInput = { email: 'test@test.com', password: 'password' };
+        (authenticationSignIn as jest.Mock).mockRejectedValue(mockError);
+        const dispatch = jest.fn();
 
-        const authenticationMock = jest.spyOn(authenticationAdapter, 'signIn');
-        authenticationMock.mockRejectedValue(mockError);
+        const input: SignInInput = { email: 'test@test.com', password: 'password' };
+        const signInFunction = signIn(input);
 
-        await signInAsync(payload, mockThunkAPI);
+        try {
+          await signInFunction(dispatch, () => {}, undefined);
+        } catch (e) {}
 
-        expect(mockRejectWithValue).toHaveBeenCalledWith({ data: mockError.response?.data, status: mockError.response?.status });
+        const errorAction = dispatch.mock.calls[1][0];
 
-        authenticationMock.mockRestore();
+        expect(errorAction.error.message).toBe('Rejected');
+        expect(errorAction.payload).toEqual({ data: mockError.response?.data, status: mockError.response?.status });
+        expect(errorAction.meta.arg).toBe(input);
+
+        expect(dispatch).toHaveBeenNthCalledWith(1, signIn.pending(errorAction.meta.requestId, input));
+        expect(dispatch).toHaveBeenCalledTimes(2);
+      });
+
+      it('calls signIn API unsuccessfully WITHOUT response data', async () => {
+        const error = Error('error test');
+        (authenticationSignIn as jest.Mock).mockRejectedValue(error);
+        const dispatch = jest.fn();
+
+        const input: SignInInput = { email: 'test@test.com', password: 'password' };
+        const signInFunction = signIn(input);
+
+        try {
+          await signInFunction(dispatch, () => {}, undefined);
+        } catch (e) {}
+
+        const errorAction = dispatch.mock.calls[1][0];
+
+        expect(errorAction.error.message).toBe(error.message);
+        expect(errorAction.meta.arg).toBe(input);
+
+        expect(dispatch).toHaveBeenNthCalledWith(1, signIn.pending(errorAction.meta.requestId, input));
+        expect(dispatch).toHaveBeenCalledTimes(2);
       });
     });
 
