@@ -7,10 +7,11 @@ interface DashboardHeaderProps {
   daysAgo: string;
   profileUrl: string;
   children: React.ReactNode;
+  'data-test-id'?: string;
 }
-const DashboardHeader = ({ dateTime, daysAgo, profileUrl, children }: DashboardHeaderProps): JSX.Element => {
+const DashboardHeader = ({ dateTime, daysAgo, profileUrl, children, ...attributes }: DashboardHeaderProps): JSX.Element => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen" {...attributes}>
       <div className="flex flex-row justify-between pt-8">
         <NimbleLogoWhite />
         <img className="w-[36px] h-[36px] rounded-full" src={profileUrl} alt="user avatar" />
