@@ -2,9 +2,13 @@ import React from 'react';
 
 import Shimmer from 'components/Shimmer';
 
-const DashboardContent = (): JSX.Element => {
+interface DashboardContentProps {
+  'data-test-id'?: string;
+}
+
+const DashboardContent = ({ ...attributes }: DashboardContentProps): JSX.Element => {
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full" {...attributes}>
       <Shimmer classAttributes="h-[302px] rounded-[12px]" />
       <div className="flex flex-row justify-between mt-[38px]">
         <div className="flex flex-col justify-between">
