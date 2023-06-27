@@ -54,7 +54,7 @@ const SignInScreen = (): JSX.Element => {
             Forgot?
           </button>
         </div>
-        <ElevatedButton isFullSize={true} type="submit" data-test-id={signInScreenTestIds.signInButton}>
+        <ElevatedButton isFullSize type="submit" data-test-id={signInScreenTestIds.signInButton}>
           Sign in
         </ElevatedButton>
       </form>
