@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { getToken } from 'helpers/authentication';
-import { paths } from 'routes';
 
 import BackgroundImage from 'components/BackgroundImage';
 import DashboardContent from 'components/Dashboard/Content';
 import DashboardHeader from 'components/Dashboard/Header';
+import { getToken } from 'helpers/authentication';
 import { useAppDispatch, useAppSelector } from 'hooks';
+import { paths } from 'routes';
 import { surveysAction } from 'store/reducers/Surveys';
 
 const DashBoardScreen = (): JSX.Element => {
