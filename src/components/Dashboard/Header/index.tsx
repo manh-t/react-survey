@@ -6,7 +6,7 @@ import Shimmer from 'components/Shimmer';
 interface DashboardHeaderProps {
   dateTime: string;
   daysAgo: string;
-  profileUrl: string;
+  profileUrl?: string;
   shouldShowShimmer?: boolean;
   children: React.ReactNode;
   'data-test-id'?: string;
@@ -33,7 +33,7 @@ const DashboardHeader = ({
         {shouldShowShimmer ? (
           <Shimmer classAttributes="w-[117px] h-[18px] rounded-[14px]" />
         ) : (
-          <p className="text-x-small font-extrabold">{dateTime}</p>
+          <p className="text-x-small font-extrabold">{dateTime.toUpperCase()}</p>
         )}
         {shouldShowShimmer ? (
           <div className="mt-[14px]">

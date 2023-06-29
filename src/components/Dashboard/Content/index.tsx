@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import classNames from 'classnames';
 
@@ -49,7 +50,9 @@ const DashboardContent = ({
   ) : (
     <div className="flex flex-col h-full" data-test-id={dashboardDataTestIds.content}>
       <div
-        style={{ backgroundImage: `url(${getHighResolutionImage(surveys[currentPosition].coverImageUrl)})` }}
+        style={{
+          backgroundImage: `url(${surveys.length === 0 ? '' : getHighResolutionImage(surveys[currentPosition].coverImageUrl)})`,
+        }}
         className="w-full h-[302px] rounded-[12px] bg-cover duration-500 ease-in-out"
       ></div>
       <div className="flex flex-row justify-between mt-[38px]">
@@ -57,12 +60,14 @@ const DashboardContent = ({
           <p className="text-white text-x-regular font-extrabold">{surveys[currentPosition].title}</p>
           <p className="text-white text-regular tracking-survey-tight opacity-60 mt-2">{surveys[currentPosition].description}</p>
         </div>
-        <button
-          type="button"
-          className="w-[56px] h-[56px] bg-white rounded-full inline-flex items-center justify-center text-black-chinese"
-        >
-          <ArrowRight />
-        </button>
+        <Link to={`surveys/${surveys[currentPosition].id}`}>
+          <button
+            type="button"
+            className="w-[56px] h-[56px] bg-white rounded-full inline-flex items-center justify-center text-black-chinese"
+          >
+            <ArrowRight />
+          </button>
+        </Link>
       </div>
       {/* <!-- Slider indicators --> */}
       <div className="flex-1 flex space-x-3 justify-center items-end mb-[42px]">
