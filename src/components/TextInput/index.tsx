@@ -1,5 +1,7 @@
 import React from 'react';
 
+import classnames from 'classnames';
+
 type TextInputProps = {
   label?: string;
   labelDataTestId?: string;
@@ -10,10 +12,12 @@ type TextInputProps = {
     placeholder?: string;
     'data-test-id'?: string;
   };
-  extraClassName?: string;
+  classNames?: string;
 };
 
-const TextInput = ({ label, labelDataTestId, inputAttributes, extraClassName }: TextInputProps): JSX.Element => {
+const TextInput = ({ label, labelDataTestId, inputAttributes, classNames }: TextInputProps): JSX.Element => {
+  const DEFAULT_CLASS_NAMES =
+    'block appearance-none bg-white bg-opacity-[.18] rounded-[12px] w-full h-14 focus:outline-none focus:ring-transparent px-3 mt-2 text-white text-regular tracking-survey-tight focus:bg-opacity-30';
   return (
     <div>
       {label !== null && (
@@ -27,7 +31,7 @@ const TextInput = ({ label, labelDataTestId, inputAttributes, extraClassName }: 
       )}
       <input
         {...inputAttributes}
-        className={`block appearance-none bg-white bg-opacity-[.18] rounded-[12px] w-full h-14 focus:outline-none focus:ring-transparent px-3 mt-2 text-white text-regular tracking-survey-tight focus:bg-opacity-30 ${extraClassName}`}
+        className={classnames(DEFAULT_CLASS_NAMES, classNames)}
         placeholder={inputAttributes.placeholder}
       />
     </div>

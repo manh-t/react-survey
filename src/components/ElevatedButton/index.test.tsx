@@ -7,9 +7,10 @@ import ElevatedButton from '.';
 describe('ElevatedButton', () => {
   const label = 'Sign in';
   const dataTestId = 'sign-in_button';
+
   it('renders a full-width button', () => {
     render(
-      <ElevatedButton isFullSize data-test-id={dataTestId}>
+      <ElevatedButton isFullWidth data-test-id={dataTestId}>
         {label}
       </ElevatedButton>
     );
@@ -22,9 +23,9 @@ describe('ElevatedButton', () => {
     expect(button).toHaveClass('w-full');
   });
 
-  it('renders a wrap-content button', () => {
+  it('does NOT render a full-width button', () => {
     render(
-      <ElevatedButton isFullSize={false} data-test-id={dataTestId}>
+      <ElevatedButton isFullWidth={false} data-test-id={dataTestId}>
         {label}
       </ElevatedButton>
     );

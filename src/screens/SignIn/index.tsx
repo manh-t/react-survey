@@ -44,7 +44,7 @@ const SignInScreen = (): JSX.Element => {
                 type: 'password',
                 'data-test-id': signInScreenTestIds.passwordField,
               }}
-              extraClassName="pr-16"
+              classNames="pr-16"
             />
           </span>
           <button
@@ -54,7 +54,7 @@ const SignInScreen = (): JSX.Element => {
             Forgot?
           </button>
         </div>
-        <ElevatedButton isFullSize type="submit" data-test-id={signInScreenTestIds.signInButton}>
+        <ElevatedButton isFullWidth type="submit" data-test-id={signInScreenTestIds.signInButton}>
           Sign in
         </ElevatedButton>
       </form>

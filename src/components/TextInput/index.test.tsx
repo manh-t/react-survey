@@ -10,6 +10,7 @@ describe('TextInput', () => {
   const inputDataTestId = 'text-input';
   const inputType = 'email';
   const inputPlaceholder = 'input placeholder';
+
   it('renders a text input with a label', () => {
     const inputProps = {
       label: label,
