@@ -39,6 +39,7 @@ describe('DashboardScreen', () => {
         },
       ],
       currentPosition: 0,
+      isInitialLoading: true,
     },
   };
 
