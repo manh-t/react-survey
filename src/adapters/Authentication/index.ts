@@ -1,10 +1,10 @@
 import { post } from 'adapters/Base';
-import { Config } from 'config';
+import { config } from 'config';
 
 export const signIn = (email: string, password: string) =>
   post('oauth/token', {
-    clientId: Config.clientId,
-    clientSecret: Config.clientSecret,
+    clientId: config().clientId,
+    clientSecret: config().clientSecret,
     grantType: 'password',
     email: email,
     password: password,

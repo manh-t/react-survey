@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import camelCase from 'lodash/camelCase';
 
 interface ConfigProps {
@@ -7,16 +8,16 @@ interface ConfigProps {
 const envConfig = process.env;
 const configurationPrefix = 'REACT_APP_';
 
-const convertConfig = () => {
-  const config: ConfigProps = {};
+const convertedConfig: ConfigProps = {};
 
+const convertConfig = () => {
   Object.keys(envConfig).forEach((key: string) => {
     const newKey = camelCase(key.replace(configurationPrefix, '').toLowerCase());
 
-    config[newKey] = envConfig[key] || '';
+    convertedConfig[newKey] = envConfig[key] || '';
   });
 
-  return config;
+  return convertedConfig;
 };
 
-export const Config = convertConfig();
+export const config = () => (_.isEmpty(convertedConfig) ? convertConfig() : convertedConfig);

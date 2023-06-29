@@ -1,5 +1,5 @@
 import { post } from 'adapters/Base';
-import { Config } from 'config';
+import { config } from 'config';
 
 import { signIn } from '.';
 
@@ -9,8 +9,10 @@ jest.mock('config');
 describe('AuthenticationAdapter', () => {
   beforeEach(() => {
     (post as jest.Mock).mockImplementation(() => jest.fn());
-    Config.clientId = 'client id';
-    Config.clientSecret = 'client secret';
+    (config as jest.Mock).mockImplementation(() => ({
+      clientId: 'client id',
+      clientSecret: 'client secret',
+    }));
   });
 
   afterEach(() => {
@@ -26,8 +28,8 @@ describe('AuthenticationAdapter', () => {
         const expectedPath = 'oauth/token';
         const expectedPayload = {
           grantType: 'password',
-          clientId: Config.clientId,
-          clientSecret: Config.clientSecret,
+          clientId: config().clientId,
+          clientSecret: config().clientSecret,
           email,
           password,
         };

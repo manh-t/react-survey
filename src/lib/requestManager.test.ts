@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { Config } from 'config';
+import { config } from 'config';
 
 import requestManager, { defaultOptions } from './requestManager';
 
@@ -11,7 +11,9 @@ describe('requestManager', () => {
   const endPoint = 'sample/endpoint';
 
   beforeEach(() => {
-    Config.apiBaseUrl = 'http://sample.com';
+    (config as jest.Mock).mockImplementation(() => ({
+      apiBaseUrl: 'http://sample.com',
+    }));
   });
 
   afterEach(() => {

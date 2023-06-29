@@ -1,6 +1,6 @@
 import axios, { Method as HTTPMethod, ResponseType, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
-import { Config } from 'config';
+import { config } from 'config';
 import { JSONValue, keysToCamelCase } from 'helpers/json';
 
 export const successResponseInterceptor = (response: AxiosResponse<unknown>): AxiosResponse<unknown> => {
@@ -13,7 +13,7 @@ export const successResponseInterceptor = (response: AxiosResponse<unknown>): Ax
 
 export const defaultOptions = (): { responseType: ResponseType; baseURL: string; headers?: { [key: string]: string } } => ({
   responseType: 'json',
-  baseURL: `${Config.apiBaseUrl}/api/v1`,
+  baseURL: `${config().apiBaseUrl}/api/v1`,
   headers: {
     'Content-Type': 'application/json',
   },
