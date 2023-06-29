@@ -122,4 +122,22 @@ describe('SignInScreen', () => {
       expect(mockUseNavigate).toHaveBeenCalledWith(paths.root, { replace: true });
     });
   });
+
+  describe('given the token has data', () => {
+    beforeEach(() => {
+      mockState.auth.token = {
+        id: 'id',
+        resourceType: 'type',
+        accessToken: 'access token',
+        tokenType: 'token type',
+        refreshToken: 'refresh token',
+      };
+    });
+
+    it('navigates to the Dashboard screen', () => {
+      render(<TestComponent />);
+
+      expect(mockUseNavigate).toHaveBeenCalledWith(paths.root, { replace: true });
+    });
+  });
 });

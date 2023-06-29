@@ -8,7 +8,7 @@ import LoadingDialog from 'components/LoadingDialog';
 import TextInput from 'components/TextInput';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { paths } from 'routes';
-import { signIn } from 'store/reducers/Authentication';
+import { signInAsyncThunk } from 'store/reducers/Authentication';
 
 export const signInScreenTestIds = {
   nimbleLogo: 'sign-in__nimble-logo',
@@ -26,7 +26,7 @@ export const signInScreenTestIds = {
 const SignInScreen = (): JSX.Element => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { loading, errors, success } = useAppSelector((state) => state.auth);
+  const { loading, errors, success, token } = useAppSelector((state) => state.auth);
 
   const navigate = useNavigate();
 
@@ -35,14 +35,14 @@ const SignInScreen = (): JSX.Element => {
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
 
-    dispatch(signIn({ email, password }));
+    dispatch(signInAsyncThunk({ email, password }));
   };
 
   useEffect(() => {
-    if (success) {
+    if (token || success) {
       navigate(paths.root, { replace: true });
     }
-  }, [navigate, success]);
+  }, [navigate, token, success]);
 
   return (
     <div className="sign-in bg-cover min-h-screen flex flex-col justify-center items-center bg-sign-in">

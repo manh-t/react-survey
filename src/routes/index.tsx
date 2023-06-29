@@ -4,6 +4,8 @@ import { RouteObject } from 'react-router-dom';
 import DashBoardScreen from 'screens/Dashboard';
 import SignInScreen from 'screens/SignIn';
 
+import ProtectedRoute from './ProtectedRoute';
+
 export const paths = {
   root: '/',
   signIn: '/sign-in',
@@ -11,8 +13,13 @@ export const paths = {
 
 const routes: RouteObject[] = [
   {
-    path: paths.root,
-    element: <DashBoardScreen />,
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: paths.root,
+        element: <DashBoardScreen />,
+      },
+    ],
   },
   {
     path: paths.signIn,

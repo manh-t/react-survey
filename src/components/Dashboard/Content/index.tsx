@@ -71,7 +71,7 @@ const DashboardContent = ({
             <button
               key={surveyItem.id}
               type="button"
-              className={classNames('w-2 h-2 rounded-full bg-white', { 'bg-opacity-20': index === currentPosition })}
+              className={classNames('w-2 h-2 rounded-full bg-white', { 'bg-opacity-20': index !== currentPosition })}
               aria-current={index === currentPosition ? 'true' : 'false'}
               aria-label={`Slide ${surveyItem.id}`}
               data-carousel-slide-to={index}
