@@ -44,7 +44,7 @@ const SignInScreen = (): JSX.Element => {
                 type: 'password',
                 'data-test-id': signInScreenTestIds.passwordField,
               }}
-              classNames="pr-16"
+              className="pr-16"
             />
           </span>
           <button
