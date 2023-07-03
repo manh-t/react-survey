@@ -7,7 +7,7 @@ import DashboardHeader from '.';
 describe('DashboardHeader', () => {
   const dataTestId = 'dashboard-header';
   it('renders DashboardHeader and its components without shimmers', () => {
-    const dateTime = 'Monday, JUNE 15';
+    const dateTime = 'MONDAY, JUNE 15';
     const daysAgo = 'Today';
     const profileUrl = 'test url';
     render(
@@ -28,7 +28,7 @@ describe('DashboardHeader', () => {
   });
 
   it('does NOT renders text components', () => {
-    const dateTime = 'Monday, JUNE 15';
+    const dateTime = 'MONDAY, JUNE 15';
     const daysAgo = 'Today';
     const profileUrl = 'test url';
     render(

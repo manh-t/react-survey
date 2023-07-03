@@ -45,7 +45,7 @@ const DashboardContent = ({
   ) : (
     <div className="flex flex-col h-full" {...attributes}>
       <div
-        style={{ backgroundImage: `url(${surveys.length === 0 ? '' : surveys[currentPosition].coverImageUrl + 'l'})` }}
+        style={{ backgroundImage: `url(${surveys.length ? surveys[currentPosition].coverImageUrl + 'l' : ''})` }}
         className={`w-full h-[302px] rounded-[12px] bg-cover duration-500 ease-in-out`}
       ></div>
       <div className="flex flex-row justify-between mt-[38px]">

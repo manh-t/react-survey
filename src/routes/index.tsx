@@ -21,15 +21,15 @@ const routes: RouteObject[] = [
         path: paths.root,
         element: <DashBoardScreen />,
       },
+      {
+        path: paths.survey,
+        element: <SurveyScreen />,
+      },
     ],
   },
   {
     path: paths.signIn,
     element: <SignInScreen />,
-  },
-  {
-    path: paths.survey,
-    element: <SurveyScreen />,
   },
 ];
 

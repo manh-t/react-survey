@@ -2,12 +2,14 @@ import React from 'react';
 
 import { render, screen } from '@testing-library/react';
 
+import TestWrapper from 'tests/TestWrapper';
 import { Survey } from 'types/survey';
 
 import DashboardContent from '.';
 
 describe('DashboardContent', () => {
   const dataTestId = 'dashboard-content';
+  let shouldShowShimmer = false;
   const surveys: Survey[] = [
     {
       id: '1',
@@ -17,17 +19,24 @@ describe('DashboardContent', () => {
       description: 'We would like to know how you feel about our work from home.',
     },
   ];
-  it('renders DashboardContent and its components', () => {
-    render(
-      <DashboardContent
-        surveys={surveys}
-        currentPosition={0}
-        shouldShowShimmer={false}
-        onNextSurvey={() => jest.fn()}
-        onIndicatorTapped={() => jest.fn()}
-        data-test-id={dataTestId}
-      />
+
+  const TestComponent = (): JSX.Element => {
+    return (
+      <TestWrapper>
+        <DashboardContent
+          surveys={surveys}
+          currentPosition={0}
+          shouldShowShimmer={shouldShowShimmer}
+          onNextSurvey={() => jest.fn()}
+          onIndicatorTapped={() => jest.fn()}
+          data-test-id={dataTestId}
+        />
+      </TestWrapper>
     );
+  };
+
+  it('renders DashboardContent and its components', () => {
+    render(<TestComponent />);
 
     const dashboardContent = screen.getByTestId(dataTestId);
 
@@ -37,16 +46,9 @@ describe('DashboardContent', () => {
   });
 
   it('does NOT render the DashboardContent components', () => {
-    render(
-      <DashboardContent
-        surveys={surveys}
-        currentPosition={0}
-        shouldShowShimmer={true}
-        onNextSurvey={() => jest.fn()}
-        onIndicatorTapped={() => jest.fn()}
-        data-test-id={dataTestId}
-      />
-    );
+    shouldShowShimmer = true;
+
+    render(<TestComponent />);
 
     expect(screen.queryByTestId(dataTestId)).not.toBeInTheDocument();
   });
