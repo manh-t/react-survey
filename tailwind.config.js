@@ -28,6 +28,13 @@ module.exports = {
         'survey-wide': '-0.08px',
         'survey-wider': '0.38px',
       },
+      keyframes: {
+        shimmer: {
+          '100%': {
+            transform: 'translateX(100%)',
+          },
+        },
+      },
     },
   },
   plugins: [],
