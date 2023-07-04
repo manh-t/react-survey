@@ -1,0 +1,8 @@
+// Base
+@import './base';
+
+@layer base {
+  body {
+    @apply font-neuzeit;
+  }
+}
