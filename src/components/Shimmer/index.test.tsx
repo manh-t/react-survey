@@ -2,15 +2,16 @@ import React from 'react';
 
 import { render, screen } from '@testing-library/react';
 
+import { dashboardScreenTestIds } from 'screens/Dashboard';
+
 import Shimmer from '.';
 
 describe('Shimmer', () => {
-  const dataTestId = 'shimmer';
   it('renders Shimmer and its components', () => {
     const testClass = 'test-class';
-    render(<Shimmer classAttributes={testClass} data-test-id={dataTestId} />);
+    render(<Shimmer classAttributes={testClass} />);
 
-    const shimmer = screen.getByTestId(dataTestId);
+    const shimmer = screen.getByTestId(dashboardScreenTestIds.shimmer);
 
     expect(shimmer).toBeVisible();
     expect(shimmer).toHaveClass(testClass);
