@@ -5,6 +5,8 @@ declare global {
   namespace Cypress {
     interface Chainable {
       interceptWithDelay(method: HttpMethod, url: RouteMatcher, delayTime: number, response?: RouteHandler): void;
+
+      signIn(): void;
     }
   }
 }
