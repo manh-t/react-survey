@@ -18,12 +18,13 @@ describe('auth slice', () => {
       jest.restoreAllMocks();
     });
 
+    const resourceId = 'resource id';
+    const resourceType = 'resource type';
+    const accessToken = 'access token';
+    const refreshToken = 'refresh token';
+    const tokenType = 'token type';
+
     describe('payload creator', () => {
-      const resourceId = 'resource id';
-      const resourceType = 'resource type';
-      const accessToken = 'access token';
-      const refreshToken = 'refresh token';
-      const tokenType = 'token type';
       const successResponse = {
         data: {
           id: resourceId,
@@ -59,13 +60,7 @@ describe('auth slice', () => {
         };
 
         expect(signInPayload.meta.arg).toBe(input);
-        expect(signInPayload.payload).toEqual({
-          accessToken: 'access token',
-          id: 'resource id',
-          refreshToken: 'refresh token',
-          resourceType: 'resource type',
-          tokenType: 'token type',
-        });
+        expect(signInPayload.payload).toEqual(expectedResult);
 
         expect(dispatch).toHaveBeenNthCalledWith(1, signIn.pending(signInPayload.meta.requestId, input));
         expect(dispatch).toHaveBeenNthCalledWith(2, signIn.fulfilled(expectedResult, signInPayload.meta.requestId, input));
@@ -126,11 +121,19 @@ describe('auth slice', () => {
 
     describe('given the thunk action is fulfilled', () => {
       it('sets success to true and loading to false', () => {
-        const action = { type: signIn.fulfilled.type, payload: { email: 'test@test.com', password: 'password' } };
+        const expectedResult = {
+          accessToken: accessToken,
+          id: resourceId,
+          refreshToken: refreshToken,
+          resourceType: resourceType,
+          tokenType: tokenType,
+        };
+        const action = { type: signIn.fulfilled.type, payload: expectedResult };
         const state = authSlice.reducer(initialState, action);
 
         expect(state.loading).toBe(false);
         expect(state.success).toBe(true);
+        expect(state.signInToken).toBe(expectedResult);
       });
     });
 
