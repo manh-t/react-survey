@@ -1,7 +1,7 @@
 import { post } from 'adapters/Base';
 import { config } from 'config';
 
-import { signIn } from '.';
+import { refreshToken, signIn } from '.';
 
 jest.mock('adapters/Base');
 jest.mock('config');
@@ -35,6 +35,26 @@ describe('AuthenticationAdapter', () => {
         };
 
         signIn(email, password);
+
+        expect(post).toHaveBeenCalledWith(expectedPath, expectedPayload);
+      });
+    });
+  });
+
+  describe('refreshToken', () => {
+    describe('given a refresh token', () => {
+      it('calls the post method from the base adapter', () => {
+        const token = 'refresh token';
+
+        const expectedPath = 'oauth/token';
+        const expectedPayload = {
+          grantType: 'refresh_token',
+          clientId: config().clientId,
+          clientSecret: config().clientSecret,
+          refreshToken: token,
+        };
+
+        refreshToken(token);
 
         expect(post).toHaveBeenCalledWith(expectedPath, expectedPayload);
       });
