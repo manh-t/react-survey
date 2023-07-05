@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
-import requestManager from 'lib/requestManager';
+import requestManager from 'lib/request/v1/requestManager';
 
 import { get, post } from '.';
 
-jest.mock('lib/requestManager', () => jest.fn());
+jest.mock('lib/request/v1/requestManager', () => jest.fn());
 
 describe('BaseAdapter', () => {
   const apiPath = '/sample';

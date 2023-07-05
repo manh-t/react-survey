@@ -1,5 +1,5 @@
-import _ from 'lodash';
 import camelCase from 'lodash/camelCase';
+import isEmpty from 'lodash/isEmpty';
 
 interface ConfigProps {
   [key: string]: string;
@@ -20,4 +20,4 @@ const convertConfig = () => {
   return convertedConfig;
 };
 
-export const config = () => (_.isEmpty(convertedConfig) ? convertConfig() : convertedConfig);
+export const config = () => (isEmpty(convertedConfig) ? convertConfig() : convertedConfig);

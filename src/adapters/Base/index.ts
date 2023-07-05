@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 
 import { JSONObject, keysToSnakeCase } from 'helpers/json';
-import requestManager from 'lib/requestManager';
+import requestManager from 'lib/request/v1/requestManager';
 
 export function get(path: string, params?: JSONObject) {
   const requestOptions: AxiosRequestConfig = {};

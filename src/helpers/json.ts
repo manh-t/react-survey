@@ -1,5 +1,5 @@
-import _ from 'lodash';
 import camelCase from 'lodash/camelCase';
+import isEmpty from 'lodash/isEmpty';
 import snakeCase from 'lodash/snakeCase';
 
 export type JSONValue = string | number | boolean | JSONObject | JSONArray;
@@ -32,7 +32,7 @@ export const keysToCamelCase = (json: JSONValue | JSONObject | JSONArray): JSONV
     (key) => camelCase(key),
     (jsonVal) => keysToCamelCase(jsonVal as JSONValue)
   );
-  if (!_.isEmpty(result)) {
+  if (!isEmpty(result)) {
     return result;
   }
   return json;
@@ -44,7 +44,7 @@ export const keysToSnakeCase = (json: JSONValue | JSONObject | JSONArray): JSONV
     (key) => snakeCase(key),
     (jsonVal) => keysToSnakeCase(jsonVal as JSONValue)
   );
-  if (!_.isEmpty(result)) {
+  if (!isEmpty(result)) {
     return result;
   }
   return json;
