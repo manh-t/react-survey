@@ -1,6 +1,6 @@
 import { AxiosError, AxiosHeaders } from 'axios';
 
-import { APIError, ErrorList } from 'helpers/error';
+import { APIError, ErrorList } from 'types/error';
 
 export const mockAxiosError = (status: number, statusText = '', data?: APIError[]): AxiosError<ErrorList> => {
   return {

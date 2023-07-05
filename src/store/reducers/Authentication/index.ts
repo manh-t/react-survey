@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { ErrorResponse } from 'helpers/error';
+import { ErrorResponse } from 'types/error';
 
 import { signInAsync } from './actions';
 

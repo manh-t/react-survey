@@ -4,7 +4,7 @@ interface LoadingDialogProps {
   'data-test-id'?: string;
 }
 
-const LoadingDialog = ({ ...htmlAttributes }: LoadingDialogProps): JSX.Element => {
+const LoadingDialog = (htmlAttributes: LoadingDialogProps): JSX.Element => {
   return (
     <div className="w-full h-full bg-black bg-opacity-60 fixed top-0 left-0 right-0" {...htmlAttributes}>
       <div

@@ -2,8 +2,8 @@
 import { AxiosResponse } from 'axios';
 
 import { signIn as authenticationSignIn } from 'adapters/Authentication';
-import { APIError } from 'helpers/error';
 import { mockAxiosError } from 'tests/error';
+import { APIError } from 'types/error';
 
 import { authSlice, initialState, signIn } from '.';
 import { SignInInput } from './actions';
