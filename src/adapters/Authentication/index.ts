@@ -9,3 +9,11 @@ export const signIn = (email: string, password: string) =>
     email: email,
     password: password,
   });
+
+export const refreshToken = (refreshToken: string) =>
+  post('oauth/token', {
+    clientId: config().clientId,
+    clientSecret: config().clientSecret,
+    grantType: 'refresh_token',
+    refreshToken: refreshToken,
+  });
