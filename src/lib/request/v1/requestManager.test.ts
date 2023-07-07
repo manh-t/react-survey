@@ -1,11 +1,24 @@
 import axios from 'axios';
 
+import { config } from 'config';
+
 import requestManager, { defaultOptions } from './requestManager';
 
 jest.mock('axios');
+jest.mock('config');
 
 describe('requestManager', () => {
-  const endPoint = 'https://sample-endpoint.com/api/';
+  const endPoint = 'sample/endpoint';
+
+  beforeEach(() => {
+    (config as jest.Mock).mockImplementation(() => ({
+      apiBaseUrl: 'http://sample.com',
+    }));
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('fetches successfully data from an API', async () => {
     const responseData = {
@@ -23,7 +36,7 @@ describe('requestManager', () => {
   });
 
   it('fetches the provided endPoint', async () => {
-    const requestOptions = { ...defaultOptions, method: 'POST', url: endPoint };
+    const requestOptions = { ...defaultOptions(), method: 'POST', url: endPoint };
 
     const requestSpy = jest.spyOn(axios, 'request').mockImplementation(() => Promise.resolve({}));
 
