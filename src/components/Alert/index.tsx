@@ -6,8 +6,8 @@ interface AlertProps {
   errors: string[];
   'data-test-id'?: string;
 }
-const Alert = ({ errors, ...htmlAttributes }: AlertProps): JSX.Element => (
-  <div role="alert" {...htmlAttributes}>
+const Alert = ({ errors, ...rest }: AlertProps): JSX.Element => (
+  <div role="alert" {...rest}>
     <div className="bg-black-raisin bg-opacity-60 rounded-xl px-4 py-4 flex flex-row">
       <AlertIcon className="mr-[19px]" />
       <div>
