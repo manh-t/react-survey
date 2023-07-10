@@ -111,7 +111,7 @@ describe('refreshToken', () => {
         tokenType: 'tokenType',
       }));
 
-      global.window = Object.create(window);
+      global.window ??= Object.create(window);
       const url = 'http://dummy.com';
       Object.defineProperty(window, 'location', {
         value: {
