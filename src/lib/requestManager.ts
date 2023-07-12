@@ -1,8 +1,37 @@
-import axios, { Method as HTTPMethod, ResponseType, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { Method as HTTPMethod, ResponseType, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
-export const defaultOptions: { responseType: ResponseType } = {
-  responseType: 'json',
+import { config } from 'config';
+import { JSONValue, keysToCamelCase } from 'helpers/json';
+import { refreshToken } from 'services/refreshToken';
+
+export const successResponseInterceptor = (response: AxiosResponse<unknown>): AxiosResponse<unknown> => {
+  const responseData = response.data as JSONValue;
+  const formattedData = keysToCamelCase(responseData);
+  response.data = formattedData;
+
+  return response;
 };
+
+export const errorInterceptor = async (error: AxiosError<unknown>): Promise<unknown> => {
+  if (error.response) {
+    if (error.response.status === 401) {
+      return refreshToken(error);
+    }
+    const errorData = error.response.data as JSONValue;
+    const formattedData = keysToCamelCase(errorData);
+    error.response.data = formattedData;
+  }
+
+  return Promise.reject(error);
+};
+
+export const defaultOptions = (): { responseType: ResponseType; baseURL: string; headers?: { [key: string]: string } } => ({
+  responseType: 'json',
+  baseURL: `${config().apiBaseUrl}/api/v1`,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
 /**
  * The main API access function that comes preconfigured with useful defaults.
@@ -22,13 +51,20 @@ const requestManager = (
   const requestParams: AxiosRequestConfig = {
     method,
     url: endpoint,
-    ...defaultOptions,
+    ...defaultOptions(),
     ...requestOptions,
   };
 
-  return axios.request(requestParams).then((response: AxiosResponse) => {
-    return response.data;
-  });
+  axios.interceptors.response.use(successResponseInterceptor, errorInterceptor);
+
+  return axios
+    .request(requestParams)
+    .then((response: AxiosResponse) => {
+      return response.data;
+    })
+    .catch((error: AxiosError) => {
+      throw error;
+    });
 };
 
 export default requestManager;

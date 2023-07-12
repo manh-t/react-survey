@@ -11,6 +11,7 @@ type TextInputProps = {
     required?: boolean;
     placeholder?: string;
     'data-test-id'?: string;
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
   };
   className?: string;
 };
@@ -34,6 +35,7 @@ const TextInput = ({ label, labelDataTestId, inputAttributes, className }: TextI
         {...inputAttributes}
         className={classNames(DEFAULT_CLASS_NAMES, className)}
         placeholder={inputAttributes.placeholder}
+        onChange={inputAttributes.onChange}
       />
     </div>
   );
