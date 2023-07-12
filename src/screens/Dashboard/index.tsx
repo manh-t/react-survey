@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
-import { getToken } from 'helpers/authentication';
+import { getTokens } from 'helpers/authentication';
 
 const DashBoardScreen = (): JSX.Element => {
   // TODO This is a test. Will remove it later.
   const [token, setToken] = useState('');
 
   useEffect(() => {
-    const userToken = getToken();
+    const userToken = getTokens();
     if (userToken) {
       setToken(userToken.accessToken);
     }

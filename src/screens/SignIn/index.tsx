@@ -32,7 +32,7 @@ const SignInScreen = (): JSX.Element => {
 
   const dispatch = useAppDispatch();
 
-  const handleSubmit = async (event: React.SyntheticEvent) => {
+  const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
 
     dispatch(signIn({ email, password }));
@@ -48,7 +48,6 @@ const SignInScreen = (): JSX.Element => {
     <div className="sign-in bg-cover min-h-screen flex flex-col justify-center items-center bg-sign-in">
       <img className="mx-auto" src={nimbleLogoWhite} alt="nimble logo" data-test-id={signInScreenTestIds.nimbleLogo} />
       <div className="mt-6 text-white opacity-60 text-regular tracking-survey-tight">Sign in to Nimble</div>
-
       <div className="mt-6">{errors && <Alert errors={errors} data-test-id={signInScreenTestIds.errorAlert} />}</div>
 
       <form className="w-80 mt-8" onSubmit={handleSubmit} data-test-id={signInScreenTestIds.signInForm}>

@@ -4,20 +4,19 @@ import { Resource } from 'types/resource';
 
 import { JSONObject } from './json';
 
-export type DeserializableResponse = AxiosResponse<Deserializable>;
+export type DeserializableResponse = AxiosResponse<Deserializer>;
 
-export interface Deserializable {
+export interface Deserializer {
   type: string;
   id: string;
   attributes: JSONObject;
 }
 
-export const deserialize = <T extends Resource>(data: Deserializable): T => {
-  const attributes = data.attributes;
+export const deserialize = <T extends Resource>(data: Deserializer): T => {
   const resource = {
     id: data.id,
     resourceType: data.type,
-    ...attributes,
+    ...data.attributes,
   };
 
   return resource as T;

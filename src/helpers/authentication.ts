@@ -2,7 +2,7 @@ import { SignIn } from 'types/signIn';
 
 export const authTokenKey = 'AuthToken';
 
-export const getToken = () => {
+export const getTokens = () => {
   const authToken = localStorage.getItem(authTokenKey);
   if (!authToken) {
     return;
@@ -13,10 +13,10 @@ export const getToken = () => {
   return token;
 };
 
-export const setToken = (token: SignIn) => {
+export const setTokens = (token: SignIn) => {
   localStorage.setItem(authTokenKey, JSON.stringify(token));
 };
 
-export const clearToken = () => {
+export const clearTokens = () => {
   localStorage.removeItem(authTokenKey);
 };

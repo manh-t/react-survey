@@ -1,6 +1,6 @@
 import { SignIn } from 'types/signIn';
 
-import { authTokenKey, clearToken, getToken, setToken } from './authentication';
+import { authTokenKey, clearTokens, getTokens, setTokens } from './authentication';
 
 describe('Authentication helper', () => {
   const mockStorage: { [key: string]: string | null } = {};
@@ -39,7 +39,7 @@ describe('Authentication helper', () => {
     });
 
     it('returns the tokens from local storage', () => {
-      const tokens = getToken();
+      const tokens = getTokens();
 
       expect(tokens?.accessToken).toBe(mockAccessToken);
       expect(tokens?.refreshToken).toBe(mockRefreshToken);
@@ -58,7 +58,7 @@ describe('Authentication helper', () => {
 
       const setItemSpy = jest.spyOn(window.Storage.prototype, 'setItem');
 
-      setToken(mockTokens);
+      setTokens(mockTokens);
 
       expect(setItemSpy).toHaveBeenCalledWith(authTokenKey, JSON.stringify(mockTokens));
     });
@@ -79,7 +79,7 @@ describe('Authentication helper', () => {
     it('clears the tokens from local storage', () => {
       const removeItemSpy = jest.spyOn(window.Storage.prototype, 'removeItem');
 
-      clearToken();
+      clearTokens();
 
       expect(removeItemSpy).toHaveBeenCalledWith(authTokenKey);
     });
