@@ -1,0 +1,15 @@
+import React from 'react';
+
+import { render, screen } from '@testing-library/react';
+
+import AppSlider, { appSliderDataTestIds } from '.';
+
+describe('AppSlider', () => {
+  it('renders AppSlider component', () => {
+    render(<AppSlider onValueChanged={jest.fn()} />);
+
+    const appSlider = screen.getByTestId(appSliderDataTestIds.base);
+
+    expect(appSlider).toBeVisible();
+  });
+});
