@@ -98,7 +98,7 @@ describe('SignInScreen', () => {
       expect(loadingDialog).toBeVisible();
     });
 
-    it('does NOT renders the loading dialog if loading is false', () => {
+    it('does NOT render the loading dialog if loading is false', () => {
       mockState.auth.loading = false;
       render(<TestComponent />);
 
@@ -111,7 +111,7 @@ describe('SignInScreen', () => {
       mockState.auth.success = true;
     });
 
-    it('navigate to the Dashboard screen', () => {
+    it('navigates to the Dashboard screen', () => {
       render(<TestComponent />);
 
       expect(mockUseNavigate).toHaveBeenCalledWith('/dashboard', { replace: true });
