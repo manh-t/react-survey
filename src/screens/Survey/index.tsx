@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { ReactComponent as ArrowBack } from 'assets/images/icons/arrow-back.svg';
@@ -7,6 +7,7 @@ import ElevatedButton from 'components/ElevatedButton';
 import LoadingDialog from 'components/LoadingDialog';
 import MainView from 'components/MainView';
 import { useAppDispatch, useAppSelector } from 'hooks';
+import { questionPath } from 'routes';
 import { getSurveyAsyncThunk } from 'store/reducers/Survey';
 
 export const surveyScreenTestIds = {
@@ -71,9 +72,11 @@ const SurveyScreen = (): JSX.Element => {
               {survey?.description}
             </p>
             <div className="pt-8">
-              <ElevatedButton isFullWidth type="submit" data-test-id={surveyScreenTestIds.startSurveyButton}>
-                Start Survey
-              </ElevatedButton>
+              <Link to={questionPath()}>
+                <ElevatedButton isFullWidth type="submit" data-test-id={surveyScreenTestIds.startSurveyButton}>
+                  Start Survey
+                </ElevatedButton>
+              </Link>
             </div>
           </div>
         </div>
