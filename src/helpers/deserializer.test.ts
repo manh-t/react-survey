@@ -22,8 +22,8 @@ describe('Deserializer helper', () => {
       const deserializedData = deserialize<TestType>(jsonData);
 
       expect(deserializedData.resourceType).toBe('TestType');
-      expect(deserializedData.name).toBe(jsonData.attributes.name);
-      expect(deserializedData.age).toBe(jsonData.attributes.age);
+      expect(deserializedData.name).toBe('Name');
+      expect(deserializedData.age).toBe(25);
     });
   });
 });

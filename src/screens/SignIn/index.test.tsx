@@ -88,21 +88,25 @@ describe('SignInScreen', () => {
     });
   });
 
-  describe('given the loading has data', () => {
-    it('renders the loading dialog if loading is true', () => {
-      mockState.auth.loading = true;
-      render(<TestComponent />);
+  describe('given the loading field has data', () => {
+    describe('given loading is true', () => {
+      it('renders the loading dialog', () => {
+        mockState.auth.loading = true;
+        render(<TestComponent />);
 
-      const loadingDialog = screen.getByTestId(signInScreenTestIds.loadingDialog);
+        const loadingDialog = screen.getByTestId(signInScreenTestIds.loadingDialog);
 
-      expect(loadingDialog).toBeVisible();
+        expect(loadingDialog).toBeVisible();
+      });
     });
 
-    it('does NOT render the loading dialog if loading is false', () => {
-      mockState.auth.loading = false;
-      render(<TestComponent />);
+    describe('given the loading is false', () => {
+      it('does NOT render the loading dialog', () => {
+        mockState.auth.loading = false;
+        render(<TestComponent />);
 
-      expect(screen.queryByTestId(signInScreenTestIds.loadingDialog)).not.toBeInTheDocument();
+        expect(screen.queryByTestId(signInScreenTestIds.loadingDialog)).not.toBeInTheDocument();
+      });
     });
   });
 
