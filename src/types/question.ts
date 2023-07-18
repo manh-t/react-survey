@@ -16,3 +16,26 @@ export interface Question extends Resource {
   coverBackgroundColor?: string;
   answers: Answer[];
 }
+
+export enum DisplayType {
+  Intro = 'intro',
+  Star = 'star',
+  Heart = 'heart',
+  Smiley = 'smiley',
+  Thumbs = 'thumbs',
+  Choice = 'choice',
+  Nps = 'nps',
+  Textarea = 'textarea',
+  Textfield = 'textfield',
+  Dropdown = 'dropdown',
+  Outro = 'outro',
+  Unknown = '',
+}
+
+export const getDisplayTypeEnum = (question: Question): DisplayType => {
+  try {
+    return (<never>DisplayType)[question.displayType ?? ''];
+  } catch (error) {
+    return DisplayType.Unknown;
+  }
+};
