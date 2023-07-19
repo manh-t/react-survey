@@ -1,10 +1,10 @@
 /* eslint camelcase: ["error", {allow: ["camel_case_key"]}] */
 import { getToken } from 'helpers/authentication';
-import requestManager from 'lib/requestManager';
+import requestManager from 'lib/request/v1/requestManager';
 
 import { authenticatedHeader, getAuth, postAuth } from '.';
 
-jest.mock('lib/requestManager');
+jest.mock('lib/request/v1/requestManager');
 jest.mock('helpers/authentication');
 
 describe('BaseAuthAdapter', () => {

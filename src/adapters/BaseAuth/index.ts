@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from 'axios';
 
 import { getToken } from 'helpers/authentication';
 import { JSONObject, keysToSnakeCase } from 'helpers/json';
-import requestManager from 'lib/requestManager';
+import requestManager from 'lib/request/v1/requestManager';
 
 export const authenticatedHeader = (): { Authorization: string } => ({
   Authorization: `${getToken()?.tokenType} ${getToken()?.accessToken}`,
