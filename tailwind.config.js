@@ -8,10 +8,14 @@ module.exports = {
       },
       colors: {
         'black-chinese': '#15151A',
+        'black-raisin': '#252525',
       },
       fontSize: {
+        'x-small': ['13px', '18px'],
         small: ['15px', '20px'],
         regular: ['17px', '22px'],
+        large: ['28px', '34px'],
+        'x-large': ['34px', '41px'],
       },
       backgroundImage: {
         'sign-in': "url('assets/images/illustrations/background-sign-in.png')",

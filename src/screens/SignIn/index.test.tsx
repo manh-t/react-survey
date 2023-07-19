@@ -2,11 +2,49 @@ import React from 'react';
 
 import { render, screen } from '@testing-library/react';
 
+import { useAppDispatch, useAppSelector } from 'hooks';
+import { AuthenticationState } from 'store/reducers/Authentication';
+import TestWrapper from 'tests/TestWrapper';
+
 import SignInScreen, { signInScreenTestIds } from '.';
 
+const mockUseNavigate = jest.fn();
+const mockDispatch = jest.fn();
+
+jest.mock('hooks');
+
+jest.mock('react-router-dom', () => ({
+  ...(jest.requireActual('react-router-dom') as jest.Mock),
+  useNavigate: () => mockUseNavigate,
+}));
+
 describe('SignInScreen', () => {
+  const TestComponent = (): JSX.Element => {
+    return (
+      <TestWrapper>
+        <SignInScreen />
+      </TestWrapper>
+    );
+  };
+
+  const mockState: { auth: AuthenticationState } = {
+    auth: {
+      loading: false,
+      success: false,
+    },
+  };
+
+  beforeEach(() => {
+    (useAppSelector as jest.Mock).mockImplementation((callback) => callback(mockState));
+    (useAppDispatch as jest.Mock).mockImplementation(() => mockDispatch);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('renders Sign In form and its components', () => {
-    render(<SignInScreen />);
+    render(<TestComponent />);
     const emailLabel = screen.getByTestId(signInScreenTestIds.emailLabel);
     const emailField = screen.getByTestId(signInScreenTestIds.emailField);
     const passwordLabel = screen.getByTestId(signInScreenTestIds.passwordLabel);
@@ -34,5 +72,53 @@ describe('SignInScreen', () => {
     expect(signInButton).toHaveTextContent('Sign in');
 
     expect(nimbleLogo).toBeVisible();
+  });
+
+  describe('given the errors field has data', () => {
+    beforeEach(() => {
+      mockState.auth.errors = ['error'];
+    });
+
+    it('renders the Alert', () => {
+      render(<TestComponent />);
+
+      const errorAlert = screen.getByTestId(signInScreenTestIds.errorAlert);
+
+      expect(errorAlert).toBeVisible();
+    });
+  });
+
+  describe('given the loading field has data', () => {
+    describe('given loading is true', () => {
+      it('renders the loading dialog', () => {
+        mockState.auth.loading = true;
+        render(<TestComponent />);
+
+        const loadingDialog = screen.getByTestId(signInScreenTestIds.loadingDialog);
+
+        expect(loadingDialog).toBeVisible();
+      });
+    });
+
+    describe('given the loading is false', () => {
+      it('does NOT render the loading dialog', () => {
+        mockState.auth.loading = false;
+        render(<TestComponent />);
+
+        expect(screen.queryByTestId(signInScreenTestIds.loadingDialog)).not.toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('given the success is true', () => {
+    beforeEach(() => {
+      mockState.auth.success = true;
+    });
+
+    it('navigates to the Dashboard screen', () => {
+      render(<TestComponent />);
+
+      expect(mockUseNavigate).toHaveBeenCalledWith('/dashboard', { replace: true });
+    });
   });
 });
