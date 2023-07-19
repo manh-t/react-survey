@@ -1,4 +1,4 @@
-import { SignIn } from 'types/signIn';
+import { Tokens } from 'types/tokens';
 
 export const authTokenKey = 'AuthToken';
 
@@ -8,12 +8,12 @@ export const getTokens = () => {
     return;
   }
 
-  const token = JSON.parse(authToken) as SignIn;
+  const token = JSON.parse(authToken) as Tokens;
 
   return token;
 };
 
-export const setTokens = (token: SignIn) => {
+export const setTokens = (token: Tokens) => {
   localStorage.setItem(authTokenKey, JSON.stringify(token));
 };
 

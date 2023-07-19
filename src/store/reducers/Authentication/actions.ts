@@ -4,20 +4,20 @@ import { signIn } from 'adapters/Authentication';
 import { setTokens } from 'helpers/authentication';
 import { DeserializableResponse, deserialize } from 'helpers/deserializer';
 import { JSONObject } from 'helpers/json';
-import { SignIn } from 'types/signIn';
+import { Tokens } from 'types/tokens';
 
 export interface SignInInput {
   email: string;
   password: string;
 }
 
-export const signInAsync: AsyncThunkPayloadCreator<SignIn, SignInInput, JSONObject> = async (input, { rejectWithValue }) => {
+export const signInAsync: AsyncThunkPayloadCreator<Tokens, SignInInput, JSONObject> = async (input, { rejectWithValue }) => {
   return signIn(input.email, input.password)
     .then((response: DeserializableResponse) => {
-      const signInType = deserialize<SignIn>(response.data);
+      const tokens = deserialize<Tokens>(response.data);
 
-      setTokens(signInType);
-      return signInType;
+      setTokens(tokens);
+      return tokens;
     })
     .catch((error) => {
       if (!error.response) {

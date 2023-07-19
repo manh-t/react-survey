@@ -1,4 +1,4 @@
-import { SignIn } from 'types/signIn';
+import { Tokens } from 'types/tokens';
 
 import { authTokenKey, clearTokens, getTokens, setTokens } from './authentication';
 
@@ -28,7 +28,7 @@ describe('Authentication helper', () => {
 
   describe('getToken', () => {
     beforeEach(() => {
-      const mockTokens: SignIn = {
+      const mockTokens: Tokens = {
         id: mockId,
         resourceType: mockResourceType,
         accessToken: mockAccessToken,
@@ -48,7 +48,7 @@ describe('Authentication helper', () => {
 
   describe('setToken', () => {
     it('sets the tokens to local storage', () => {
-      const mockTokens: SignIn = {
+      const mockTokens: Tokens = {
         id: mockId,
         resourceType: mockResourceType,
         accessToken: mockAccessToken,
@@ -66,7 +66,7 @@ describe('Authentication helper', () => {
 
   describe('clearToken', () => {
     beforeEach(() => {
-      const mockTokens: SignIn = {
+      const mockTokens: Tokens = {
         id: mockId,
         resourceType: mockResourceType,
         accessToken: mockAccessToken,

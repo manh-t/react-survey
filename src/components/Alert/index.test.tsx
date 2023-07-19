@@ -6,7 +6,7 @@ import Alert from '.';
 
 describe('Alert', () => {
   const errors = ['Error 1'];
-  const dataTestId = 'test-id__alert';
+  const dataTestId = 'alert';
 
   it('renders an alert and its component', () => {
     render(<Alert errors={errors} data-test-id={dataTestId} />);
