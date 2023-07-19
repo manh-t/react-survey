@@ -1,6 +1,6 @@
-import { Tokens } from 'types/tokens';
+import { Token } from 'types/token';
 
-import { authTokenKey, clearTokens, getTokens, setTokens } from './authentication';
+import { authTokenKey, clearToken, getToken, setToken } from './authentication';
 
 describe('Authentication helper', () => {
   const mockStorage: { [key: string]: string | null } = {};
@@ -28,27 +28,27 @@ describe('Authentication helper', () => {
 
   describe('getToken', () => {
     beforeEach(() => {
-      const mockTokens: Tokens = {
+      const mockToken: Token = {
         id: mockId,
         resourceType: mockResourceType,
         accessToken: mockAccessToken,
         refreshToken: mockRefreshToken,
         tokenType: mockTokenType,
       };
-      mockStorage[authTokenKey] = JSON.stringify(mockTokens);
+      mockStorage[authTokenKey] = JSON.stringify(mockToken);
     });
 
-    it('returns the tokens from local storage', () => {
-      const tokens = getTokens();
+    it('returns the token from local storage', () => {
+      const token = getToken();
 
-      expect(tokens?.accessToken).toBe(mockAccessToken);
-      expect(tokens?.refreshToken).toBe(mockRefreshToken);
+      expect(token?.accessToken).toBe(mockAccessToken);
+      expect(token?.refreshToken).toBe(mockRefreshToken);
     });
   });
 
   describe('setToken', () => {
-    it('sets the tokens to local storage', () => {
-      const mockTokens: Tokens = {
+    it('sets the token to local storage', () => {
+      const mockToken: Token = {
         id: mockId,
         resourceType: mockResourceType,
         accessToken: mockAccessToken,
@@ -58,28 +58,28 @@ describe('Authentication helper', () => {
 
       const setItemSpy = jest.spyOn(window.Storage.prototype, 'setItem');
 
-      setTokens(mockTokens);
+      setToken(mockToken);
 
-      expect(setItemSpy).toHaveBeenCalledWith(authTokenKey, JSON.stringify(mockTokens));
+      expect(setItemSpy).toHaveBeenCalledWith(authTokenKey, JSON.stringify(mockToken));
     });
   });
 
   describe('clearToken', () => {
     beforeEach(() => {
-      const mockTokens: Tokens = {
+      const mockToken: Token = {
         id: mockId,
         resourceType: mockResourceType,
         accessToken: mockAccessToken,
         refreshToken: mockRefreshToken,
         tokenType: mockTokenType,
       };
-      mockStorage[authTokenKey] = JSON.stringify(mockTokens);
+      mockStorage[authTokenKey] = JSON.stringify(mockToken);
     });
 
-    it('clears the tokens from local storage', () => {
+    it('clears the token from local storage', () => {
       const removeItemSpy = jest.spyOn(window.Storage.prototype, 'removeItem');
 
-      clearTokens();
+      clearToken();
 
       expect(removeItemSpy).toHaveBeenCalledWith(authTokenKey);
     });

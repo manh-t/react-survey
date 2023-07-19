@@ -1,22 +1,22 @@
-import { Tokens } from 'types/tokens';
+import { Token } from 'types/token';
 
 export const authTokenKey = 'AuthToken';
 
-export const getTokens = () => {
+export const getToken = () => {
   const authToken = localStorage.getItem(authTokenKey);
   if (!authToken) {
     return;
   }
 
-  const token = JSON.parse(authToken) as Tokens;
+  const token = JSON.parse(authToken) as Token;
 
   return token;
 };
 
-export const setTokens = (token: Tokens) => {
+export const setToken = (token: Token) => {
   localStorage.setItem(authTokenKey, JSON.stringify(token));
 };
 
-export const clearTokens = () => {
+export const clearToken = () => {
   localStorage.removeItem(authTokenKey);
 };

@@ -1,23 +1,23 @@
 import { AsyncThunkPayloadCreator } from '@reduxjs/toolkit';
 
 import { signIn } from 'adapters/Authentication';
-import { setTokens } from 'helpers/authentication';
+import { setToken } from 'helpers/authentication';
 import { DeserializableResponse, deserialize } from 'helpers/deserializer';
 import { JSONObject } from 'helpers/json';
-import { Tokens } from 'types/tokens';
+import { Token } from 'types/token';
 
 export interface SignInInput {
   email: string;
   password: string;
 }
 
-export const signInAsync: AsyncThunkPayloadCreator<Tokens, SignInInput, JSONObject> = async (input, { rejectWithValue }) => {
+export const signInAsync: AsyncThunkPayloadCreator<Token, SignInInput, JSONObject> = async (input, { rejectWithValue }) => {
   return signIn(input.email, input.password)
     .then((response: DeserializableResponse) => {
-      const tokens = deserialize<Tokens>(response.data);
+      const token = deserialize<Token>(response.data);
 
-      setTokens(tokens);
-      return tokens;
+      setToken(token);
+      return token;
     })
     .catch((error) => {
       if (!error.response) {
