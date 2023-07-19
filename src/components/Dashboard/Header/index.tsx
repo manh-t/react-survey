@@ -11,7 +11,7 @@ interface DashboardHeaderProps {
 }
 const DashboardHeader = ({ dateTime, daysAgo, profileUrl, children, ...attributes }: DashboardHeaderProps): JSX.Element => {
   return (
-    <div className="flex flex-col min-h-screen" {...attributes}>
+    <header className="flex flex-col min-h-screen" {...attributes}>
       <div className="flex flex-row justify-between pt-8">
         <NimbleLogoWhite />
         <img className="w-[36px] h-[36px] rounded-full" src={profileUrl} alt="user avatar" />
@@ -29,7 +29,7 @@ const DashboardHeader = ({ dateTime, daysAgo, profileUrl, children, ...attribute
         <div className="flex-1">{children}</div>
         <div className="w-1/5"></div>
       </div>
-    </div>
+    </header>
   );
 };
 
