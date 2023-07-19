@@ -4,7 +4,7 @@ interface DashboardEmptyProps {
   'data-test-id'?: string;
 }
 
-const DashboardEmpty = ({ ...attributes }: DashboardEmptyProps): JSX.Element => {
+const DashboardEmpty = (attributes: DashboardEmptyProps): JSX.Element => {
   return (
     <div className="flex flex-col items-center" {...attributes}>
       <p className="text-[64px]">😎</p>
