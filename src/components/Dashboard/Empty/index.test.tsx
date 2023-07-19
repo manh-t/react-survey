@@ -5,8 +5,8 @@ import { render, screen } from '@testing-library/react';
 import DashboardEmpty from '.';
 
 describe('DashboardEmpty', () => {
-  const dataTestId = 'dashboard-empty';
   it('renders DashboardEmpty and its components', () => {
+    const dataTestId = 'dashboard-empty';
     render(<DashboardEmpty data-test-id={dataTestId} />);
 
     const dashboardEmpty = screen.getByTestId(dataTestId);
