@@ -12,6 +12,22 @@ export const testTypeFabricator = Fabricator({
   },
 });
 
+// Requests
+const answerRequestFabricator = Fabricator({
+  id: () => sequence('answerId').toString(),
+  answer: () => faker.string.sample(),
+});
+
+const questionRequestFabricator = Fabricator({
+  id: () => sequence('questionId').toString(),
+  answers: () => answerRequestFabricator.times(2),
+});
+
+export const surveySubmitRequestFabricator = Fabricator({
+  surveyId: () => sequence('surveyId').toString(),
+  questions: () => questionRequestFabricator.times(10),
+});
+
 // Responses
 const questionId = faker.string.uuid();
 
