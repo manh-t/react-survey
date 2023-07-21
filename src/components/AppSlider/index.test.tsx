@@ -6,7 +6,11 @@ import AppSlider, { appSliderDataTestIds } from '.';
 
 describe('AppSlider', () => {
   it('renders AppSlider component', () => {
-    render(<AppSlider onValueChanged={jest.fn()} />);
+    const onValueChanged = () => {
+      // Do nothing
+    };
+
+    render(<AppSlider onValueChanged={onValueChanged} />);
 
     const appSlider = screen.getByTestId(appSliderDataTestIds.base);
     const slider = screen.getByRole('slider');

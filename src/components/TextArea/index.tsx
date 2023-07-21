@@ -3,6 +3,7 @@ import React from 'react';
 import _get from 'lodash/get';
 
 import { Answer } from 'types/answer';
+import { AnswerRequest } from 'types/request/surveySubmitRequest';
 
 export const textAreaDataTestIds = {
   base: 'text-area__base',
@@ -10,7 +11,7 @@ export const textAreaDataTestIds = {
 
 type TextAreaProps = {
   items: Answer[];
-  onValueChange?: (id: string, value: string) => void;
+  onValueChange: (answerRequest: AnswerRequest) => void;
 };
 
 const TextArea = ({ items, onValueChange }: TextAreaProps): JSX.Element => {
@@ -19,8 +20,11 @@ const TextArea = ({ items, onValueChange }: TextAreaProps): JSX.Element => {
   const handleOnChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     event.preventDefault();
 
-    const answerId = currentAnswer?.id ?? '';
-    onValueChange?.(answerId, event.target.value);
+    const answerRequest = {
+      id: currentAnswer?.id ?? '',
+      answer: event.target.value,
+    };
+    onValueChange(answerRequest);
   };
 
   return (

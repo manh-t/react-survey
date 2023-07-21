@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
 
@@ -33,6 +33,10 @@ const Nps = ({ items, onValuesChanged }: NpsProps): JSX.Element => {
     setCurrentScore(index);
     onValuesChanged(selectedValues);
   };
+
+  useEffect(() => {
+    setCurrentScore(Math.round(items.length / 2));
+  }, [items]);
 
   return (
     <div className="flex justify-center" data-test-id={npsDataTestIds.base}>

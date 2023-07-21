@@ -25,6 +25,7 @@ export enum DisplayType {
   Thumbs = 'thumbs',
   Choice = 'choice',
   Nps = 'nps',
+  Slider = 'slider',
   Textarea = 'textarea',
   Textfield = 'textfield',
   Dropdown = 'dropdown',

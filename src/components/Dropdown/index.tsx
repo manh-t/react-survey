@@ -12,6 +12,7 @@ interface DropdownProps {
   items: Answer[];
   onValueChanged: (value: Answer) => void;
 }
+
 const Dropdown = ({ questionId, items, onValueChanged }: DropdownProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(items[0].text);

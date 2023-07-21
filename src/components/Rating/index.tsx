@@ -8,13 +8,12 @@ export const ratingDataTestIds = {
 };
 
 interface RatingProps {
-  questionId: string;
   items: Answer[];
   displayType: DisplayType;
   onValueChanged: (answer: Answer) => void;
 }
 
-const Rating = ({ questionId, items, displayType, onValueChanged }: RatingProps): JSX.Element => {
+const Rating = ({ items, displayType, onValueChanged }: RatingProps): JSX.Element => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleOnSelectRating = (index: number, answer: Answer) => {
@@ -49,7 +48,7 @@ const Rating = ({ questionId, items, displayType, onValueChanged }: RatingProps)
 
   useEffect(() => {
     setSelectedIndex(0);
-  }, [questionId]);
+  }, []);
 
   return (
     <div
