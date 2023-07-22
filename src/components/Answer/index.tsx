@@ -23,31 +23,63 @@ const Answer = ({ question, ...rest }: AnswerProps): JSX.Element => {
     case DisplayType.Star:
       return (
         <Rating
-          questionId={question.id}
           items={question.answers}
           displayType={displayTypeEnum}
-          data-test-id={rest['data-test-id']}
+          onValueChanged={() => {
+            // TODO
+          }}
         />
       );
     case DisplayType.Choice:
       return (
         <MultiChoice
-          questionId={question.id}
           items={question.answers}
           isPickOne={question?.pick === 'one'}
-          data-test-id={rest['data-test-id']}
+          onValuesChanged={() => {
+            // TODO
+          }}
         />
       );
     case DisplayType.Nps:
-      return <Nps questionId={question.id} items={question.answers} data-test-id={rest['data-test-id']} />;
+      return (
+        <Nps
+          items={question.answers}
+          onValuesChanged={() => {
+            // TODO
+          }}
+        />
+      );
     case DisplayType.Textarea:
-      return <TextArea questionId={question.id} items={question.answers} data-test-id={rest['data-test-id']} />;
+      return (
+        <TextArea
+          items={question.answers}
+          onValueChange={() => {
+            // TODO
+          }}
+        />
+      );
     case DisplayType.Textfield:
-      return <MultiInputs questionId={question.id} items={question.answers} data-test-id={rest['data-test-id']} />;
+      return <MultiInputs questionId={question.id} items={question.answers} />;
     case DisplayType.Dropdown:
-      return <Dropdown questionId={question.id} items={question.answers} data-test-id={rest['data-test-id']} />;
+      return (
+        <Dropdown
+          questionId={question.id}
+          items={question.answers}
+          onValueChanged={() => {
+            // TODO
+          }}
+        />
+      );
     case DisplayType.Slider:
-      return <AppSlider questionId={question.id} items={question.answers} data-test-id={rest['data-test-id']} />;
+      return (
+        <AppSlider
+          min={0}
+          max={question.answers.length}
+          onValueChanged={() => {
+            // TODO
+          }}
+        />
+      );
     case DisplayType.Unknown:
     case DisplayType.Intro:
     case DisplayType.Outro:

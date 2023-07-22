@@ -1,3 +1,5 @@
+import capitalize from 'lodash/capitalize';
+
 import { Resource } from 'types/resource';
 
 import { Answer } from './answer';
@@ -34,5 +36,5 @@ export enum DisplayType {
 }
 
 export const getDisplayTypeEnum = (question: Question): DisplayType => {
-  return question.displayType ? (<never>DisplayType)[question.displayType] : DisplayType.Unknown;
+  return DisplayType[capitalize(question.displayType) as keyof typeof DisplayType] ?? DisplayType.Unknown;
 };

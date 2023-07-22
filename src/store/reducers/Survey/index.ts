@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { SurveySubmitRequest } from 'types/request/surveySubmitRequest';
 import { Survey } from 'types/survey';
 
-import { getSurveyThunkCreator, submitSurveyThunkCreator } from './action';
+import { getSurveyThunkCreator } from './action';
 
 export interface SurveyState {
   survey?: Survey;
@@ -18,8 +18,6 @@ export const initialState: SurveyState = {
 };
 
 export const getSurveyAsyncThunk = createAsyncThunk('survey/getSurvey', getSurveyThunkCreator);
-
-export const submitSurveyAsyncThunk = createAsyncThunk('survey/submitSurvey', submitSurveyThunkCreator);
 
 export const surveySlice = createSlice({
   name: 'survey',
