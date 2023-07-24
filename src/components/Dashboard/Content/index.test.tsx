@@ -14,6 +14,7 @@ describe('DashboardContent', () => {
       description: 'We would like to know how you feel about our work from home.',
     },
   ];
+
   it('renders DashboardContent and its components', () => {
     render(
       <DashboardContent
