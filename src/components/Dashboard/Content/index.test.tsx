@@ -2,14 +2,13 @@ import React from 'react';
 
 import { render, screen } from '@testing-library/react';
 
-import DashboardContent from '.';
+import DashboardContent, { dashboardDataTestIds } from '.';
 
 describe('DashboardContent', () => {
-  const dataTestId = 'dashboard-content';
   it('renders DashboardContent and its components', () => {
-    render(<DashboardContent data-test-id={dataTestId} />);
+    render(<DashboardContent />);
 
-    const dashboardContent = screen.getByTestId(dataTestId);
+    const dashboardContent = screen.getByTestId(dashboardDataTestIds.content);
 
     expect(dashboardContent).toBeVisible();
   });
