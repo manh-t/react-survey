@@ -4,6 +4,7 @@ import { act, render, screen } from '@testing-library/react';
 
 import { answerDataTestIds } from 'components/Answer';
 import { useAppDispatch, useAppSelector } from 'hooks';
+import { paths } from 'routes';
 import { SurveyState } from 'store/reducers/Survey';
 import { questionFabricator, surveyFabricator } from 'tests/fabricator';
 import TestWrapper from 'tests/TestWrapper';
@@ -35,6 +36,8 @@ describe('QuestionScreen', () => {
       survey: surveys,
       isLoading: true,
       isError: false,
+      questionRequests: [],
+      isSubmitSuccess: false,
     },
   };
 
@@ -83,7 +86,7 @@ describe('QuestionScreen', () => {
   });
 
   describe('given the close button is clicked', () => {
-    it('navigates back to the previous screen', () => {
+    it('navigates back to the Home screen', () => {
       render(<TestComponent />);
 
       const closeButton = screen.getByTestId(questionScreenTestIds.closeButton);
@@ -92,7 +95,35 @@ describe('QuestionScreen', () => {
         closeButton.click();
       });
 
-      expect(mockUseNavigate).toHaveBeenCalledWith(-1);
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'survey/resetQuestions' });
+      expect(mockUseNavigate).toHaveBeenCalledWith(paths.root, { replace: true });
+    });
+  });
+
+  describe('given the submit button is clicked', () => {
+    it('submits the survey', () => {
+      render(<TestComponent />);
+
+      const nextButton = screen.getByTestId(questionScreenTestIds.nextButton);
+
+      act(() => {
+        nextButton.click();
+      });
+
+      act(() => {
+        nextButton.click();
+      });
+
+      const submitButton = screen.getByTestId(questionScreenTestIds.submitButton);
+
+      act(() => {
+        submitButton.click();
+      });
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'survey/fillAnswers',
+        payload: { id: 'question 2', answers: [{ id: 'answer 1' }] },
+      });
     });
   });
 });

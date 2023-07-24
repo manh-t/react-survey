@@ -1,5 +1,7 @@
 import React from 'react';
 
+import isEmpty from 'lodash/isEmpty';
+
 import AppSlider from 'components/AppSlider';
 import Dropdown from 'components/Dropdown';
 import MultiChoice from 'components/MultiChoice';
@@ -7,9 +9,9 @@ import MultiInputs from 'components/MultiInputs';
 import Nps from 'components/Nps';
 import Rating from 'components/Rating';
 import TextArea from 'components/TextArea';
-import { Answer as AnswerType } from 'types/answer';
+import { Answer as AnswerType, instanceOfAnswer } from 'types/answer';
 import { DisplayType, Question, getDisplayTypeEnum } from 'types/question';
-import { AnswerRequest } from 'types/request/surveySubmitRequest';
+import { AnswerRequest, instanceOfAnswerRequest } from 'types/request/surveySubmitRequest';
 
 export const answerDataTestIds = {
   base: 'answer__base',
@@ -17,18 +19,40 @@ export const answerDataTestIds = {
 
 interface AnswerProps {
   question: Question;
+  onAnswerChanged: (answers: AnswerRequest[]) => void;
 }
-const Answer = ({ question }: AnswerProps): JSX.Element => {
+
+const Answer = ({ question, onAnswerChanged }: AnswerProps): JSX.Element => {
   const displayTypeEnum = getDisplayTypeEnum(question);
 
   const onValueChanged = (answer: number | AnswerType | AnswerRequest) => {
-    // TODO
-    console.log(answer);
+    if (typeof answer === 'number') {
+      console.log(`number ${answer}`);
+      onAnswerChanged([{ id: question.answers[answer - 1].id, answer: '' }]);
+    } else if (instanceOfAnswer(answer)) {
+      console.log(`answer ${answer}`);
+      onAnswerChanged([{ id: answer.id, answer: '' }]);
+    } else if (instanceOfAnswerRequest(answer)) {
+      console.log(`answer request ${answer}`);
+      onAnswerChanged([answer]);
+    }
   };
 
   const onValuesChanged = (answers: AnswerType[] | AnswerRequest[]) => {
-    // TODO
-    console.log(answers);
+    if (!isEmpty(answers)) {
+      if (instanceOfAnswer(answers[0])) {
+        console.log(`answers ${answers}`);
+        const answerRequests: AnswerRequest[] = answers.map((answer) => ({
+          id: answer.id,
+          answer: '',
+        }));
+
+        onAnswerChanged(answerRequests);
+      } else if (instanceOfAnswerRequest(answers[0])) {
+        console.log(`answerRequests ${answers}`);
+        onAnswerChanged(answers as AnswerRequest[]);
+      }
+    }
   };
 
   const answerComponent = (): JSX.Element => {
