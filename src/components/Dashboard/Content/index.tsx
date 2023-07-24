@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 import { ReactComponent as ArrowRight } from 'assets/images/icons/arrow-right.svg';
 import Shimmer from 'components/Shimmer';
+import { getHighResolutionImage } from 'helpers/image';
 import { Survey } from 'types/survey';
 
 export const dashboardDataTestIds = {
@@ -48,7 +49,7 @@ const DashboardContent = ({
   ) : (
     <div className="flex flex-col h-full" data-test-id={dashboardDataTestIds.content}>
       <div
-        style={{ backgroundImage: `url(${surveys[currentPosition].coverImageUrl})` }}
+        style={{ backgroundImage: `url(${getHighResolutionImage(surveys[currentPosition].coverImageUrl)})` }}
         className={`w-full h-[302px] rounded-[12px] bg-cover duration-500 ease-in-out`}
       ></div>
       <div className="flex flex-row justify-between mt-[38px]">
