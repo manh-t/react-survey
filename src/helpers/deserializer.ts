@@ -6,7 +6,7 @@ import { JSONObject } from './json';
 
 export type DeserializableResponse = AxiosResponse<Deserializer>;
 
-export type DeserializableArrayResponse = AxiosResponse<Deserializer[]>;
+export type DeserializableListResponse = AxiosResponse<Deserializer[]>;
 
 export interface Deserializer {
   type: string;
