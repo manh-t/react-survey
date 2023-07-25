@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { ReactComponent as ArrowRight } from 'assets/images/icons/arrow-right.svg';
 import { ReactComponent as CloseButton } from 'assets/images/icons/close-btn.svg';
 import Answer from 'components/Answer';
+import ConfirmDialog from 'components/Dialog/Confirm';
 import ElevatedButton from 'components/ElevatedButton';
 import LoadingDialog from 'components/LoadingDialog';
 import MainView from 'components/MainView';
@@ -29,6 +30,8 @@ const QuestionScreen = (): JSX.Element => {
 
   const [currentQuestion, setCurrentQuestion] = useState(survey?.questions?.at(0));
   const [questionIndex, setQuestionIndex] = useState(0);
+
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
 
   const handleAnswerChanged = (answers: AnswerRequest[]) => {
     dispatch(
@@ -72,6 +75,10 @@ const QuestionScreen = (): JSX.Element => {
   };
 
   const handleOnClose = () => {
+    setIsConfirmDialogOpen(true);
+  };
+
+  const handleOnConfirm = () => {
     dispatch(surveyAction.resetState());
     navigate(paths.root, { replace: true });
   };
@@ -93,6 +100,14 @@ const QuestionScreen = (): JSX.Element => {
   return (
     <div>
       <ToastContainer />
+      <ConfirmDialog
+        title="Warning!"
+        open={isConfirmDialogOpen}
+        onClose={() => setIsConfirmDialogOpen(false)}
+        onConfirm={handleOnConfirm}
+      >
+        Are you sure you want to quit the survey?
+      </ConfirmDialog>
       <MainView backgroundUrl={currentQuestion?.coverImageUrl}>
         <div className="flex flex-col h-full">
           <button
