@@ -11,13 +11,7 @@ describe('DashboardHeader', () => {
     const daysAgo = 'Today';
     const profileUrl = 'test url';
     render(
-      <DashboardHeader
-        dateTime={dateTime}
-        daysAgo={daysAgo}
-        profileUrl={profileUrl}
-        data-test-id={dataTestId}
-        shouldShowShimmer={false}
-      >
+      <DashboardHeader dateTime={dateTime} daysAgo={daysAgo} profileUrl={profileUrl} data-test-id={dataTestId}>
         Dashboard Header
       </DashboardHeader>
     );
@@ -38,7 +32,7 @@ describe('DashboardHeader', () => {
     const daysAgo = 'Today';
     const profileUrl = 'test url';
     render(
-      <DashboardHeader dateTime={dateTime} daysAgo={daysAgo} profileUrl={profileUrl} data-test-id={dataTestId}>
+      <DashboardHeader dateTime={dateTime} daysAgo={daysAgo} profileUrl={profileUrl} data-test-id={dataTestId} shouldShowShimmer>
         Dashboard Header
       </DashboardHeader>
     );
