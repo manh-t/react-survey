@@ -9,7 +9,7 @@ describe('DashboardContent', () => {
     {
       id: '1',
       resourceType: 'survey',
-      imageUrl: 'https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_',
+      coverImageUrl: 'https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_',
       title: 'Working from home Check-In',
       description: 'We would like to know how you feel about our work from home.',
     },

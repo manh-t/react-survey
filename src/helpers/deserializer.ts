@@ -6,6 +6,8 @@ import { JSONObject } from './json';
 
 export type DeserializableResponse = AxiosResponse<Deserializer>;
 
+export type DeserializableListResponse = AxiosResponse<Deserializer[]>;
+
 export interface Deserializer {
   type: string;
   id: string;
@@ -20,4 +22,8 @@ export const deserialize = <T extends Resource>(data: Deserializer): T => {
   };
 
   return resource as T;
+};
+
+export const deserializeList = <T extends Resource>(data: Deserializer[]): T[] => {
+  return data.map((item) => deserialize<T>(item));
 };

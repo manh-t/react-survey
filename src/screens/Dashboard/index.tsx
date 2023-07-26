@@ -12,7 +12,7 @@ const DashBoardScreen = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   return (
-    <BackgroundImage backgroundUrl={surveys[currentPosition].imageUrl}>
+    <BackgroundImage backgroundUrl={surveys[currentPosition].coverImageUrl}>
       <DashboardHeader dateTime="Monday, JUNE 15" daysAgo="Today" profileUrl="https://i.pravatar.cc/150?img=3">
         <div className="pt-36 h-full">
           <DashboardContent
