@@ -21,23 +21,23 @@ export const initialState: AuthenticationState = {
   token: token,
 };
 
-export const signInAsyncThunk = createAsyncThunk('auth/signIn', signInThunkCreator);
+export const signIn = createAsyncThunk('auth/signIn', signInThunkCreator);
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(signInAsyncThunk.pending, (state) => {
+    builder.addCase(signIn.pending, (state) => {
       state.errors = undefined;
       state.loading = true;
     });
-    builder.addCase(signInAsyncThunk.fulfilled, (state, action) => {
+    builder.addCase(signIn.fulfilled, (state, action) => {
       state.loading = false;
       state.success = true;
       state.token = action.payload;
     });
-    builder.addCase(signInAsyncThunk.rejected, (state, action) => {
+    builder.addCase(signIn.rejected, (state, action) => {
       state.loading = false;
       state.errors = (action.payload as ErrorResponse).data.errors.map((error) => error.detail);
     });

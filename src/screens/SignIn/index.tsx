@@ -8,7 +8,7 @@ import LoadingDialog from 'components/LoadingDialog';
 import TextInput from 'components/TextInput';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { paths } from 'routes';
-import { signInAsyncThunk } from 'store/reducers/Authentication';
+import { signIn } from 'store/reducers/Authentication';
 
 export const signInScreenTestIds = {
   nimbleLogo: 'sign-in__nimble-logo',
@@ -35,7 +35,7 @@ const SignInScreen = (): JSX.Element => {
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
 
-    dispatch(signInAsyncThunk({ email, password }));
+    dispatch(signIn({ email, password }));
   };
 
   useEffect(() => {

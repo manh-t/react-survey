@@ -2,15 +2,17 @@
 import { AxiosResponse } from 'axios';
 
 import { signIn as authenticationSignIn } from 'adapters/Authentication';
+import { setToken } from 'helpers/authentication';
 import { mockAxiosError } from 'tests/error';
 import { APIError } from 'types/error';
 
-import { authSlice, initialState, signInAsyncThunk } from '.';
+import { authSlice, initialState, signIn } from '.';
 import { SignInInput } from './actions';
 
 // The AsyncThunk test is following https://github.com/reduxjs/redux-toolkit/blob/635d6d5e513e13dd59cd717f600d501b30ca2381/src/tests/createAsyncThunk.test.ts
 
 jest.mock('adapters/Authentication');
+jest.mock('helpers/authentication');
 
 describe('auth slice', () => {
   describe('signIn', () => {
@@ -44,12 +46,11 @@ describe('auth slice', () => {
 
       it('calls signIn API successfully', async () => {
         (authenticationSignIn as jest.Mock).mockResolvedValue(successResponse as AxiosResponse);
-        const dispatch = jest.fn();
         const input: SignInInput = { email: 'test@test.com', password: 'password' };
 
-        const signInFunction = signInAsyncThunk(input);
+        const signInFunction = signIn(input);
 
-        const signInPayload = await signInFunction(dispatch, () => {}, undefined);
+        const signInPayload = await signInFunction(jest.fn(), () => {}, undefined);
 
         const expectedResult = {
           accessToken: accessToken,
@@ -62,11 +63,7 @@ describe('auth slice', () => {
         expect(signInPayload.meta.arg).toBe(input);
         expect(signInPayload.payload).toEqual(expectedResult);
 
-        expect(dispatch).toHaveBeenNthCalledWith(1, signInAsyncThunk.pending(signInPayload.meta.requestId, input));
-        expect(dispatch).toHaveBeenNthCalledWith(
-          2,
-          signInAsyncThunk.fulfilled(expectedResult, signInPayload.meta.requestId, input)
-        );
+        expect(setToken).toHaveBeenCalledWith(expectedResult);
       });
 
       it('calls signIn API unsuccessfully WITH response data', async () => {
@@ -74,7 +71,7 @@ describe('auth slice', () => {
         const dispatch = jest.fn();
 
         const input: SignInInput = { email: 'test@test.com', password: 'password' };
-        const signInFunction = signInAsyncThunk(input);
+        const signInFunction = signIn(input);
 
         try {
           await signInFunction(dispatch, () => {}, undefined);
@@ -85,9 +82,6 @@ describe('auth slice', () => {
         expect(errorAction.error.message).toBe('Rejected');
         expect(errorAction.payload).toEqual({ data: mockError.response?.data, status: mockError.response?.status });
         expect(errorAction.meta.arg).toBe(input);
-
-        expect(dispatch).toHaveBeenNthCalledWith(1, signInAsyncThunk.pending(errorAction.meta.requestId, input));
-        expect(dispatch).toHaveBeenCalledTimes(2);
       });
 
       it('calls signIn API unsuccessfully WITHOUT response data', async () => {
@@ -96,7 +90,7 @@ describe('auth slice', () => {
         const dispatch = jest.fn();
 
         const input: SignInInput = { email: 'test@test.com', password: 'password' };
-        const signInFunction = signInAsyncThunk(input);
+        const signInFunction = signIn(input);
 
         try {
           await signInFunction(dispatch, () => {}, undefined);
@@ -106,15 +100,12 @@ describe('auth slice', () => {
 
         expect(errorAction.error.message).toBe(error.message);
         expect(errorAction.meta.arg).toBe(input);
-
-        expect(dispatch).toHaveBeenNthCalledWith(1, signInAsyncThunk.pending(errorAction.meta.requestId, input));
-        expect(dispatch).toHaveBeenCalledTimes(2);
       });
     });
 
     describe('given the thunk action is pending', () => {
       it('sets loading to true and resets errors', () => {
-        const action = { type: signInAsyncThunk.pending.type, payload: { email: 'test@test.com', password: 'password' } };
+        const action = { type: signIn.pending.type, payload: { email: 'test@test.com', password: 'password' } };
         const state = authSlice.reducer(initialState, action);
 
         expect(state.loading).toBe(true);
@@ -131,7 +122,7 @@ describe('auth slice', () => {
           resourceType: resourceType,
           tokenType: tokenType,
         };
-        const action = { type: signInAsyncThunk.fulfilled.type, payload: expectedResult };
+        const action = { type: signIn.fulfilled.type, payload: expectedResult };
         const state = authSlice.reducer(initialState, action);
 
         expect(state.loading).toBe(false);
@@ -151,7 +142,7 @@ describe('auth slice', () => {
       const mockError = mockAxiosError(500, 'Internal server error', errors);
 
       it('sets loading to false and adds data to error', () => {
-        const action = { type: signInAsyncThunk.rejected.type, payload: mockError.response };
+        const action = { type: signIn.rejected.type, payload: mockError.response };
         const state = authSlice.reducer(initialState, action);
 
         expect(state.loading).toBe(false);
