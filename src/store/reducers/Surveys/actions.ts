@@ -17,7 +17,7 @@ export const surveysReducers = {
   },
 };
 
-export const getSurveysThunkCreator: AsyncThunkPayloadCreator<Survey[], void, JSONObject> = async () => {
+export const getSurveysThunkCreator: AsyncThunkPayloadCreator<Survey[], void, JSONObject> = () => {
   return getSurveys().then((response: DeserializableListResponse) => {
     const surveys = deserializeList<Survey>(response.data);
 

@@ -16,18 +16,18 @@ export const initialState: SurveysState = {
   isInitialLoading: true,
 };
 
-export const getSurveysAsyncThunk = createAsyncThunk('surveys/getSurveys', getSurveysThunkCreator);
+export const getSurveys = createAsyncThunk('surveys/getSurveys', getSurveysThunkCreator);
 
 export const surveysSlice = createSlice({
   name: 'surveys',
   initialState,
   reducers: surveysReducers,
   extraReducers: (builder) => {
-    builder.addCase(getSurveysAsyncThunk.fulfilled, (state, action) => {
+    builder.addCase(getSurveys.fulfilled, (state, action) => {
       state.isInitialLoading = false;
       state.surveys = action.payload;
     });
-    builder.addCase(getSurveysAsyncThunk.rejected, (state) => {
+    builder.addCase(getSurveys.rejected, (state) => {
       state.isInitialLoading = false;
     });
   },

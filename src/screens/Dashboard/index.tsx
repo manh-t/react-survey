@@ -6,8 +6,8 @@ import DashboardEmpty from 'components/Dashboard/Empty';
 import DashboardHeader from 'components/Dashboard/Header';
 import { getDaysAgoFromISODate, getdddMMMDDDateFromISODate } from 'helpers/datetime';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { getSurveysAsyncThunk, surveysAction } from 'store/reducers/Surveys';
-import { getUserAsyncThunk } from 'store/reducers/User';
+import { getSurveys, surveysAction } from 'store/reducers/Surveys';
+import { getUser } from 'store/reducers/User';
 
 const DashBoardScreen = (): JSX.Element => {
   const { surveys, currentPosition, isInitialLoading } = useAppSelector((state) => state.surveys);
@@ -29,8 +29,8 @@ const DashBoardScreen = (): JSX.Element => {
   };
 
   useEffect(() => {
-    dispatch(getSurveysAsyncThunk());
-    dispatch(getUserAsyncThunk());
+    dispatch(getSurveys());
+    dispatch(getUser());
   }, [dispatch]);
 
   return (

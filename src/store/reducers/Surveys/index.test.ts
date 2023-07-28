@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { AxiosResponse } from 'axios';
 
-import { getSurveys } from 'adapters/Survey';
+import { getSurveys as getSurveysAdapter } from 'adapters/Survey';
 
-import { SurveysState, getSurveysAsyncThunk, surveysSlice } from '.';
+import { getSurveys, surveysSlice } from '.';
 import { surveysReducers } from './actions';
 
 jest.mock('adapters/Survey');
@@ -37,36 +37,34 @@ describe('surveys slice', () => {
     isInitialLoading: true,
   };
   describe('nextSurvey', () => {
+    beforeEach(() => {
+      mockInitialState.currentPosition = 0;
+    });
+
     it('changes the current position to next position', () => {
-      const mockState: SurveysState = { ...mockInitialState };
+      surveysReducers.nextSurvey(mockInitialState);
 
-      surveysReducers.nextSurvey(mockState);
-
-      expect(mockState.currentPosition).toBe(1);
+      expect(mockInitialState.currentPosition).toBe(1);
     });
 
     it("resets the current position when the next position is larger than the total surveys's indexes", () => {
-      const mockState: SurveysState = { ...mockInitialState };
+      surveysReducers.nextSurvey(mockInitialState);
+      surveysReducers.nextSurvey(mockInitialState);
+      surveysReducers.nextSurvey(mockInitialState);
 
-      surveysReducers.nextSurvey(mockState);
-      surveysReducers.nextSurvey(mockState);
-      surveysReducers.nextSurvey(mockState);
-
-      expect(mockState.currentPosition).toBe(0);
+      expect(mockInitialState.currentPosition).toBe(0);
     });
   });
 
   describe('selectSurvey', () => {
     it('changes the current position to the selected position', () => {
-      const mockState: SurveysState = { ...mockInitialState };
+      surveysReducers.selectSurvey(mockInitialState, { type: 'selectSurvey', payload: 2 });
 
-      surveysReducers.selectSurvey(mockState, { type: 'selectSurvey', payload: 2 });
-
-      expect(mockState.currentPosition).toBe(2);
+      expect(mockInitialState.currentPosition).toBe(2);
     });
   });
 
-  describe('getSurveysAsyncThunk', () => {
+  describe('getSurveys', () => {
     const successResponse = {
       data: [
         {
@@ -100,10 +98,10 @@ describe('surveys slice', () => {
     };
 
     it('calls getSurveys API successfully', async () => {
-      (getSurveys as jest.Mock).mockResolvedValue(successResponse as AxiosResponse);
+      (getSurveysAdapter as jest.Mock).mockResolvedValue(successResponse as AxiosResponse);
       const dispatch = jest.fn();
 
-      const getSurveysFunction = getSurveysAsyncThunk();
+      const getSurveysFunction = getSurveys();
 
       const getSurveysPayload = await getSurveysFunction(dispatch, () => {}, undefined);
 
@@ -132,12 +130,6 @@ describe('surveys slice', () => {
       ];
 
       expect(getSurveysPayload.payload).toEqual(expectedResult);
-
-      expect(dispatch).toHaveBeenNthCalledWith(1, getSurveysAsyncThunk.pending(getSurveysPayload.meta.requestId));
-      expect(dispatch).toHaveBeenNthCalledWith(
-        2,
-        getSurveysAsyncThunk.fulfilled(expectedResult, getSurveysPayload.meta.requestId)
-      );
     });
   });
 
@@ -147,7 +139,7 @@ describe('surveys slice', () => {
       currentPosition: 0,
       isInitialLoading: true,
     };
-    describe('getSurveysAsyncThunk.fulfilled', () => {
+    describe('getSurveys.fulfilled', () => {
       it('returns the surveys', async () => {
         const expectedResult = [
           {
@@ -182,7 +174,7 @@ describe('surveys slice', () => {
       });
     });
 
-    describe('getSurveysAsyncThunk.rejected', () => {
+    describe('getSurveys.rejected', () => {
       it('returns no surveys', async () => {
         const dispatchedState = surveysSlice.reducer(mockEmptyState, {
           type: 'surveys/getSurveys/rejected',
