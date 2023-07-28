@@ -2,12 +2,16 @@ import React from 'react';
 
 import { render, screen, within } from '@testing-library/react';
 
+import { backgroundImageTestIds } from 'components/BackgroundImage';
+import { dashboardContentDataTestIds } from 'components/Dashboard/Content';
+import { dashboardHeaderDataTestIds } from 'components/Dashboard/Header';
+import { shimmerDataTestIds } from 'components/Shimmer';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { SurveysState } from 'store/reducers/Surveys';
 import { UserState } from 'store/reducers/User';
 import TestWrapper from 'tests/TestWrapper';
 
-import DashBoardScreen, { dashboardScreenTestIds } from '.';
+import DashBoardScreen from '.';
 
 // Mock the current date to a fixed date so the test is always correct regardless of the system date.
 jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
@@ -48,7 +52,7 @@ describe('DashboardScreen', () => {
     it('shows the shimmers', () => {
       render(<TestComponent />);
 
-      expect(screen.queryAllByTestId(dashboardScreenTestIds.shimmer)).toHaveLength(8);
+      expect(screen.queryAllByTestId(shimmerDataTestIds.content)).toHaveLength(8);
     });
   });
 
@@ -69,7 +73,7 @@ describe('DashboardScreen', () => {
     it('does NOT show the shimmers', () => {
       render(<TestComponent />);
 
-      expect(screen.queryAllByTestId(dashboardScreenTestIds.shimmer)).toHaveLength(0);
+      expect(screen.queryAllByTestId(shimmerDataTestIds.content)).toHaveLength(0);
     });
   });
 
@@ -90,9 +94,9 @@ describe('DashboardScreen', () => {
 
     it('shows the corresponing data', () => {
       render(<TestComponent />);
-      const backgroundImageComponent = screen.getByTestId(dashboardScreenTestIds.backgroundImage);
-      const dashboardHeaderComponent = screen.getByTestId(dashboardScreenTestIds.header);
-      const dashboardContentComponent = screen.getByTestId(dashboardScreenTestIds.content);
+      const backgroundImageComponent = screen.getByTestId(backgroundImageTestIds.base);
+      const dashboardHeaderComponent = screen.getByTestId(dashboardHeaderDataTestIds.base);
+      const dashboardContentComponent = screen.getByTestId(dashboardContentDataTestIds.base);
 
       expect(within(backgroundImageComponent).getByAltText('background')).toHaveAttribute(
         'src',
@@ -129,7 +133,7 @@ describe('DashboardScreen', () => {
 
     it('shows the corresponing data', () => {
       render(<TestComponent />);
-      const dashboardHeaderComponent = screen.getByTestId(dashboardScreenTestIds.header);
+      const dashboardHeaderComponent = screen.getByTestId(dashboardHeaderDataTestIds.base);
 
       expect(within(dashboardHeaderComponent).getByAltText('user avatar')).toHaveAttribute('src', 'http://testurl.com');
     });

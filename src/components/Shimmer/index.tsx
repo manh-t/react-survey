@@ -2,13 +2,13 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-interface ShimmerProps {
-  classAttributes: string;
-}
-
 export const shimmerDataTestIds = {
   content: 'shimmer__content',
 };
+
+interface ShimmerProps {
+  classAttributes: string;
+}
 
 // Ref: https://delba.dev/blog/animated-loading-skeletons-with-tailwind
 const Shimmer = ({ classAttributes }: ShimmerProps): JSX.Element => {

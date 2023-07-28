@@ -8,8 +8,8 @@ import Shimmer from 'components/Shimmer';
 import { getHighResolutionImage } from 'helpers/image';
 import { Survey } from 'types/survey';
 
-export const dashboardDataTestIds = {
-  content: 'dashboard__content',
+export const dashboardContentDataTestIds = {
+  base: 'dashboard__content',
 };
 
 interface DashboardContentProps {
@@ -48,7 +48,7 @@ const DashboardContent = ({
       </div>
     </div>
   ) : (
-    <div className="flex flex-col h-full" data-test-id={dashboardDataTestIds.content}>
+    <div className="flex flex-col h-full" data-test-id={dashboardContentDataTestIds.base}>
       <div
         style={{
           backgroundImage: `url(${surveys.length ? getHighResolutionImage(surveys[currentPosition].coverImageUrl) : ''})`,

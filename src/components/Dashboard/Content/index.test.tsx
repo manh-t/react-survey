@@ -5,7 +5,7 @@ import { render, screen } from '@testing-library/react';
 import TestWrapper from 'tests/TestWrapper';
 import { Survey } from 'types/survey';
 
-import DashboardContent, { dashboardDataTestIds } from '.';
+import DashboardContent, { dashboardContentDataTestIds } from '.';
 
 describe('DashboardContent', () => {
   let shouldShowShimmer = false;
@@ -36,7 +36,7 @@ describe('DashboardContent', () => {
   it('renders DashboardContent and its components', () => {
     render(<TestComponent />);
 
-    const dashboardContent = screen.getByTestId(dashboardDataTestIds.content);
+    const dashboardContent = screen.getByTestId(dashboardContentDataTestIds.base);
 
     expect(dashboardContent).toBeVisible();
     expect(dashboardContent).toHaveTextContent(surveys[0].title);
@@ -48,6 +48,6 @@ describe('DashboardContent', () => {
 
     render(<TestComponent />);
 
-    expect(screen.queryByTestId(dashboardDataTestIds.content)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(dashboardContentDataTestIds.base)).not.toBeInTheDocument();
   });
 });
