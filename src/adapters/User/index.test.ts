@@ -5,10 +5,6 @@ import { getUserInfo } from '.';
 jest.mock('adapters/BaseAuth');
 
 describe('UserAdapter', () => {
-  beforeEach(() => {
-    (getAuth as jest.Mock).mockImplementation(() => jest.fn());
-  });
-
   afterEach(() => {
     jest.clearAllMocks();
   });
