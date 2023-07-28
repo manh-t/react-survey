@@ -11,7 +11,10 @@ export interface SignInInput {
   password: string;
 }
 
-export const signInAsync: AsyncThunkPayloadCreator<Token, SignInInput, JSONObject> = async (input, { rejectWithValue }) => {
+export const signInThunkCreator: AsyncThunkPayloadCreator<Token, SignInInput, JSONObject> = async (
+  input,
+  { rejectWithValue }
+) => {
   return signIn(input.email, input.password)
     .then((response: DeserializableResponse) => {
       const token = deserialize<Token>(response.data);

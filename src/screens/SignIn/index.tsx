@@ -26,7 +26,7 @@ export const signInScreenTestIds = {
 const SignInScreen = (): JSX.Element => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { loading, errors, success } = useAppSelector((state) => state.auth);
+  const { loading, errors, success, token } = useAppSelector((state) => state.auth);
 
   const navigate = useNavigate();
 
@@ -39,10 +39,10 @@ const SignInScreen = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (success) {
-      navigate(paths.dashboard, { replace: true });
+    if (token || success) {
+      navigate(paths.root, { replace: true });
     }
-  }, [navigate, success]);
+  }, [navigate, token, success]);
 
   return (
     <div className="sign-in bg-cover min-h-screen flex flex-col justify-center items-center bg-sign-in">
