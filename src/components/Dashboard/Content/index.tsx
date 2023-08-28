@@ -64,14 +64,14 @@ const DashboardContent = ({
     <div className="flex flex-col h-full" data-test-id={dashboardContentDataTestIds.base}>
       <div
         style={{
-          backgroundImage: `url(${surveys.length ? getHighResolutionImage(surveys[currentPosition].coverImageUrl) : ''})`,
+          backgroundImage: `url(${surveys.length ? getHighResolutionImage(getCurrentSurvey()?.coverImageUrl) : ''})`,
         }}
         className="w-full h-[302px] rounded-[12px] bg-cover duration-500 ease-in-out"
       ></div>
       <div className="flex flex-row justify-between mt-[38px]">
         <div className="flex flex-col justify-between">
-          <p className="text-white text-x-regular font-extrabold">{surveys[currentPosition].title}</p>
-          <p className="text-white text-regular tracking-survey-tight opacity-60 mt-2">{surveys[currentPosition].description}</p>
+          <p className="text-white text-x-regular font-extrabold">{getCurrentSurvey()?.title}</p>
+          <p className="text-white text-regular tracking-survey-tight opacity-60 mt-2">{getCurrentSurvey()?.description}</p>
         </div>
         <Link to={getSurveyPath()}>
           <button
