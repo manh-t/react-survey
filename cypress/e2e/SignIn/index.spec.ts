@@ -65,6 +65,10 @@ describe('SignIn screen', () => {
       cy.findByTestId(signInScreenTestIds.loadingDialog).should('be.visible');
 
       cy.findByTestId(signInScreenTestIds.errorAlert).should('be.visible');
+      cy.findByTestId(signInScreenTestIds.errorAlert).should(
+        'contain.text',
+        'Your email or password is incorrect. Please try again.'
+      );
     });
   });
 
