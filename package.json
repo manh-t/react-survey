@@ -30,9 +30,9 @@
     "stylelint:fix": "stylelint '**/*.scss' --fix",
     "codebase:lint": "npm run lint && npm run stylelint",
     "codebase:fix": "npm run lint:fix && npm run stylelint:fix",
-    "cypress": "start-server-and-test start 3000 cypress:run",
     "cypress:run": "cypress run",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress": "start-server-and-test start 3000 cypress:run"
   },
   "browserslist": {
     "production": [
