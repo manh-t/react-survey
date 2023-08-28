@@ -5,10 +5,6 @@ import { getUserInfo } from '.';
 jest.mock('adapters/BaseAuth');
 
 describe('UserAdapter', () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   describe('getUserInfo', () => {
     it('calls the get method from the base adapter', () => {
       const expectedPath = 'me';
