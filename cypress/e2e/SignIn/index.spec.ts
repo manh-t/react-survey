@@ -1,3 +1,5 @@
+import { api } from '../../support/constants';
+
 const signInScreenTestIds = {
   nimbleLogo: 'sign-in__nimble-logo',
   signInForm: 'sign-in-form',
@@ -12,23 +14,25 @@ const signInScreenTestIds = {
 };
 
 describe('SignIn screen', () => {
-  context('given the valid form submission', () => {
+  context('given a valid form submission', () => {
     beforeEach(() => {
-      cy.interceptWithDelay('GET', '**/api/v1/surveys*', 200, {
-        statusCode: 200,
+      cy.interceptWithDelay('GET', '**/api/v1/surveys*', api.delay.short, {
+        statusCode: api.status.success,
         fixture: 'Survey/List/valid.json',
       });
-      cy.interceptWithDelay('GET', '**/api/v1/me', 200, {
-        statusCode: 200,
+
+      cy.interceptWithDelay('GET', '**/api/v1/me', api.delay.short, {
+        statusCode: api.status.success,
         fixture: 'User/valid.json',
       });
     });
 
     it('shows the loading dialog and navigates to Dashboard screen', () => {
-      cy.interceptWithDelay('POST', '**/api/v1/oauth/token', 200, {
-        statusCode: 200,
+      cy.interceptWithDelay('POST', '**/api/v1/oauth/token', api.delay.short, {
+        statusCode: api.status.success,
         fixture: 'Authentication/SignIn/valid.json',
       });
+
       cy.visit('/');
       cy.location().should((location) => {
         expect(location.pathname).to.equal('/sign-in');
@@ -48,10 +52,11 @@ describe('SignIn screen', () => {
 
   context('given the invalid form submission', () => {
     it('shows the error dialog', () => {
-      cy.interceptWithDelay('POST', '**/api/v1/oauth/token', 200, {
-        statusCode: 400,
+      cy.interceptWithDelay('POST', '**/api/v1/oauth/token', api.delay.short, {
+        statusCode: api.status.badRequest,
         fixture: 'Authentication/SignIn/invalid.json',
       });
+
       cy.visit('/');
       cy.findByTestId(signInScreenTestIds.emailField).type('test@email.com');
       cy.findByTestId(signInScreenTestIds.passwordField).type('12345678');
