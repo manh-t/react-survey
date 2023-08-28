@@ -3,13 +3,16 @@ import React from 'react';
 import { ReactComponent as NimbleLogoWhite } from 'assets/images/icons/nimble-logo-white.svg';
 import Shimmer from 'components/Shimmer';
 
+export const dashboardHeaderDataTestIds = {
+  base: 'dashboard-header__base',
+};
+
 interface DashboardHeaderProps {
   dateTime: string;
   daysAgo: string;
-  profileUrl: string;
+  profileUrl?: string;
   shouldShowShimmer?: boolean;
   children: React.ReactNode;
-  'data-test-id'?: string;
 }
 const DashboardHeader = ({
   dateTime,
@@ -17,10 +20,9 @@ const DashboardHeader = ({
   profileUrl,
   shouldShowShimmer = false,
   children,
-  ...rest
 }: DashboardHeaderProps): JSX.Element => {
   return (
-    <header className="flex flex-col w-full h-full items-center" {...rest}>
+    <header className="flex flex-col w-full h-full items-center" data-test-id={dashboardHeaderDataTestIds.base}>
       <div className="flex justify-between w-full pt-8 pl-8 pr-8">
         {shouldShowShimmer ? <Shimmer classAttributes="w-[117px] h-[18px] rounded-[14px]" /> : <NimbleLogoWhite />}
         {shouldShowShimmer ? (
@@ -33,7 +35,7 @@ const DashboardHeader = ({
         {shouldShowShimmer ? (
           <Shimmer classAttributes="w-[117px] h-[18px] rounded-[14px]" />
         ) : (
-          <p className="text-x-small font-extrabold">{dateTime}</p>
+          <p className="text-x-small font-extrabold uppercase">{dateTime}</p>
         )}
         {shouldShowShimmer ? (
           <div className="mt-[14px]">

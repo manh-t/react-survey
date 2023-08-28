@@ -1,32 +1,46 @@
 import React from 'react';
 
+import { faker } from '@faker-js/faker';
 import { render, screen } from '@testing-library/react';
+import { Fabricator } from '@travelperksl/fabricator';
 
-import DashboardContent, { dashboardDataTestIds } from '.';
+import TestWrapper from 'tests/TestWrapper';
+import { Survey } from 'types/survey';
+
+import DashboardContent, { dashboardContentDataTestIds } from '.';
 
 describe('DashboardContent', () => {
-  const surveys = [
-    {
-      id: '1',
-      resourceType: 'survey',
-      coverImageUrl: 'https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_',
-      title: 'Working from home Check-In',
-      description: 'We would like to know how you feel about our work from home.',
-    },
-  ];
+  const surveyFabricator = Fabricator({
+    id: () => faker.string.numeric(),
+    resourceType: 'survey',
+    coverImageUrl: () => faker.image.avatar(),
+    title: () => faker.string.sample(),
+    description: () => faker.string.sample(),
+  });
+  const surveys: Survey[] = surveyFabricator.times(1);
+
+  type TestComponentProps = {
+    shouldShowShimmer: boolean;
+  };
+
+  const TestComponent = ({ shouldShowShimmer }: TestComponentProps): JSX.Element => {
+    return (
+      <TestWrapper>
+        <DashboardContent
+          surveys={surveys}
+          currentPosition={0}
+          shouldShowShimmer={shouldShowShimmer}
+          onNextSurvey={() => jest.fn()}
+          onIndicatorTapped={() => jest.fn()}
+        />
+      </TestWrapper>
+    );
+  };
 
   it('renders DashboardContent and its components', () => {
-    render(
-      <DashboardContent
-        surveys={surveys}
-        currentPosition={0}
-        shouldShowShimmer={false}
-        onNextSurvey={() => jest.fn()}
-        onIndicatorTapped={() => jest.fn()}
-      />
-    );
+    render(<TestComponent shouldShowShimmer={false} />);
 
-    const dashboardContent = screen.getByTestId(dashboardDataTestIds.content);
+    const dashboardContent = screen.getByTestId(dashboardContentDataTestIds.base);
 
     expect(dashboardContent).toBeVisible();
     expect(dashboardContent).toHaveTextContent(surveys[0].title);
@@ -34,16 +48,8 @@ describe('DashboardContent', () => {
   });
 
   it('does NOT render the DashboardContent components', () => {
-    render(
-      <DashboardContent
-        surveys={surveys}
-        currentPosition={0}
-        shouldShowShimmer={true}
-        onNextSurvey={() => jest.fn()}
-        onIndicatorTapped={() => jest.fn()}
-      />
-    );
+    render(<TestComponent shouldShowShimmer />);
 
-    expect(screen.queryByTestId(dashboardDataTestIds.content)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(dashboardContentDataTestIds.base)).not.toBeInTheDocument();
   });
 });
