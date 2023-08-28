@@ -10,7 +10,6 @@ import { Survey } from 'types/survey';
 import DashboardContent, { dashboardContentDataTestIds } from '.';
 
 describe('DashboardContent', () => {
-  let shouldShowShimmer = false;
   const surveyFabricator = Fabricator({
     id: () => faker.string.numeric(),
     resourceType: 'survey',
@@ -20,7 +19,11 @@ describe('DashboardContent', () => {
   });
   const surveys: Survey[] = surveyFabricator.times(1);
 
-  const TestComponent = (): JSX.Element => {
+  type TestComponentProps = {
+    shouldShowShimmer: boolean;
+  };
+
+  const TestComponent = ({ shouldShowShimmer }: TestComponentProps): JSX.Element => {
     return (
       <TestWrapper>
         <DashboardContent
@@ -35,7 +38,7 @@ describe('DashboardContent', () => {
   };
 
   it('renders DashboardContent and its components', () => {
-    render(<TestComponent />);
+    render(<TestComponent shouldShowShimmer={false} />);
 
     const dashboardContent = screen.getByTestId(dashboardContentDataTestIds.base);
 
@@ -45,9 +48,7 @@ describe('DashboardContent', () => {
   });
 
   it('does NOT render the DashboardContent components', () => {
-    shouldShowShimmer = true;
-
-    render(<TestComponent />);
+    render(<TestComponent shouldShowShimmer />);
 
     expect(screen.queryByTestId(dashboardContentDataTestIds.base)).not.toBeInTheDocument();
   });

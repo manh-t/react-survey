@@ -28,6 +28,18 @@ const DashboardContent = ({
   onNextSurvey,
   onIndicatorTapped,
 }: DashboardContentProps): JSX.Element => {
+  const getCurrentSurvey = (): Survey | undefined => {
+    return _get(surveys, currentPosition, undefined);
+  };
+
+  const getSurveyPath = (): string => {
+    const currentSurvey = getCurrentSurvey();
+    if (currentSurvey) {
+      return `surveys/${currentSurvey?.id}`;
+    }
+    return '';
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       onNextSurvey();
@@ -61,10 +73,10 @@ const DashboardContent = ({
           <p className="text-white text-x-regular font-extrabold">{surveys[currentPosition].title}</p>
           <p className="text-white text-regular tracking-survey-tight opacity-60 mt-2">{surveys[currentPosition].description}</p>
         </div>
-        <Link to={`surveys/${_get(surveys, `${currentPosition}.id`, '')}`}>
+        <Link to={getSurveyPath()}>
           <button
             type="button"
-            className="w-[56px] h-[56px] bg-white rounded-full items-center justify-center text-black-chinese"
+            className="w-[56px] h-[56px] bg-white rounded-full inline-flex items-center justify-center text-black-chinese"
           >
             <ArrowRight />
           </button>
