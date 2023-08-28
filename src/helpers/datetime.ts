@@ -1,6 +1,6 @@
 import { format, parseISO, formatDistanceStrict } from 'date-fns';
 
-export const getdddMMMDDDateFromISODate = (dateStr?: string) => {
+export const getShortDateFormat = (dateStr?: string) => {
   if (dateStr) {
     return format(parseISO(dateStr), 'E, MMM dd');
   }

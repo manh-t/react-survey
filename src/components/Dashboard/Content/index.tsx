@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import classNames from 'classnames';
+import _get from 'lodash/get';
 
 import { ReactComponent as ArrowRight } from 'assets/images/icons/arrow-right.svg';
 import Shimmer from 'components/Shimmer';
@@ -9,7 +10,7 @@ import { getHighResolutionImage } from 'helpers/image';
 import { Survey } from 'types/survey';
 
 export const dashboardContentDataTestIds = {
-  base: 'dashboard__content',
+  base: 'dashboard__base',
 };
 
 interface DashboardContentProps {
@@ -60,10 +61,10 @@ const DashboardContent = ({
           <p className="text-white text-x-regular font-extrabold">{surveys[currentPosition].title}</p>
           <p className="text-white text-regular tracking-survey-tight opacity-60 mt-2">{surveys[currentPosition].description}</p>
         </div>
-        <Link to={`surveys/${surveys[currentPosition].id}`}>
+        <Link to={`surveys/${_get(surveys, `${currentPosition}.id`, '')}`}>
           <button
             type="button"
-            className="w-[56px] h-[56px] bg-white rounded-full inline-flex items-center justify-center text-black-chinese"
+            className="w-[56px] h-[56px] bg-white rounded-full items-center justify-center text-black-chinese"
           >
             <ArrowRight />
           </button>

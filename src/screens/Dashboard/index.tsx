@@ -4,7 +4,7 @@ import BackgroundImage from 'components/BackgroundImage';
 import DashboardContent from 'components/Dashboard/Content';
 import DashboardEmpty from 'components/Dashboard/Empty';
 import DashboardHeader from 'components/Dashboard/Header';
-import { getDaysAgoFromISODate, getdddMMMDDDateFromISODate } from 'helpers/datetime';
+import { getDaysAgoFromISODate, getShortDateFormat } from 'helpers/datetime';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { getSurveys, surveysAction } from 'store/reducers/Surveys';
 import { getUser } from 'store/reducers/User';
@@ -36,7 +36,7 @@ const DashBoardScreen = (): JSX.Element => {
   return (
     <BackgroundImage backgroundUrl={surveys.length > 0 ? surveys[currentPosition].coverImageUrl : undefined}>
       <DashboardHeader
-        dateTime={surveys.length ? getdddMMMDDDateFromISODate(surveys[currentPosition].createdAt) : ''}
+        dateTime={surveys.length ? getShortDateFormat(surveys[currentPosition].createdAt) : ''}
         daysAgo={surveys.length ? getDaysAgoFromISODate(surveys[currentPosition].createdAt) : ''}
         profileUrl={user?.avatarUrl}
         shouldShowShimmer={isInitialLoading}

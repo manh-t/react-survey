@@ -2,21 +2,20 @@ import React from 'react';
 
 import { render, screen } from '@testing-library/react';
 
-import DashboardHeader from '.';
+import DashboardHeader, { dashboardHeaderDataTestIds } from '.';
 
 describe('DashboardHeader', () => {
-  const dataTestId = 'dashboard-header';
   it('renders DashboardHeader and its components without shimmers', () => {
     const dateTime = 'MONDAY, JUNE 15';
     const daysAgo = 'Today';
     const profileUrl = 'test url';
     render(
-      <DashboardHeader dateTime={dateTime} daysAgo={daysAgo} profileUrl={profileUrl} data-test-id={dataTestId}>
+      <DashboardHeader dateTime={dateTime} daysAgo={daysAgo} profileUrl={profileUrl}>
         Dashboard Header
       </DashboardHeader>
     );
 
-    const dashboardHeader = screen.getByTestId(dataTestId);
+    const dashboardHeader = screen.getByTestId(dashboardHeaderDataTestIds.base);
     const avatar = screen.getByAltText('user avatar');
 
     expect(dashboardHeader).toBeVisible();
@@ -32,12 +31,12 @@ describe('DashboardHeader', () => {
     const daysAgo = 'Today';
     const profileUrl = 'test url';
     render(
-      <DashboardHeader dateTime={dateTime} daysAgo={daysAgo} profileUrl={profileUrl} data-test-id={dataTestId} shouldShowShimmer>
+      <DashboardHeader dateTime={dateTime} daysAgo={daysAgo} profileUrl={profileUrl} shouldShowShimmer>
         Dashboard Header
       </DashboardHeader>
     );
 
-    const dashboardHeader = screen.getByTestId(dataTestId);
+    const dashboardHeader = screen.getByTestId(dashboardHeaderDataTestIds.base);
 
     expect(dashboardHeader).toBeVisible();
     expect(dashboardHeader).not.toHaveTextContent(dateTime);

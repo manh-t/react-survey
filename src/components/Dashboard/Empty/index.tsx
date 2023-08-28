@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const dashboardEmptyDataTestIds = {
-  base: 'dashboard-empty',
+  base: 'dashboard-empty__base',
 };
 
 const DashboardEmpty = (): JSX.Element => {

@@ -46,6 +46,7 @@ describe('user slice', () => {
 
   describe('extraReducers', () => {
     const mockEmptyState = {};
+
     describe('getUser.fulfilled', () => {
       it('returns the user info', async () => {
         const expectedResult = {
@@ -55,6 +56,7 @@ describe('user slice', () => {
           avatarUrl: 'http://testurl.com',
           name: 'test user',
         };
+
         const dispatchedState = userSlice.reducer(mockEmptyState, {
           type: 'user/getUser/fulfilled',
           payload: expectedResult,

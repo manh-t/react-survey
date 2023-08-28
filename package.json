@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "1.9.5",
+    "@travelperksl/fabricator": "7.0.1",
     "@types/lodash": "4.14.195",
     "axios": "1.4.0",
     "classnames": "2.3.2",
@@ -53,6 +54,7 @@
     "@cypress/browserify-preprocessor": "3.0.2",
     "@cypress/code-coverage": "3.10.7",
     "@cypress/instrument-cra": "1.4.0",
+    "@faker-js/faker": "8.0.2",
     "@nimblehq/eslint-config-nimble-react": "1.2.0",
     "@nimblehq/eslint-config-nimble-testing": "1.1.0",
     "@nimblehq/stylelint-config-nimble": "1.0.2",

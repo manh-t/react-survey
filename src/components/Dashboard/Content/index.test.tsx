@@ -1,6 +1,8 @@
 import React from 'react';
 
+import { faker } from '@faker-js/faker';
 import { render, screen } from '@testing-library/react';
+import { Fabricator } from '@travelperksl/fabricator';
 
 import TestWrapper from 'tests/TestWrapper';
 import { Survey } from 'types/survey';
@@ -9,15 +11,14 @@ import DashboardContent, { dashboardContentDataTestIds } from '.';
 
 describe('DashboardContent', () => {
   let shouldShowShimmer = false;
-  const surveys: Survey[] = [
-    {
-      id: '1',
-      resourceType: 'survey',
-      coverImageUrl: 'https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_',
-      title: 'Working from home Check-In',
-      description: 'We would like to know how you feel about our work from home.',
-    },
-  ];
+  const surveyFabricator = Fabricator({
+    id: () => faker.string.numeric(),
+    resourceType: 'survey',
+    coverImageUrl: () => faker.image.avatar(),
+    title: () => faker.string.sample(),
+    description: () => faker.string.sample(),
+  });
+  const surveys: Survey[] = surveyFabricator.times(1);
 
   const TestComponent = (): JSX.Element => {
     return (

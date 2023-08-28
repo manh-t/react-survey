@@ -4,7 +4,7 @@ import { ReactComponent as NimbleLogoWhite } from 'assets/images/icons/nimble-lo
 import Shimmer from 'components/Shimmer';
 
 export const dashboardHeaderDataTestIds = {
-  base: 'dashboard-header',
+  base: 'dashboard-header__base',
 };
 
 interface DashboardHeaderProps {

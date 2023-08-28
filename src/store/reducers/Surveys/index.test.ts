@@ -36,6 +36,7 @@ describe('surveys slice', () => {
     currentPosition: 0,
     isInitialLoading: true,
   };
+
   describe('nextSurvey', () => {
     beforeEach(() => {
       mockInitialState.currentPosition = 0;
@@ -139,6 +140,7 @@ describe('surveys slice', () => {
       currentPosition: 0,
       isInitialLoading: true,
     };
+
     describe('getSurveys.fulfilled', () => {
       it('returns the surveys', async () => {
         const expectedResult = [

@@ -1,4 +1,4 @@
-import { getDaysAgoFromISODate, getdddMMMDDDateFromISODate } from './datetime';
+import { getDaysAgoFromISODate, getShortDateFormat } from './datetime';
 
 // Mock the current date to a fixed date so the test is always correct regardless of the system date.
 jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
@@ -7,13 +7,13 @@ describe('Datetime helper', () => {
   describe('getdddMMMDDDateFromISODate', () => {
     describe('given an ISO date string', () => {
       it('returns the date with format ddd, MMM DD', () => {
-        expect(getdddMMMDDDateFromISODate('2017-01-23T07:48:12.991Z')).toBe('Mon, Jan 23');
+        expect(getShortDateFormat('2017-01-23T07:48:12.991Z')).toBe('Mon, Jan 23');
       });
     });
 
     describe('given an undefined', () => {
       it('returns the empty', () => {
-        expect(getdddMMMDDDateFromISODate(undefined)).toBe('');
+        expect(getShortDateFormat(undefined)).toBe('');
       });
     });
   });
