@@ -28,12 +28,9 @@ const DashboardContent = ({
   onNextSurvey,
   onIndicatorTapped,
 }: DashboardContentProps): JSX.Element => {
-  const getCurrentSurvey = (): Survey | undefined => {
-    return _get(surveys, currentPosition, undefined);
-  };
+  const currentSurvey = _get(surveys, currentPosition);
 
   const getSurveyPath = (): string => {
-    const currentSurvey = getCurrentSurvey();
     if (currentSurvey) {
       return `surveys/${currentSurvey?.id}`;
     }
@@ -64,14 +61,14 @@ const DashboardContent = ({
     <div className="flex flex-col h-full" data-test-id={dashboardContentDataTestIds.base}>
       <div
         style={{
-          backgroundImage: `url(${surveys.length ? getHighResolutionImage(getCurrentSurvey()?.coverImageUrl) : ''})`,
+          backgroundImage: `url(${surveys.length ? getHighResolutionImage(currentSurvey?.coverImageUrl) : ''})`,
         }}
         className="w-full h-[302px] rounded-[12px] bg-cover duration-500 ease-in-out"
       ></div>
       <div className="flex flex-row justify-between mt-[38px]">
         <div className="flex flex-col justify-between">
-          <p className="text-white text-x-regular font-extrabold">{getCurrentSurvey()?.title}</p>
-          <p className="text-white text-regular tracking-survey-tight opacity-60 mt-2">{getCurrentSurvey()?.description}</p>
+          <p className="text-white text-x-regular font-extrabold">{currentSurvey?.title}</p>
+          <p className="text-white text-regular tracking-survey-tight opacity-60 mt-2">{currentSurvey?.description}</p>
         </div>
         <Link to={getSurveyPath()}>
           <button

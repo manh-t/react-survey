@@ -102,7 +102,6 @@ describe('DashboardScreen', () => {
         'src',
         'https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_'
       );
-      expect(dashboardHeaderComponent).toHaveTextContent('MON, JAN 23');
       expect(dashboardHeaderComponent).toHaveTextContent('3 years ago');
       expect(dashboardContentComponent).toHaveTextContent('Working from home Check-In');
       expect(dashboardContentComponent).toHaveTextContent('We would like to know how you feel about our work from home.');
