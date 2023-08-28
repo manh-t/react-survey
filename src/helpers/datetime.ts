@@ -1,15 +1,15 @@
-import moment from 'moment';
+import { format, parseISO, formatDistanceStrict } from 'date-fns';
 
 export const getdddMMMDDDateFromISODate = (dateStr?: string) => {
   if (dateStr) {
-    return moment(dateStr).format('ddd, MMM DD');
+    return format(parseISO(dateStr), 'E, MMM dd');
   }
   return '';
 };
 
 export const getDaysAgoFromISODate = (dateStr?: string) => {
   if (dateStr) {
-    return moment(dateStr).startOf('day').fromNow();
+    return formatDistanceStrict(parseISO(dateStr), new Date(), { addSuffix: true });
   }
   return '';
 };
