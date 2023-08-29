@@ -1,7 +1,10 @@
+import { faker } from '@faker-js/faker';
+import { Fabricator } from '@travelperksl/fabricator';
+
 import { Resource } from 'types/resource';
 import { Survey } from 'types/survey';
 
-import { Deserializable, deserialize, deserializeList } from './deserializer';
+import { Deserializer, deserialize, deserializeList } from './deserializer';
 
 describe('Deserializer helper', () => {
   interface TestType extends Resource {
@@ -10,69 +13,85 @@ describe('Deserializer helper', () => {
   }
 
   describe('deserialize', () => {
-    const jsonData = {
-      id: '1',
+    const jsonName = faker.person.fullName();
+    const jsonAge = faker.number.int();
+    const jsonDataFabricator = Fabricator({
+      id: () => faker.string.uuid(),
       type: 'TestType',
       attributes: {
-        name: 'Name',
-        age: 25,
+        name: jsonName,
+        age: jsonAge,
+      },
+    });
+
+    const questionId = faker.string.uuid();
+
+    const jsonDataWithRelation: Deserializer = {
+      type: 'survey',
+      id: faker.string.uuid(),
+      attributes: {
+        title: faker.string.sample(),
+        description: faker.string.sample(),
+        thankEmailAboveThreshold: faker.string.sample(),
+        thankEmailBelowThreshold: faker.string.sample(),
+        isActive: true,
+        coverImageUrl: faker.image.url(),
+        createdAt: faker.date.anytime().toISOString(),
+        activeAt: faker.date.anytime().toISOString(),
+      },
+      relationships: {
+        questions: {
+          data: [{ type: 'question', id: questionId }],
+        },
       },
     };
 
+    const jsonDataWithoutRelation: Deserializer = {
+      type: 'survey',
+      id: faker.string.uuid(),
+      attributes: {
+        title: faker.string.sample(),
+        description: faker.string.sample(),
+        thankEmailAboveThreshold: faker.string.sample(),
+        thankEmailBelowThreshold: faker.string.sample(),
+        isActive: true,
+        coverImageUrl: faker.image.url(),
+        createdAt: faker.date.anytime().toISOString(),
+        activeAt: faker.date.anytime().toISOString(),
+      },
+    };
+
+    const jsonDataIncluded: Deserializer[] = [
+      {
+        type: 'question',
+        id: questionId,
+        attributes: {
+          text: faker.string.sample(),
+          displayOrder: 0,
+          shortText: faker.string.sample(),
+          pick: faker.string.sample(),
+          displayType: faker.string.sample(),
+          isMandatory: false,
+          imageUrl: faker.image.url(),
+          coverImageUrl: faker.image.url(),
+          coverImageOpacity: 0.6,
+          isShareableOnFacebook: false,
+          isShareableOnTwitter: false,
+          tagList: '',
+        },
+      },
+    ];
+
     it('returns deserialized data', () => {
-      const deserializedData = deserialize<TestType>(jsonData);
+      const deserializedData = deserialize<TestType>(jsonDataFabricator());
 
       expect(deserializedData.resourceType).toBe('TestType');
-      expect(deserializedData.name).toBe('Name');
-      expect(deserializedData.age).toBe(25);
+      expect(deserializedData.name).toBe(jsonName);
+      expect(deserializedData.age).toBe(jsonAge);
     });
 
     describe('given relationships and included', () => {
       describe('given the relationships is an array', () => {
-        const jsonDataWithRelation: Deserializable = {
-          type: 'survey',
-          id: '234234',
-          attributes: {
-            title: 'Scarlett Bangkok',
-            description: "We'd love ot hear from you!",
-            thankEmailAboveThreshold:
-              '<span style="font-family:arial,helvetica,sans-serif"><span style="font-size:14px">Dear {name},<br /><br />Thank you for visiting Scarlett Wine Bar &amp; Restaurant at Pullman Bangkok Hotel G &nbsp;and for taking the time to complete our guest feedback survey!<br /><br />Your feedback is very important to us and each survey is read individually by the management and owners shortly after it is sent. We discuss comments and suggestions at our daily meetings and use them to constantly improve our services.<br /><br />We would very much appreciate it if you could take a few more moments and review us on TripAdvisor regarding your recent visit. By <a href="https://www.tripadvisor.com/Restaurant_Review-g293916-d2629404-Reviews-Scarlett_Wine_Bar_Restaurant-Bangkok.html">clicking here</a> you will be directed to our page.&nbsp;<br /><br />Thank you once again and we look forward to seeing you soon!<br /><br />The Team at Scarlett Wine Bar &amp; Restaurant&nbsp;</span></span><span style="font-family:arial,helvetica,sans-serif; font-size:14px">Pullman Bangkok Hotel G</span>',
-            thankEmailBelowThreshold:
-              '<span style="font-size:14px"><span style="font-family:arial,helvetica,sans-serif">Dear {name},<br /><br />Thank you for visiting&nbsp;</span></span><span style="font-family:arial,helvetica,sans-serif; font-size:14px">Uno Mas at Centara Central World&nbsp;</span><span style="font-size:14px"><span style="font-family:arial,helvetica,sans-serif">&nbsp;and for taking the time to complete our customer&nbsp;feedback survey.</span></span><br /><br /><span style="font-family:arial,helvetica,sans-serif; font-size:14px">The Team at&nbsp;</span><span style="font-family:arial,helvetica,sans-serif"><span style="font-size:14px">Scarlett Wine Bar &amp; Restaurant&nbsp;</span></span><span style="font-family:arial,helvetica,sans-serif; font-size:14px">Pullman Bangkok Hotel G</span>',
-            isActive: true,
-            coverImageUrl: 'https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_',
-            createdAt: '2017-01-23T07:48:12.991Z',
-            activeAt: '2015-10-08T07:04:00.000Z',
-          },
-          relationships: {
-            questions: {
-              data: [{ type: 'question', id: 'question 1' }],
-            },
-          },
-        };
-
-        const jsonDataIncluded: Deserializable[] = [
-          {
-            type: 'question',
-            id: 'question 1',
-            attributes: {
-              text: '\nThank you for visiting Scarlett!\n Please take a moment to share your feedback.',
-
-              displayOrder: 0,
-              shortText: 'introduction',
-              pick: 'none',
-              displayType: 'intro',
-              isMandatory: false,
-              imageUrl: 'https://dhdbhh0jsld0o.cloudfront.net/m/2001ebbfdcbf6c00c757_',
-              coverImageUrl: 'https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_',
-              coverImageOpacity: 0.6,
-              isShareableOnFacebook: false,
-              isShareableOnTwitter: false,
-              tagList: '',
-            },
-          },
-        ];
-
         it('sets the relation array correctly', () => {
           const deserializedData = deserialize<Survey>(jsonDataWithRelation, jsonDataIncluded);
 
@@ -93,28 +112,6 @@ describe('Deserializer helper', () => {
       });
 
       describe('given relationships data but NO included data', () => {
-        const jsonDataWithRelation: Deserializable = {
-          type: 'survey',
-          id: '234234',
-          attributes: {
-            title: 'Scarlett Bangkok',
-            description: "We'd love ot hear from you!",
-            thankEmailAboveThreshold:
-              '<span style="font-family:arial,helvetica,sans-serif"><span style="font-size:14px">Dear {name},<br /><br />Thank you for visiting Scarlett Wine Bar &amp; Restaurant at Pullman Bangkok Hotel G &nbsp;and for taking the time to complete our guest feedback survey!<br /><br />Your feedback is very important to us and each survey is read individually by the management and owners shortly after it is sent. We discuss comments and suggestions at our daily meetings and use them to constantly improve our services.<br /><br />We would very much appreciate it if you could take a few more moments and review us on TripAdvisor regarding your recent visit. By <a href="https://www.tripadvisor.com/Restaurant_Review-g293916-d2629404-Reviews-Scarlett_Wine_Bar_Restaurant-Bangkok.html">clicking here</a> you will be directed to our page.&nbsp;<br /><br />Thank you once again and we look forward to seeing you soon!<br /><br />The Team at Scarlett Wine Bar &amp; Restaurant&nbsp;</span></span><span style="font-family:arial,helvetica,sans-serif; font-size:14px">Pullman Bangkok Hotel G</span>',
-            thankEmailBelowThreshold:
-              '<span style="font-size:14px"><span style="font-family:arial,helvetica,sans-serif">Dear {name},<br /><br />Thank you for visiting&nbsp;</span></span><span style="font-family:arial,helvetica,sans-serif; font-size:14px">Uno Mas at Centara Central World&nbsp;</span><span style="font-size:14px"><span style="font-family:arial,helvetica,sans-serif">&nbsp;and for taking the time to complete our customer&nbsp;feedback survey.</span></span><br /><br /><span style="font-family:arial,helvetica,sans-serif; font-size:14px">The Team at&nbsp;</span><span style="font-family:arial,helvetica,sans-serif"><span style="font-size:14px">Scarlett Wine Bar &amp; Restaurant&nbsp;</span></span><span style="font-family:arial,helvetica,sans-serif; font-size:14px">Pullman Bangkok Hotel G</span>',
-            isActive: true,
-            coverImageUrl: 'https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_',
-            createdAt: '2017-01-23T07:48:12.991Z',
-            activeAt: '2015-10-08T07:04:00.000Z',
-          },
-          relationships: {
-            questions: {
-              data: [{ type: 'question', id: 'question 1' }],
-            },
-          },
-        };
-
         it('does NOT assign the relation', () => {
           const deserializedData = deserialize<Survey>(jsonDataWithRelation);
 
@@ -134,58 +131,19 @@ describe('Deserializer helper', () => {
       });
 
       describe('given NO relationships data but included data', () => {
-        const jsonDataWithRelation: Deserializable = {
-          type: 'survey',
-          id: '234234',
-          attributes: {
-            title: 'Scarlett Bangkok',
-            description: "We'd love ot hear from you!",
-            thankEmailAboveThreshold:
-              '<span style="font-family:arial,helvetica,sans-serif"><span style="font-size:14px">Dear {name},<br /><br />Thank you for visiting Scarlett Wine Bar &amp; Restaurant at Pullman Bangkok Hotel G &nbsp;and for taking the time to complete our guest feedback survey!<br /><br />Your feedback is very important to us and each survey is read individually by the management and owners shortly after it is sent. We discuss comments and suggestions at our daily meetings and use them to constantly improve our services.<br /><br />We would very much appreciate it if you could take a few more moments and review us on TripAdvisor regarding your recent visit. By <a href="https://www.tripadvisor.com/Restaurant_Review-g293916-d2629404-Reviews-Scarlett_Wine_Bar_Restaurant-Bangkok.html">clicking here</a> you will be directed to our page.&nbsp;<br /><br />Thank you once again and we look forward to seeing you soon!<br /><br />The Team at Scarlett Wine Bar &amp; Restaurant&nbsp;</span></span><span style="font-family:arial,helvetica,sans-serif; font-size:14px">Pullman Bangkok Hotel G</span>',
-            thankEmailBelowThreshold:
-              '<span style="font-size:14px"><span style="font-family:arial,helvetica,sans-serif">Dear {name},<br /><br />Thank you for visiting&nbsp;</span></span><span style="font-family:arial,helvetica,sans-serif; font-size:14px">Uno Mas at Centara Central World&nbsp;</span><span style="font-size:14px"><span style="font-family:arial,helvetica,sans-serif">&nbsp;and for taking the time to complete our customer&nbsp;feedback survey.</span></span><br /><br /><span style="font-family:arial,helvetica,sans-serif; font-size:14px">The Team at&nbsp;</span><span style="font-family:arial,helvetica,sans-serif"><span style="font-size:14px">Scarlett Wine Bar &amp; Restaurant&nbsp;</span></span><span style="font-family:arial,helvetica,sans-serif; font-size:14px">Pullman Bangkok Hotel G</span>',
-            isActive: true,
-            coverImageUrl: 'https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_',
-            createdAt: '2017-01-23T07:48:12.991Z',
-            activeAt: '2015-10-08T07:04:00.000Z',
-          },
-        };
-
-        const jsonDataIncluded: Deserializable[] = [
-          {
-            type: 'question',
-            id: 'question 1',
-            attributes: {
-              text: '\nThank you for visiting Scarlett!\n Please take a moment to share your feedback.',
-
-              displayOrder: 0,
-              shortText: 'introduction',
-              pick: 'none',
-              displayType: 'intro',
-              isMandatory: false,
-              imageUrl: 'https://dhdbhh0jsld0o.cloudfront.net/m/2001ebbfdcbf6c00c757_',
-              coverImageUrl: 'https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_',
-              coverImageOpacity: 0.6,
-              isShareableOnFacebook: false,
-              isShareableOnTwitter: false,
-              tagList: '',
-            },
-          },
-        ];
-
         it('does NOT assign the relation', () => {
-          const deserializedData = deserialize<Survey>(jsonDataWithRelation, jsonDataIncluded);
+          const deserializedData = deserialize<Survey>(jsonDataWithoutRelation, jsonDataIncluded);
 
           expect(deserializedData.resourceType).toBe('survey');
-          expect(deserializedData.id).toEqual(jsonDataWithRelation.id);
-          expect(deserializedData.title).toEqual(jsonDataWithRelation.attributes.title);
-          expect(deserializedData.description).toEqual(jsonDataWithRelation.attributes.description);
-          expect(deserializedData.thankEmailAboveThreshold).toEqual(jsonDataWithRelation.attributes.thankEmailAboveThreshold);
-          expect(deserializedData.thankEmailBelowThreshold).toEqual(jsonDataWithRelation.attributes.thankEmailBelowThreshold);
-          expect(deserializedData.isActive).toEqual(jsonDataWithRelation.attributes.isActive);
-          expect(deserializedData.coverImageUrl).toEqual(jsonDataWithRelation.attributes.coverImageUrl);
-          expect(deserializedData.createdAt).toEqual(jsonDataWithRelation.attributes.createdAt);
-          expect(deserializedData.activeAt).toEqual(jsonDataWithRelation.attributes.activeAt);
+          expect(deserializedData.id).toEqual(jsonDataWithoutRelation.id);
+          expect(deserializedData.title).toEqual(jsonDataWithoutRelation.attributes.title);
+          expect(deserializedData.description).toEqual(jsonDataWithoutRelation.attributes.description);
+          expect(deserializedData.thankEmailAboveThreshold).toEqual(jsonDataWithoutRelation.attributes.thankEmailAboveThreshold);
+          expect(deserializedData.thankEmailBelowThreshold).toEqual(jsonDataWithoutRelation.attributes.thankEmailBelowThreshold);
+          expect(deserializedData.isActive).toEqual(jsonDataWithoutRelation.attributes.isActive);
+          expect(deserializedData.coverImageUrl).toEqual(jsonDataWithoutRelation.attributes.coverImageUrl);
+          expect(deserializedData.createdAt).toEqual(jsonDataWithoutRelation.attributes.createdAt);
+          expect(deserializedData.activeAt).toEqual(jsonDataWithoutRelation.attributes.activeAt);
 
           expect(deserializedData.questions).toBeUndefined();
         });
@@ -193,24 +151,7 @@ describe('Deserializer helper', () => {
     });
 
     describe('deserializeList', () => {
-      const jsonArray = [
-        {
-          id: '1',
-          type: 'TestType',
-          attributes: {
-            name: 'Name',
-            age: 25,
-          },
-        },
-        {
-          id: '2',
-          type: 'TestType',
-          attributes: {
-            name: 'Name',
-            age: 30,
-          },
-        },
-      ];
+      const jsonArray = jsonDataFabricator.times(2);
 
       it('returns a list of the deserialized items', () => {
         const deserializedList = deserializeList<TestType>(jsonArray);
