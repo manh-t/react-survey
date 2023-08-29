@@ -2,7 +2,7 @@ import React from 'react';
 
 import { render, screen } from '@testing-library/react';
 
-import { backgroundImageTestIds } from 'components/BackgroundImage';
+import { mainViewTestIds } from 'components/MainView';
 import TestWrapper from 'tests/TestWrapper';
 
 import SurveyScreen, { surveyScreenTestIds } from '.';
@@ -19,7 +19,7 @@ describe('SurveyScreen', () => {
   it('renders Survey screen and its components', () => {
     render(<TestComponent />);
 
-    const backgroundImage = screen.getByTestId(backgroundImageTestIds.base);
+    const backgroundImage = screen.getByTestId(mainViewTestIds.base);
     const backButton = screen.getByTestId(surveyScreenTestIds.backButton);
     const coverImage = screen.getByTestId(surveyScreenTestIds.coverImage);
     const title = screen.getByTestId(surveyScreenTestIds.title);

@@ -2,9 +2,9 @@ import React from 'react';
 
 import { render, screen, within } from '@testing-library/react';
 
-import { backgroundImageTestIds } from 'components/BackgroundImage';
 import { dashboardContentDataTestIds } from 'components/Dashboard/Content';
 import { dashboardHeaderDataTestIds } from 'components/Dashboard/Header';
+import { mainViewTestIds } from 'components/MainView';
 import { shimmerDataTestIds } from 'components/Shimmer';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { SurveysState } from 'store/reducers/Surveys';
@@ -94,7 +94,7 @@ describe('DashboardScreen', () => {
 
     it('shows the corresponing data', () => {
       render(<TestComponent />);
-      const backgroundImageComponent = screen.getByTestId(backgroundImageTestIds.base);
+      const backgroundImageComponent = screen.getByTestId(mainViewTestIds.base);
       const dashboardHeaderComponent = screen.getByTestId(dashboardHeaderDataTestIds.base);
       const dashboardContentComponent = screen.getByTestId(dashboardContentDataTestIds.base);
 

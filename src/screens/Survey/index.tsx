@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { ReactComponent as ArrowBack } from 'assets/images/icons/arrow-back.svg';
-import BackgroundImage from 'components/BackgroundImage';
 import ElevatedButton from 'components/ElevatedButton';
+import MainView from 'components/MainView';
 
 export const surveyScreenTestIds = {
   backButton: 'survey__back-button',
@@ -14,9 +14,9 @@ export const surveyScreenTestIds = {
 
 const SurveyScreen = (): JSX.Element => {
   return (
-    <BackgroundImage backgroundUrl="https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_">
+    <MainView backgroundUrl="https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_">
       <div className="flex flex-col">
-        <button className="mt-[37px] ml-[39px] p-1" data-test-id={surveyScreenTestIds.backButton}>
+        <button type="button" className="w-fit mt-[37px] ml-[39px] p-1 text-white" data-test-id={surveyScreenTestIds.backButton}>
           <ArrowBack />
         </button>
         <div className="w-1/2 self-center pt-36">
@@ -42,7 +42,7 @@ const SurveyScreen = (): JSX.Element => {
           </div>
         </div>
       </div>
-    </BackgroundImage>
+    </MainView>
   );
 };
 

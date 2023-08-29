@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 
-import BackgroundImage from 'components/BackgroundImage';
 import DashboardContent from 'components/Dashboard/Content';
 import DashboardEmpty from 'components/Dashboard/Empty';
 import DashboardHeader from 'components/Dashboard/Header';
+import MainView from 'components/MainView';
 import { getDaysAgoFromISODate, getShortDateFormat } from 'helpers/datetime';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { getSurveys, surveysAction } from 'store/reducers/Surveys';
@@ -34,7 +34,7 @@ const DashBoardScreen = (): JSX.Element => {
   }, [dispatch]);
 
   return (
-    <BackgroundImage backgroundUrl={surveys.length > 0 ? surveys[currentPosition].coverImageUrl : undefined}>
+    <MainView backgroundUrl={surveys.length > 0 ? surveys[currentPosition].coverImageUrl : undefined}>
       <DashboardHeader
         dateTime={surveys.length ? getShortDateFormat(surveys[currentPosition].createdAt) : ''}
         daysAgo={surveys.length ? getDaysAgoFromISODate(surveys[currentPosition].createdAt) : ''}
@@ -45,7 +45,7 @@ const DashBoardScreen = (): JSX.Element => {
           {isInitialLoading ? dashboardContent() : surveys.length ? dashboardContent() : <DashboardEmpty />}
         </div>
       </DashboardHeader>
-    </BackgroundImage>
+    </MainView>
   );
 };
 
