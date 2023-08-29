@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { faker } from '@faker-js/faker';
 import { render, screen } from '@testing-library/react';
 
 import { mainViewTestIds } from 'components/MainView';
@@ -25,11 +26,11 @@ describe('SurveyScreen', () => {
   const mockState: { survey: SurveyState } = {
     survey: {
       survey: {
-        id: 'd5de6a8f8f5f1cfe51bc',
+        id: faker.string.uuid(),
         resourceType: 'survey',
-        title: 'Scarlett Bangkok',
-        description: "We'd love ot hear from you!",
-        coverImageUrl: 'https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_',
+        title: faker.string.sample(),
+        description: faker.string.sample(),
+        coverImageUrl: faker.image.url(),
       },
       isLoading: true,
       isError: false,
