@@ -2,6 +2,7 @@ import axios, { Method as HTTPMethod, ResponseType, AxiosRequestConfig, AxiosRes
 
 import { config } from 'config';
 import { JSONValue, keysToCamelCase } from 'helpers/json';
+import { refreshToken } from 'services/refreshToken';
 
 export const successResponseInterceptor = (response: AxiosResponse<unknown>): AxiosResponse<unknown> => {
   const responseData = response.data as JSONValue;
@@ -13,6 +14,9 @@ export const successResponseInterceptor = (response: AxiosResponse<unknown>): Ax
 
 export const errorInterceptor = async (error: AxiosError<unknown>): Promise<unknown> => {
   if (error.response) {
+    if (error.response.status === 401) {
+      return refreshToken(error);
+    }
     const errorData = error.response.data as JSONValue;
     const formattedData = keysToCamelCase(errorData);
     error.response.data = formattedData;
