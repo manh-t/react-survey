@@ -5,7 +5,7 @@ import { authenticatedHeader } from 'adapters/BaseAuth';
 import { clearToken, getToken, setToken } from 'helpers/authentication';
 import { DeserializableResponse, deserialize } from 'helpers/deserializer';
 import { paths } from 'routes';
-import { SignIn } from 'types/signIn';
+import { Token } from 'types/token';
 
 let isAlreadyFetchingAccessToken = false;
 let subscribers: { (isFetchSuccess: boolean): void }[] = [];
@@ -21,9 +21,9 @@ function addSubscriber(callback: { (isFetchSuccess: boolean): void }) {
 const doRefreshToken = (token: string) => {
   return authenticationRefreshToken(token)
     .then((response: DeserializableResponse) => {
-      const signInType = deserialize<SignIn>(response.data);
+      const tokenType = deserialize<Token>(response.data);
 
-      setToken(signInType);
+      setToken(tokenType);
       return true;
     })
     .catch(() => {
@@ -55,9 +55,9 @@ export const refreshToken = (error: AxiosError<unknown>): Promise<unknown> => {
 
   if (!isAlreadyFetchingAccessToken) {
     isAlreadyFetchingAccessToken = true;
-    const signInToken = getToken();
-    if (signInToken?.refreshToken) {
-      doRefreshToken(signInToken.refreshToken).then((isFetchSuccess) => {
+    const token = getToken();
+    if (token?.refreshToken) {
+      doRefreshToken(token.refreshToken).then((isFetchSuccess) => {
         isAlreadyFetchingAccessToken = false;
         onAccessTokenFetched(isFetchSuccess);
       });
