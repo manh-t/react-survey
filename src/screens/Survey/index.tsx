@@ -5,7 +5,6 @@ import BackgroundImage from 'components/BackgroundImage';
 import ElevatedButton from 'components/ElevatedButton';
 
 export const surveyScreenTestIds = {
-  backgroundImage: 'survey__background-image',
   backButton: 'survey__back-button',
   coverImage: 'survey__cover-image',
   title: 'survey__title-text',
@@ -15,10 +14,7 @@ export const surveyScreenTestIds = {
 
 const SurveyScreen = (): JSX.Element => {
   return (
-    <BackgroundImage
-      backgroundUrl="https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_"
-      data-test-id={surveyScreenTestIds.backgroundImage}
-    >
+    <BackgroundImage backgroundUrl="https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_">
       <div className="flex flex-col">
         <button className="mt-[37px] ml-[39px] p-1" data-test-id={surveyScreenTestIds.backButton}>
           <ArrowBack />
