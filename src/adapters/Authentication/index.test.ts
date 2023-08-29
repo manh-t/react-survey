@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker';
+
 import { post } from 'adapters/Base';
 import { config } from 'config';
 
@@ -22,8 +24,8 @@ describe('AuthenticationAdapter', () => {
   describe('signIn', () => {
     describe('given an email and a password', () => {
       it('calls the post method from the base adapter', () => {
-        const email = 'test@test.com';
-        const password = 'test';
+        const email = faker.internet.email();
+        const password = faker.internet.password();
 
         const expectedPath = 'oauth/token';
         const expectedPayload = {
@@ -44,7 +46,7 @@ describe('AuthenticationAdapter', () => {
   describe('refreshToken', () => {
     describe('given a refresh token', () => {
       it('calls the post method from the base adapter', () => {
-        const token = 'refresh token';
+        const token = faker.string.uuid();
 
         const expectedPath = 'oauth/token';
         const expectedPayload = {
