@@ -18,12 +18,12 @@ function addSubscriber(callback: { (isFetchSuccess: boolean): void }) {
   subscribers.push(callback);
 }
 
-const doRefreshToken = (token: string) => {
-  return authenticationRefreshToken(token)
+const doRefreshToken = (refreshToken: string) => {
+  return authenticationRefreshToken(refreshToken)
     .then((response: DeserializableResponse) => {
-      const tokenType = deserialize<Token>(response.data);
+      const token = deserialize<Token>(response.data);
 
-      setToken(tokenType);
+      setToken(token);
       return true;
     })
     .catch(() => {
@@ -45,7 +45,6 @@ export const refreshToken = (error: AxiosError<unknown>): Promise<unknown> => {
       }
       if (originalRequest) {
         Object.assign(originalRequest.headers, {
-          ...originalRequest.headers,
           ...authenticatedHeader(),
         });
         resolve(axios(originalRequest));
@@ -56,6 +55,7 @@ export const refreshToken = (error: AxiosError<unknown>): Promise<unknown> => {
   if (!isAlreadyFetchingAccessToken) {
     isAlreadyFetchingAccessToken = true;
     const token = getToken();
+
     if (token?.refreshToken) {
       doRefreshToken(token.refreshToken).then((isFetchSuccess) => {
         isAlreadyFetchingAccessToken = false;
