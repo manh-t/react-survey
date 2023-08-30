@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { ReactComponent as ArrowBack } from 'assets/images/icons/arrow-back.svg';
 import ElevatedButton from 'components/ElevatedButton';
@@ -8,8 +8,6 @@ import LoadingDialog from 'components/LoadingDialog';
 import MainView from 'components/MainView';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { getSurveyAsyncThunk } from 'store/reducers/Survey';
-
-import 'react-toastify/dist/ReactToastify.css';
 
 export const surveyScreenTestIds = {
   backButton: 'survey__back-button',
@@ -44,47 +42,44 @@ const SurveyScreen = (): JSX.Element => {
   }, [isError]);
 
   return (
-    <div>
-      <ToastContainer />
-      <MainView backgroundUrl={isLoading ? undefined : survey?.coverImageUrl}>
-        {isLoading || isError ? (
-          <div></div>
-        ) : (
-          <div className="flex flex-col">
-            <button
-              className="w-fit mt-[37px] ml-[39px] p-1 text-white"
-              onClick={goBack}
-              data-test-id={surveyScreenTestIds.backButton}
+    <MainView backgroundUrl={isLoading ? undefined : survey?.coverImageUrl}>
+      {isLoading || isError ? (
+        <div></div>
+      ) : (
+        <div className="flex flex-col">
+          <button
+            className="w-fit mt-[37px] ml-[39px] p-1 text-white"
+            onClick={goBack}
+            data-test-id={surveyScreenTestIds.backButton}
+          >
+            <ArrowBack />
+          </button>
+          <div className="w-1/2 self-center pt-36">
+            <img
+              src={survey?.coverImageUrl ? `${survey?.coverImageUrl}l` : ''}
+              className="w-full h-[302px] rounded-[12px] object-cover"
+              alt="survey"
+              data-test-id={surveyScreenTestIds.coverImage}
+            />
+            <p className="text-white text-x-large font-extrabold pt-8" data-test-id={surveyScreenTestIds.title}>
+              {survey?.title}
+            </p>
+            <p
+              className="text-white text-regular tracking-survey-tight opacity-60 pt-2"
+              data-test-id={surveyScreenTestIds.description}
             >
-              <ArrowBack />
-            </button>
-            <div className="w-1/2 self-center pt-36">
-              <img
-                src={survey?.coverImageUrl ? `${survey?.coverImageUrl}l` : ''}
-                className="w-full h-[302px] rounded-[12px] object-cover"
-                alt="survey"
-                data-test-id={surveyScreenTestIds.coverImage}
-              />
-              <p className="text-white text-x-large font-extrabold pt-8" data-test-id={surveyScreenTestIds.title}>
-                {survey?.title}
-              </p>
-              <p
-                className="text-white text-regular tracking-survey-tight opacity-60 pt-2"
-                data-test-id={surveyScreenTestIds.description}
-              >
-                {survey?.description}
-              </p>
-              <div className="pt-8">
-                <ElevatedButton isFullWidth type="submit" data-test-id={surveyScreenTestIds.startSurveyButton}>
-                  Start Survey
-                </ElevatedButton>
-              </div>
+              {survey?.description}
+            </p>
+            <div className="pt-8">
+              <ElevatedButton isFullWidth type="submit" data-test-id={surveyScreenTestIds.startSurveyButton}>
+                Start Survey
+              </ElevatedButton>
             </div>
           </div>
-        )}
-        {isLoading && <LoadingDialog data-test-id={surveyScreenTestIds.loadingDialog} />}
-      </MainView>
-    </div>
+        </div>
+      )}
+      {isLoading && <LoadingDialog data-test-id={surveyScreenTestIds.loadingDialog} />}
+    </MainView>
   );
 };
 
