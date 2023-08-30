@@ -12,10 +12,10 @@ export const testTypeFabricator = Fabricator({
   },
 });
 
-// Survey
+// Responses
 const questionId = faker.string.uuid();
 
-export const surveyWithRelationshipFabricator = Fabricator({
+export const surveyResponseWithRelationshipFabricator = Fabricator({
   type: 'survey',
   id: faker.string.uuid(),
   attributes: {
@@ -35,7 +35,7 @@ export const surveyWithRelationshipFabricator = Fabricator({
   },
 });
 
-export const surveyWithoutRelationshipFabricator = Fabricator({
+export const surveyResponseWithoutRelationshipFabricator = Fabricator({
   type: 'survey',
   id: faker.string.uuid(),
   attributes: {
@@ -50,7 +50,7 @@ export const surveyWithoutRelationshipFabricator = Fabricator({
   },
 });
 
-export const questionFabricator = Fabricator({
+export const questionResponseFabricator = Fabricator({
   type: 'question',
   id: questionId,
   attributes: {
@@ -67,4 +67,20 @@ export const questionFabricator = Fabricator({
     isShareableOnTwitter: false,
     tagList: '',
   },
+});
+
+// Models
+export const surveyFabricator = Fabricator({
+  id: faker.string.uuid(),
+  resourceType: 'survey',
+  title: faker.string.sample(),
+  description: faker.string.sample(),
+  coverImageUrl: faker.image.url(),
+});
+
+// States
+export const surveyStateFabricator = Fabricator({
+  survey: () => surveyFabricator(),
+  isLoading: true,
+  isError: false,
 });
