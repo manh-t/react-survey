@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { faker } from '@faker-js/faker';
 import { render, screen } from '@testing-library/react';
 
 import { mainViewTestIds } from 'components/MainView';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { SurveyState } from 'store/reducers/Survey';
+import { surveyStateFabricator } from 'tests/fabricator';
 import TestWrapper from 'tests/TestWrapper';
 
 import SurveyScreen, { surveyScreenTestIds } from '.';
@@ -15,6 +15,19 @@ const mockDispatch = jest.fn();
 jest.mock('hooks');
 
 describe('SurveyScreen', () => {
+  const mockState: { survey: SurveyState } = {
+    survey: surveyStateFabricator(),
+  };
+
+  beforeEach(() => {
+    (useAppSelector as jest.Mock).mockImplementation((callback) => callback(mockState));
+    (useAppDispatch as jest.Mock).mockImplementation(() => mockDispatch);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   const TestComponent = (): JSX.Element => {
     return (
       <TestWrapper>
@@ -22,30 +35,6 @@ describe('SurveyScreen', () => {
       </TestWrapper>
     );
   };
-
-  const mockState: { survey: SurveyState } = {
-    survey: {
-      survey: {
-        id: faker.string.uuid(),
-        resourceType: 'survey',
-        title: faker.string.sample(),
-        description: faker.string.sample(),
-        coverImageUrl: faker.image.url(),
-      },
-      isLoading: true,
-      isError: false,
-    },
-  };
-
-  beforeEach(() => {
-    (useAppSelector as jest.Mock).mockImplementation((callback) => callback(mockState));
-    (useAppDispatch as jest.Mock).mockImplementation(() => mockDispatch);
-    jest.spyOn(React, 'useEffect').mockImplementation(() => jest.fn());
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
 
   describe('given the isLoading is true', () => {
     it('shows the loading indicator', () => {
@@ -70,6 +59,7 @@ describe('SurveyScreen', () => {
 
     it('renders Survey screen and its components', () => {
       render(<TestComponent />);
+
       const mainView = screen.getByTestId(mainViewTestIds.base);
       const backButton = screen.getByTestId(surveyScreenTestIds.backButton);
       const coverImage = screen.getByTestId(surveyScreenTestIds.coverImage);

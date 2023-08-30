@@ -1,7 +1,7 @@
 import {
-  questionFabricator,
-  surveyWithRelationshipFabricator,
-  surveyWithoutRelationshipFabricator,
+  questionResponseFabricator,
+  surveyResponseWithRelationshipFabricator,
+  surveyResponseWithoutRelationshipFabricator,
   testTypeAge,
   testTypeFabricator,
   testTypeName,
@@ -18,9 +18,9 @@ describe('Deserializer helper', () => {
   }
 
   describe('deserialize', () => {
-    const surveyWithRelationship: Deserializer = surveyWithRelationshipFabricator();
-    const surveyWithoutRelationship: Deserializer = surveyWithoutRelationshipFabricator();
-    const questions: Deserializer[] = questionFabricator.times(1);
+    const surveyWithRelationship: Deserializer = surveyResponseWithRelationshipFabricator();
+    const surveyWithoutRelationship: Deserializer = surveyResponseWithoutRelationshipFabricator();
+    const questions: Deserializer[] = questionResponseFabricator.times(1);
 
     it('returns deserialized data', () => {
       const deserializedData = deserialize<TestType>(testTypeFabricator());
