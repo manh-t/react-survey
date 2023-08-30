@@ -35,16 +35,18 @@ describe('Deserializer helper', () => {
         it('deserializes the relation array correctly', () => {
           const deserializedData = deserialize<Survey>(surveyWithRelationship, questions);
 
-          expect(deserializedData.resourceType).toBe('survey');
-          expect(deserializedData.id).toEqual(surveyWithRelationship.id);
-          expect(deserializedData.title).toEqual(surveyWithRelationship.attributes.title);
-          expect(deserializedData.description).toEqual(surveyWithRelationship.attributes.description);
-          expect(deserializedData.thankEmailAboveThreshold).toEqual(surveyWithRelationship.attributes.thankEmailAboveThreshold);
-          expect(deserializedData.thankEmailBelowThreshold).toEqual(surveyWithRelationship.attributes.thankEmailBelowThreshold);
-          expect(deserializedData.isActive).toEqual(surveyWithRelationship.attributes.isActive);
-          expect(deserializedData.coverImageUrl).toEqual(surveyWithRelationship.attributes.coverImageUrl);
-          expect(deserializedData.createdAt).toEqual(surveyWithRelationship.attributes.createdAt);
-          expect(deserializedData.activeAt).toEqual(surveyWithRelationship.attributes.activeAt);
+          expect(deserializedData).toMatchObject({
+            id: surveyWithRelationship.id,
+            resourceType: 'survey',
+            title: surveyWithRelationship.attributes.title,
+            description: surveyWithRelationship.attributes.description,
+            thankEmailAboveThreshold: surveyWithRelationship.attributes.thankEmailAboveThreshold,
+            thankEmailBelowThreshold: surveyWithRelationship.attributes.thankEmailBelowThreshold,
+            isActive: surveyWithRelationship.attributes.isActive,
+            coverImageUrl: surveyWithRelationship.attributes.coverImageUrl,
+            createdAt: surveyWithRelationship.attributes.createdAt,
+            activeAt: surveyWithRelationship.attributes.activeAt,
+          });
 
           expect(deserializedData.questions?.length).toEqual(questions.length);
           expect(deserializedData.questions?.at(0)?.id).toEqual(questions.at(0)?.id);
@@ -55,16 +57,18 @@ describe('Deserializer helper', () => {
         it('does NOT assign the relation', () => {
           const deserializedData = deserialize<Survey>(surveyWithRelationship);
 
-          expect(deserializedData.resourceType).toBe('survey');
-          expect(deserializedData.id).toEqual(surveyWithRelationship.id);
-          expect(deserializedData.title).toEqual(surveyWithRelationship.attributes.title);
-          expect(deserializedData.description).toEqual(surveyWithRelationship.attributes.description);
-          expect(deserializedData.thankEmailAboveThreshold).toEqual(surveyWithRelationship.attributes.thankEmailAboveThreshold);
-          expect(deserializedData.thankEmailBelowThreshold).toEqual(surveyWithRelationship.attributes.thankEmailBelowThreshold);
-          expect(deserializedData.isActive).toEqual(surveyWithRelationship.attributes.isActive);
-          expect(deserializedData.coverImageUrl).toEqual(surveyWithRelationship.attributes.coverImageUrl);
-          expect(deserializedData.createdAt).toEqual(surveyWithRelationship.attributes.createdAt);
-          expect(deserializedData.activeAt).toEqual(surveyWithRelationship.attributes.activeAt);
+          expect(deserializedData).toMatchObject({
+            id: surveyWithRelationship.id,
+            resourceType: 'survey',
+            title: surveyWithRelationship.attributes.title,
+            description: surveyWithRelationship.attributes.description,
+            thankEmailAboveThreshold: surveyWithRelationship.attributes.thankEmailAboveThreshold,
+            thankEmailBelowThreshold: surveyWithRelationship.attributes.thankEmailBelowThreshold,
+            isActive: surveyWithRelationship.attributes.isActive,
+            coverImageUrl: surveyWithRelationship.attributes.coverImageUrl,
+            createdAt: surveyWithRelationship.attributes.createdAt,
+            activeAt: surveyWithRelationship.attributes.activeAt,
+          });
 
           expect(deserializedData.questions).toBeUndefined();
         });
@@ -74,20 +78,18 @@ describe('Deserializer helper', () => {
         it('does NOT assign the relation', () => {
           const deserializedData = deserialize<Survey>(surveyWithoutRelationship, questions);
 
-          expect(deserializedData.resourceType).toBe('survey');
-          expect(deserializedData.id).toEqual(surveyWithoutRelationship.id);
-          expect(deserializedData.title).toEqual(surveyWithoutRelationship.attributes.title);
-          expect(deserializedData.description).toEqual(surveyWithoutRelationship.attributes.description);
-          expect(deserializedData.thankEmailAboveThreshold).toEqual(
-            surveyWithoutRelationship.attributes.thankEmailAboveThreshold
-          );
-          expect(deserializedData.thankEmailBelowThreshold).toEqual(
-            surveyWithoutRelationship.attributes.thankEmailBelowThreshold
-          );
-          expect(deserializedData.isActive).toEqual(surveyWithoutRelationship.attributes.isActive);
-          expect(deserializedData.coverImageUrl).toEqual(surveyWithoutRelationship.attributes.coverImageUrl);
-          expect(deserializedData.createdAt).toEqual(surveyWithoutRelationship.attributes.createdAt);
-          expect(deserializedData.activeAt).toEqual(surveyWithoutRelationship.attributes.activeAt);
+          expect(deserializedData).toMatchObject({
+            id: surveyWithoutRelationship.id,
+            resourceType: 'survey',
+            title: surveyWithoutRelationship.attributes.title,
+            description: surveyWithoutRelationship.attributes.description,
+            thankEmailAboveThreshold: surveyWithoutRelationship.attributes.thankEmailAboveThreshold,
+            thankEmailBelowThreshold: surveyWithoutRelationship.attributes.thankEmailBelowThreshold,
+            isActive: surveyWithoutRelationship.attributes.isActive,
+            coverImageUrl: surveyWithoutRelationship.attributes.coverImageUrl,
+            createdAt: surveyWithoutRelationship.attributes.createdAt,
+            activeAt: surveyWithoutRelationship.attributes.activeAt,
+          });
 
           expect(deserializedData.questions).toBeUndefined();
         });
@@ -103,9 +105,11 @@ describe('Deserializer helper', () => {
         expect(deserializedList).toHaveLength(jsonArray.length);
 
         deserializedList.forEach((item: TestType, index: number) => {
-          expect(item.resourceType).toBe('TestType');
-          expect(item.name).toEqual(jsonArray[index].attributes.name);
-          expect(item.age).toEqual(jsonArray[index].attributes.age);
+          expect(item).toMatchObject({
+            resourceType: 'TestType',
+            name: jsonArray[index].attributes.name,
+            age: jsonArray[index].attributes.age,
+          });
         });
       });
     });
