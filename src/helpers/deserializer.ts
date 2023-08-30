@@ -1,5 +1,4 @@
 import { AxiosResponse } from 'axios';
-import { AnyObject } from 'immer/dist/internal';
 import isArray from 'lodash/isArray';
 import isEmpty from 'lodash/isEmpty';
 
@@ -56,11 +55,13 @@ export const deserialize = <T extends Resource>(data: Deserializer, included?: D
       if (isArray(relationshipData) && !isEmpty(relationshipData)) {
         const relationshipResources = relationshipData.map((item) => relationshipResource(item.id));
 
-        // FIXME Cannot use Object.assign because resource[resourceType] is null
-        (resource as unknown as AnyObject)[resourceType] = relationshipResources;
+        Object.assign(resource, {
+          [resourceType]: relationshipResources,
+        });
       } else if (!isEmpty(relationshipData)) {
-        // FIXME Cannot use Object.assign because resource[resourceType] is null
-        (resource as unknown as AnyObject)[resourceType] = relationshipResource((relationshipData as RelationshipResource).id);
+        Object.assign(resource, {
+          [resourceType]: relationshipResource((relationshipData as RelationshipResource).id),
+        });
       }
     });
   }

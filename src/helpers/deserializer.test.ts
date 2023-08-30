@@ -1,6 +1,11 @@
-import { faker } from '@faker-js/faker';
-import { Fabricator } from '@travelperksl/fabricator';
-
+import {
+  questionFabricator,
+  surveyWithRelationshipFabricator,
+  surveyWithoutRelationshipFabricator,
+  testTypeAge,
+  testTypeFabricator,
+  testTypeName,
+} from 'tests/fabricator';
 import { Resource } from 'types/resource';
 import { Survey } from 'types/survey';
 
@@ -13,137 +18,76 @@ describe('Deserializer helper', () => {
   }
 
   describe('deserialize', () => {
-    const jsonName = faker.person.fullName();
-    const jsonAge = faker.number.int();
-    const jsonDataFabricator = Fabricator({
-      id: () => faker.string.uuid(),
-      type: 'TestType',
-      attributes: {
-        name: jsonName,
-        age: jsonAge,
-      },
-    });
-
-    const questionId = faker.string.uuid();
-
-    const jsonDataWithRelation: Deserializer = {
-      type: 'survey',
-      id: faker.string.uuid(),
-      attributes: {
-        title: faker.string.sample(),
-        description: faker.string.sample(),
-        thankEmailAboveThreshold: faker.string.sample(),
-        thankEmailBelowThreshold: faker.string.sample(),
-        isActive: true,
-        coverImageUrl: faker.image.url(),
-        createdAt: faker.date.anytime().toISOString(),
-        activeAt: faker.date.anytime().toISOString(),
-      },
-      relationships: {
-        questions: {
-          data: [{ type: 'question', id: questionId }],
-        },
-      },
-    };
-
-    const jsonDataWithoutRelation: Deserializer = {
-      type: 'survey',
-      id: faker.string.uuid(),
-      attributes: {
-        title: faker.string.sample(),
-        description: faker.string.sample(),
-        thankEmailAboveThreshold: faker.string.sample(),
-        thankEmailBelowThreshold: faker.string.sample(),
-        isActive: true,
-        coverImageUrl: faker.image.url(),
-        createdAt: faker.date.anytime().toISOString(),
-        activeAt: faker.date.anytime().toISOString(),
-      },
-    };
-
-    const jsonDataIncluded: Deserializer[] = [
-      {
-        type: 'question',
-        id: questionId,
-        attributes: {
-          text: faker.string.sample(),
-          displayOrder: 0,
-          shortText: faker.string.sample(),
-          pick: faker.string.sample(),
-          displayType: faker.string.sample(),
-          isMandatory: false,
-          imageUrl: faker.image.url(),
-          coverImageUrl: faker.image.url(),
-          coverImageOpacity: 0.6,
-          isShareableOnFacebook: false,
-          isShareableOnTwitter: false,
-          tagList: '',
-        },
-      },
-    ];
+    const surveyWithRelationship: Deserializer = surveyWithRelationshipFabricator();
+    const surveyWithoutRelationship: Deserializer = surveyWithoutRelationshipFabricator();
+    const questions: Deserializer[] = questionFabricator.times(1);
 
     it('returns deserialized data', () => {
-      const deserializedData = deserialize<TestType>(jsonDataFabricator());
+      const deserializedData = deserialize<TestType>(testTypeFabricator());
 
       expect(deserializedData.resourceType).toBe('TestType');
-      expect(deserializedData.name).toBe(jsonName);
-      expect(deserializedData.age).toBe(jsonAge);
+      expect(deserializedData.name).toBe(testTypeName);
+      expect(deserializedData.age).toBe(testTypeAge);
     });
 
-    describe('given relationships and included', () => {
+    describe('given relationships and included JSON data', () => {
       describe('given the relationships is an array', () => {
-        it('sets the relation array correctly', () => {
-          const deserializedData = deserialize<Survey>(jsonDataWithRelation, jsonDataIncluded);
+        it('deserializes the relation array correctly', () => {
+          const deserializedData = deserialize<Survey>(surveyWithRelationship, questions);
 
           expect(deserializedData.resourceType).toBe('survey');
-          expect(deserializedData.id).toEqual(jsonDataWithRelation.id);
-          expect(deserializedData.title).toEqual(jsonDataWithRelation.attributes.title);
-          expect(deserializedData.description).toEqual(jsonDataWithRelation.attributes.description);
-          expect(deserializedData.thankEmailAboveThreshold).toEqual(jsonDataWithRelation.attributes.thankEmailAboveThreshold);
-          expect(deserializedData.thankEmailBelowThreshold).toEqual(jsonDataWithRelation.attributes.thankEmailBelowThreshold);
-          expect(deserializedData.isActive).toEqual(jsonDataWithRelation.attributes.isActive);
-          expect(deserializedData.coverImageUrl).toEqual(jsonDataWithRelation.attributes.coverImageUrl);
-          expect(deserializedData.createdAt).toEqual(jsonDataWithRelation.attributes.createdAt);
-          expect(deserializedData.activeAt).toEqual(jsonDataWithRelation.attributes.activeAt);
+          expect(deserializedData.id).toEqual(surveyWithRelationship.id);
+          expect(deserializedData.title).toEqual(surveyWithRelationship.attributes.title);
+          expect(deserializedData.description).toEqual(surveyWithRelationship.attributes.description);
+          expect(deserializedData.thankEmailAboveThreshold).toEqual(surveyWithRelationship.attributes.thankEmailAboveThreshold);
+          expect(deserializedData.thankEmailBelowThreshold).toEqual(surveyWithRelationship.attributes.thankEmailBelowThreshold);
+          expect(deserializedData.isActive).toEqual(surveyWithRelationship.attributes.isActive);
+          expect(deserializedData.coverImageUrl).toEqual(surveyWithRelationship.attributes.coverImageUrl);
+          expect(deserializedData.createdAt).toEqual(surveyWithRelationship.attributes.createdAt);
+          expect(deserializedData.activeAt).toEqual(surveyWithRelationship.attributes.activeAt);
 
-          expect(deserializedData.questions?.length).toEqual(jsonDataIncluded.length);
-          expect(deserializedData.questions?.at(0)?.id).toEqual(jsonDataIncluded.at(0)?.id);
+          expect(deserializedData.questions?.length).toEqual(questions.length);
+          expect(deserializedData.questions?.at(0)?.id).toEqual(questions.at(0)?.id);
         });
       });
 
-      describe('given relationships data but NO included data', () => {
+      describe('given relationships data but NO included JSON data', () => {
         it('does NOT assign the relation', () => {
-          const deserializedData = deserialize<Survey>(jsonDataWithRelation);
+          const deserializedData = deserialize<Survey>(surveyWithRelationship);
 
           expect(deserializedData.resourceType).toBe('survey');
-          expect(deserializedData.id).toEqual(jsonDataWithRelation.id);
-          expect(deserializedData.title).toEqual(jsonDataWithRelation.attributes.title);
-          expect(deserializedData.description).toEqual(jsonDataWithRelation.attributes.description);
-          expect(deserializedData.thankEmailAboveThreshold).toEqual(jsonDataWithRelation.attributes.thankEmailAboveThreshold);
-          expect(deserializedData.thankEmailBelowThreshold).toEqual(jsonDataWithRelation.attributes.thankEmailBelowThreshold);
-          expect(deserializedData.isActive).toEqual(jsonDataWithRelation.attributes.isActive);
-          expect(deserializedData.coverImageUrl).toEqual(jsonDataWithRelation.attributes.coverImageUrl);
-          expect(deserializedData.createdAt).toEqual(jsonDataWithRelation.attributes.createdAt);
-          expect(deserializedData.activeAt).toEqual(jsonDataWithRelation.attributes.activeAt);
+          expect(deserializedData.id).toEqual(surveyWithRelationship.id);
+          expect(deserializedData.title).toEqual(surveyWithRelationship.attributes.title);
+          expect(deserializedData.description).toEqual(surveyWithRelationship.attributes.description);
+          expect(deserializedData.thankEmailAboveThreshold).toEqual(surveyWithRelationship.attributes.thankEmailAboveThreshold);
+          expect(deserializedData.thankEmailBelowThreshold).toEqual(surveyWithRelationship.attributes.thankEmailBelowThreshold);
+          expect(deserializedData.isActive).toEqual(surveyWithRelationship.attributes.isActive);
+          expect(deserializedData.coverImageUrl).toEqual(surveyWithRelationship.attributes.coverImageUrl);
+          expect(deserializedData.createdAt).toEqual(surveyWithRelationship.attributes.createdAt);
+          expect(deserializedData.activeAt).toEqual(surveyWithRelationship.attributes.activeAt);
 
           expect(deserializedData.questions).toBeUndefined();
         });
       });
 
-      describe('given NO relationships data but included data', () => {
+      describe('given NO relationships data but included JSON data', () => {
         it('does NOT assign the relation', () => {
-          const deserializedData = deserialize<Survey>(jsonDataWithoutRelation, jsonDataIncluded);
+          const deserializedData = deserialize<Survey>(surveyWithoutRelationship, questions);
 
           expect(deserializedData.resourceType).toBe('survey');
-          expect(deserializedData.id).toEqual(jsonDataWithoutRelation.id);
-          expect(deserializedData.title).toEqual(jsonDataWithoutRelation.attributes.title);
-          expect(deserializedData.description).toEqual(jsonDataWithoutRelation.attributes.description);
-          expect(deserializedData.thankEmailAboveThreshold).toEqual(jsonDataWithoutRelation.attributes.thankEmailAboveThreshold);
-          expect(deserializedData.thankEmailBelowThreshold).toEqual(jsonDataWithoutRelation.attributes.thankEmailBelowThreshold);
-          expect(deserializedData.isActive).toEqual(jsonDataWithoutRelation.attributes.isActive);
-          expect(deserializedData.coverImageUrl).toEqual(jsonDataWithoutRelation.attributes.coverImageUrl);
-          expect(deserializedData.createdAt).toEqual(jsonDataWithoutRelation.attributes.createdAt);
-          expect(deserializedData.activeAt).toEqual(jsonDataWithoutRelation.attributes.activeAt);
+          expect(deserializedData.id).toEqual(surveyWithoutRelationship.id);
+          expect(deserializedData.title).toEqual(surveyWithoutRelationship.attributes.title);
+          expect(deserializedData.description).toEqual(surveyWithoutRelationship.attributes.description);
+          expect(deserializedData.thankEmailAboveThreshold).toEqual(
+            surveyWithoutRelationship.attributes.thankEmailAboveThreshold
+          );
+          expect(deserializedData.thankEmailBelowThreshold).toEqual(
+            surveyWithoutRelationship.attributes.thankEmailBelowThreshold
+          );
+          expect(deserializedData.isActive).toEqual(surveyWithoutRelationship.attributes.isActive);
+          expect(deserializedData.coverImageUrl).toEqual(surveyWithoutRelationship.attributes.coverImageUrl);
+          expect(deserializedData.createdAt).toEqual(surveyWithoutRelationship.attributes.createdAt);
+          expect(deserializedData.activeAt).toEqual(surveyWithoutRelationship.attributes.activeAt);
 
           expect(deserializedData.questions).toBeUndefined();
         });
@@ -151,7 +95,7 @@ describe('Deserializer helper', () => {
     });
 
     describe('deserializeList', () => {
-      const jsonArray = jsonDataFabricator.times(2);
+      const jsonArray = testTypeFabricator.times(2);
 
       it('returns a list of the deserialized items', () => {
         const deserializedList = deserializeList<TestType>(jsonArray);
