@@ -1,11 +1,5 @@
 const surveyScreenTestIds = {
   backButton: 'survey__back-button',
-  coverImage: 'survey__cover-image',
-  title: 'survey__title-text',
-  description: 'survey__description-text',
-  startSurveyButton: 'survey__start-survey-button',
-  loadingDialog: 'survey__loading-dialog',
-  toast: 'survey__toast',
 };
 
 describe('Survey screen', () => {
