@@ -9,7 +9,9 @@ describe('AppSlider', () => {
     render(<AppSlider onValueChanged={jest.fn()} />);
 
     const appSlider = screen.getByTestId(appSliderDataTestIds.base);
+    const slider = screen.getByRole('slider');
 
     expect(appSlider).toBeVisible();
+    expect(slider).toBeVisible();
   });
 });
