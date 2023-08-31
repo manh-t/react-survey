@@ -4,8 +4,9 @@ const surveyScreenTestIds = {
 
 describe('Survey screen', () => {
   context('given the Back button is clicked', () => {
-    beforeEach(() => {
+    it('backs to the previous page', () => {
       cy.signIn();
+
       cy.interceptWithDelay('GET', '**/api/v1/surveys/*', 200, {
         statusCode: 200,
         fixture: 'Survey/Detail/valid.json',
@@ -18,9 +19,7 @@ describe('Survey screen', () => {
         statusCode: 200,
         fixture: 'User/valid.json',
       });
-    });
 
-    it('backs to the previous page', () => {
       cy.visit('/');
       cy.visit('/surveys/d5de6a8f8f5f1cfe51bc');
 
