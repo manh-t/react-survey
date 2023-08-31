@@ -2,6 +2,7 @@ import React from 'react';
 import { useRoutes } from 'react-router-dom';
 import 'dummy.scss';
 import 'assets/stylesheets/application.scss';
+import 'rc-slider/assets/index.css';
 import { ToastContainer } from 'react-toastify';
 
 import routes from './routes';
