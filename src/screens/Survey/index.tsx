@@ -72,7 +72,7 @@ const SurveyScreen = (): JSX.Element => {
               {survey?.description}
             </p>
             <div className="pt-8">
-              <Link to={questionPath()}>
+              <Link to={questionPath}>
                 <ElevatedButton isFullWidth type="submit" data-test-id={surveyScreenTestIds.startSurveyButton}>
                   Start Survey
                 </ElevatedButton>

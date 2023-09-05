@@ -8,16 +8,13 @@ import SurveyScreen from 'screens/Survey';
 
 import ProtectedRoute from './ProtectedRoute';
 
+export const questionPath = 'questions';
+
 export const paths = {
   root: '/',
   signIn: '/sign-in',
   survey: '/surveys/:id',
-  question: '/surveys/:id/questions',
-};
-
-export const questionPath = (): string => {
-  const questionPaths = paths.question.split('/');
-  return questionPaths[questionPaths.length - 1];
+  question: `/surveys/:id/${questionPath}`,
 };
 
 const routes: RouteObject[] = [

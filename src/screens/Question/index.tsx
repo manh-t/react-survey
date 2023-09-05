@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ReactComponent as ArrowRight } from 'assets/images/icons/arrow-right.svg';
-import { ReactComponent as CloseButton } from 'assets/images/icons/close-btn-white.svg';
+import { ReactComponent as CloseButton } from 'assets/images/icons/close-btn.svg';
 import AppSlider from 'components/AppSlider';
 import MainView from 'components/MainView';
 
@@ -16,7 +16,7 @@ const QuestionScreen = (): JSX.Element => {
   return (
     <MainView backgroundUrl="https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_">
       <div className="flex flex-col h-full">
-        <button className="mt-8 mr-8 p-1 self-end" data-test-id={questionScreenTestIds.closeButton}>
+        <button className="mt-8 mr-8 p-1 self-end text-white" data-test-id={questionScreenTestIds.closeButton}>
           <CloseButton />
         </button>
         <div className="w-1/2 self-center flex-1 flex flex-col justify-center">
