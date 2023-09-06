@@ -11,7 +11,7 @@ describe('TextArea', () => {
   it('renders a text area component', () => {
     const answers: Answer[] = answerFabricator.times(2);
 
-    render(<TextArea questionId="question-id" items={answers} />);
+    render(<TextArea items={answers} />);
 
     const textArea = screen.getByTestId(textAreaDataTestIds.base);
 
