@@ -17,6 +17,9 @@ describe('Dropdown', () => {
         { id: '4', resourceType: 'answer', text: 'Test 4' },
         { id: '5', resourceType: 'answer', text: 'Test 5' },
       ],
+      onValueChanged: () => {
+        // Do nothing
+      },
     };
 
     render(<Dropdown {...dropdownProps} />);

@@ -10,7 +10,7 @@ export const dropdownDataTestIds = {
 interface DropdownProps {
   questionId: string;
   items: Answer[];
-  onValueChanged?: (value: Answer) => void;
+  onValueChanged: (value: Answer) => void;
 }
 const Dropdown = ({ questionId, items, onValueChanged }: DropdownProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +22,7 @@ const Dropdown = ({ questionId, items, onValueChanged }: DropdownProps): JSX.Ele
 
   const handleOnSelectValue = (value: Answer) => {
     setSelectedValue(value.text);
-    onValueChanged?.(value);
+    onValueChanged(value);
     toggleDropdown();
   };
 
@@ -33,11 +33,11 @@ const Dropdown = ({ questionId, items, onValueChanged }: DropdownProps): JSX.Ele
   return (
     <div className="relative flex flex-col items-center w-full rounded-lg" data-test-id={dropdownDataTestIds.base}>
       <button
-        onClick={() => toggleDropdown()}
+        onClick={toggleDropdown}
         className="w-full h-14 flex items-center justify-between appearance-none bg-white bg-opacity-[.18] rounded-[12px] hover:outline-none hover:ring-transparent px-3 text-white text-regular tracking-survey-tight hover:bg-opacity-30"
       >
         {selectedValue}
-        {!isOpen ? <ArrowDropdown /> : <ArrowDropdown className="rotate-180" />}
+        <ArrowDropdown className={isOpen ? 'rotate-180' : ''} />
       </button>
       {isOpen && (
         <div className="bg-white bg-opacity-[.18] absolute top-20 flex flex-col items-start rounded-[12px] p-2 w-full overflow-y-auto max-h-[400px]">
