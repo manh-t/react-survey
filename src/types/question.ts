@@ -33,9 +33,5 @@ export enum DisplayType {
 }
 
 export const getDisplayTypeEnum = (question: Question): DisplayType => {
-  try {
-    return (<never>DisplayType)[question.displayType ?? ''];
-  } catch (error) {
-    return DisplayType.Unknown;
-  }
+  return question.displayType ? (<never>DisplayType)[question.displayType] : DisplayType.Unknown;
 };
