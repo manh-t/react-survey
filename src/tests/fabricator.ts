@@ -78,6 +78,12 @@ export const surveyFabricator = Fabricator({
   coverImageUrl: faker.image.url(),
 });
 
+export const answerFabricator = Fabricator({
+  id: faker.string.uuid(),
+  resourceType: 'answer',
+  text: faker.string.sample(),
+});
+
 // States
 export const surveyStateFabricator = Fabricator({
   survey: () => surveyFabricator(),
