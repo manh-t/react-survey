@@ -11,7 +11,7 @@ interface RatingProps {
   questionId: string;
   items: Answer[];
   displayType: DisplayType;
-  onValueChanged?: (answer: Answer) => void;
+  onValueChanged: (answer: Answer) => void;
 }
 
 const Rating = ({ questionId, items, displayType, onValueChanged }: RatingProps): JSX.Element => {
@@ -20,7 +20,7 @@ const Rating = ({ questionId, items, displayType, onValueChanged }: RatingProps)
   const handleOnSelectRating = (index: number, answer: Answer) => {
     setSelectedIndex(index);
 
-    onValueChanged?.(answer);
+    onValueChanged(answer);
   };
 
   const faceModes = ['😡', '😕', '😐', '🙂', '😄'];

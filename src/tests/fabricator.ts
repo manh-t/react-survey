@@ -79,7 +79,7 @@ export const surveyFabricator = Fabricator({
 });
 
 export const answerFabricator = Fabricator({
-  id: faker.string.uuid(),
+  id: () => sequence().toString(),
   resourceType: 'answer',
   text: faker.string.sample(),
 });

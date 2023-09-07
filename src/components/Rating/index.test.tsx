@@ -2,26 +2,27 @@ import React from 'react';
 
 import { act, render, screen, within } from '@testing-library/react';
 
+import { answerFabricator } from 'tests/fabricator';
 import { Answer } from 'types/answer';
 import { DisplayType } from 'types/question';
 
 import Rating, { ratingDataTestIds } from '.';
 
 describe('Rating', () => {
+  const answers = answerFabricator.times(5);
+
   it('renders a rating component', () => {
     const ratingProps = {
       questionId: 'question-id',
-      items: [
-        { id: '1', resourceType: 'answer', text: 'sdf' },
-        { id: '2', resourceType: 'answer', text: 'sdf' },
-        { id: '3', resourceType: 'answer', text: 'sdf' },
-        { id: '4', resourceType: 'answer', text: 'sdf' },
-        { id: '5', resourceType: 'answer', text: 'sdf' },
-      ],
+      items: answers,
       displayType: DisplayType.Star,
     };
 
-    render(<Rating {...ratingProps} />);
+    const onValueChanged = () => {
+      // Do nothing
+    };
+
+    render(<Rating onValueChanged={onValueChanged} {...ratingProps} />);
 
     const rating = screen.getByTestId(ratingDataTestIds.base);
 
@@ -36,13 +37,7 @@ describe('Rating', () => {
       };
       const ratingProps = {
         questionId: 'question-id',
-        items: [
-          { id: '1', resourceType: 'answer', text: 'sdf' },
-          { id: '2', resourceType: 'answer', text: 'sdf' },
-          { id: '3', resourceType: 'answer', text: 'sdf' },
-          { id: '4', resourceType: 'answer', text: 'sdf' },
-          { id: '5', resourceType: 'answer', text: 'sdf' },
-        ],
+        items: answers,
         displayType: DisplayType.Star,
         onValueChanged: onValueChanged,
       };
