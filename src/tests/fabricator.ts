@@ -81,7 +81,7 @@ export const surveyFabricator = Fabricator({
 export const answerFabricator = Fabricator({
   id: () => sequence().toString(),
   resourceType: 'answer',
-  text: faker.string.sample(),
+  text: () => faker.string.sample(),
 });
 
 // States
