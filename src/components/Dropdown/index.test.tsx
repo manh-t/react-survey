@@ -2,21 +2,18 @@ import React from 'react';
 
 import { act, render, screen, within } from '@testing-library/react';
 
+import { answerFabricator } from 'tests/fabricator';
 import { Answer } from 'types/answer';
 
 import Dropdown, { dropdownDataTestIds } from '.';
 
 describe('Dropdown', () => {
+  const answers = answerFabricator.times(5);
+
   it('renders a dropdown component', () => {
     const dropdownProps = {
       questionId: 'question-id',
-      items: [
-        { id: '1', resourceType: 'answer', text: 'Test 1' },
-        { id: '2', resourceType: 'answer', text: 'Test 2' },
-        { id: '3', resourceType: 'answer', text: 'Test 3' },
-        { id: '4', resourceType: 'answer', text: 'Test 4' },
-        { id: '5', resourceType: 'answer', text: 'Test 5' },
-      ],
+      items: answers,
       onValueChanged: () => {
         // Do nothing
       },
@@ -37,13 +34,7 @@ describe('Dropdown', () => {
       };
       const dropdownProps = {
         questionId: 'question-id',
-        items: [
-          { id: '1', resourceType: 'answer', text: 'Test 1' },
-          { id: '2', resourceType: 'answer', text: 'Test 2' },
-          { id: '3', resourceType: 'answer', text: 'Test 3' },
-          { id: '4', resourceType: 'answer', text: 'Test 4' },
-          { id: '5', resourceType: 'answer', text: 'Test 5' },
-        ],
+        items: answers,
         onValueChanged: onValueChanged,
       };
 
@@ -51,19 +42,22 @@ describe('Dropdown', () => {
 
       const dropdown = screen.getByTestId(dropdownDataTestIds.base);
 
+      const firstValue = answers[0].text;
+      const thirdValue = answers[2].text;
+
       act(() => {
-        within(dropdown).getByText('Test 1').click();
+        within(dropdown).getByText(firstValue).click();
       });
 
       act(() => {
         within(dropdown)
           .getByRole('button', {
-            name: 'Test 3',
+            name: thirdValue,
           })
           .click();
       });
 
-      expect(selectedValue).toBe('Test 3');
+      expect(selectedValue).toBe(thirdValue);
     });
   });
 });

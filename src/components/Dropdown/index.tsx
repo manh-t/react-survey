@@ -17,7 +17,7 @@ const Dropdown = ({ questionId, items, onValueChanged }: DropdownProps): JSX.Ele
   const [selectedValue, setSelectedValue] = useState(items[0].text);
 
   const toggleDropdown = () => {
-    setIsOpen((prev) => !prev);
+    setIsOpen(!isOpen);
   };
 
   const handleOnSelectValue = (value: Answer) => {
