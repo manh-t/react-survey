@@ -19,7 +19,7 @@ const MultiChoice = ({ items, isPickOne, onValuesChanged }: MultiChoiceProps): J
   const [selectedValues, setSelectedValues] = useState<Answer[]>([]);
 
   const isSelected = (answer: Answer): boolean => {
-    return selectedValues.find((item) => item.id === answer.id) !== undefined;
+    return !!selectedValues.find((item) => item.id === answer.id);
   };
 
   const getExtraClassNames = (answer: Answer): string => {
