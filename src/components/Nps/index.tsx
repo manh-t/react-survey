@@ -4,19 +4,23 @@ import classNames from 'classnames';
 
 import { Answer } from 'types/answer';
 
+export const npsDataTestIds = {
+  base: 'nps__base',
+};
+
 interface NpsProps {
   items: Answer[];
-  onValuesChanged?: (answers: Answer[]) => void;
-  'data-test-id'?: string;
+  onValuesChanged: (answers: Answer[]) => void;
 }
-const Nps = ({ items: answers, onValuesChanged, ...rest }: NpsProps): JSX.Element => {
-  const [currentScore, setCurrentScore] = useState(Math.round(answers.length / 2));
+
+const Nps = ({ items, onValuesChanged }: NpsProps): JSX.Element => {
+  const [currentScore, setCurrentScore] = useState(Math.round(items.length / 2));
 
   const addBorders = (index: number): string => {
     let borderAttributes = '';
     if (index === 0) {
       borderAttributes = 'border-[1px] rounded-l-xl';
-    } else if (index === answers.length - 1) {
+    } else if (index === items.length - 1) {
       borderAttributes = 'border-t-[1px] border-b-[1px] border-r-[1px] rounded-r-xl';
     } else {
       borderAttributes = 'border-t-[1px] border-b-[1px] border-r-[1px]';
@@ -25,16 +29,16 @@ const Nps = ({ items: answers, onValuesChanged, ...rest }: NpsProps): JSX.Elemen
   };
 
   const onScoreChanged = (index: number) => {
-    const selectedValues = answers.slice(0, index + 1);
+    const selectedValues = items.slice(0, index + 1);
     setCurrentScore(index);
-    onValuesChanged?.(selectedValues);
+    onValuesChanged(selectedValues);
   };
 
   return (
-    <div className="flex justify-center" {...rest}>
+    <div className="flex justify-center" data-test-id={npsDataTestIds.base}>
       <div className="flex flex-col w-[335px]">
         <div className="flex flex-row justify-center h-[56px]">
-          {answers.map((item, index) => (
+          {items.map((item, index) => (
             <div key={item.id} className={classNames('border-white border-opacity-50', addBorders(index))}>
               <button
                 className={classNames('px-[11px] py-[18px] text-white', { 'opacity-50': index > currentScore })}
