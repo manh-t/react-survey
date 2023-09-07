@@ -2,19 +2,19 @@ import React from 'react';
 
 import { act, render, screen, within } from '@testing-library/react';
 
+import { answerFabricator } from 'tests/fabricator';
 import { Answer } from 'types/answer';
 
 import MultiChoice, { multiChoiceDataTestIds } from '.';
 
 describe('MultiChoice', () => {
-  it('renders a multi choice component', () => {
-    const answers = [
-      { id: '1', resourceType: 'answer', text: 'Test 1' },
-      { id: '2', resourceType: 'answer', text: 'Test 2' },
-      { id: '3', resourceType: 'answer', text: 'Test 3' },
-    ];
+  const answers = answerFabricator.times(3);
 
-    render(<MultiChoice items={answers} isPickOne={false} />);
+  it('renders a multi choice component', () => {
+    const onValuesChanged = () => {
+      // Do nothing
+    };
+    render(<MultiChoice items={answers} isPickOne={false} onValuesChanged={onValuesChanged} />);
 
     const multiChoice = screen.getByTestId(multiChoiceDataTestIds.base);
 
@@ -30,11 +30,6 @@ describe('MultiChoice', () => {
         const handleValuesChanged = (answers: Answer[]) => {
           selectedValues = answers;
         };
-        const answers = [
-          { id: '1', resourceType: 'answer', text: 'Test 1' },
-          { id: '2', resourceType: 'answer', text: 'Test 2' },
-          { id: '3', resourceType: 'answer', text: 'Test 3' },
-        ];
 
         render(<MultiChoice items={answers} isPickOne={false} onValuesChanged={(answers) => handleValuesChanged(answers)} />);
 
@@ -48,8 +43,8 @@ describe('MultiChoice', () => {
           within(multiChoice).getAllByRole('presentation').at(1)?.click();
         });
 
-        expect(within(multiChoice).getByText('Test 1')).not.toHaveClass('opacity-50');
-        expect(within(multiChoice).getByText('Test 2')).not.toHaveClass('opacity-50');
+        expect(within(multiChoice).getByText(answers[0].text)).not.toHaveClass('opacity-50');
+        expect(within(multiChoice).getByText(answers[1].text)).not.toHaveClass('opacity-50');
         expect(selectedValues).toHaveLength(2);
       });
     });
@@ -63,11 +58,6 @@ describe('MultiChoice', () => {
         const handleValuesChanged = (answers: Answer[]) => {
           selectedValues = answers;
         };
-        const answers = [
-          { id: '1', resourceType: 'answer', text: 'Test 1' },
-          { id: '2', resourceType: 'answer', text: 'Test 2' },
-          { id: '3', resourceType: 'answer', text: 'Test 3' },
-        ];
 
         render(<MultiChoice items={answers} isPickOne onValuesChanged={(answers) => handleValuesChanged(answers)} />);
 
@@ -77,7 +67,7 @@ describe('MultiChoice', () => {
           within(multiChoice).getAllByRole('presentation').at(0)?.click();
         });
 
-        expect(within(multiChoice).getByText('Test 1')).not.toHaveClass('opacity-50');
+        expect(within(multiChoice).getByText(answers[0].text)).not.toHaveClass('opacity-50');
         expect(selectedValues).toHaveLength(1);
       });
     });

@@ -12,7 +12,7 @@ export const multiChoiceDataTestIds = {
 interface MultiChoiceProps {
   items: Answer[];
   isPickOne: boolean;
-  onValuesChanged?: (answers: Answer[]) => void;
+  onValuesChanged: (answers: Answer[]) => void;
 }
 
 const MultiChoice = ({ items, isPickOne, onValuesChanged }: MultiChoiceProps): JSX.Element => {
@@ -40,7 +40,7 @@ const MultiChoice = ({ items, isPickOne, onValuesChanged }: MultiChoiceProps): J
       }
     }
     setSelectedValues(newSelectedValues);
-    onValuesChanged?.(newSelectedValues);
+    onValuesChanged(newSelectedValues);
   };
 
   return (
