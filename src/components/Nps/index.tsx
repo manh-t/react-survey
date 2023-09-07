@@ -37,7 +37,7 @@ const Nps = ({ items, onValuesChanged }: NpsProps): JSX.Element => {
   return (
     <div className="flex justify-center" data-test-id={npsDataTestIds.base}>
       <div className="flex flex-col w-[335px]">
-        <div className="flex flex-row justify-center h-[56px]">
+        <div className="flex justify-center h-[56px]">
           {items.map((item, index) => (
             <div key={item.id} className={classNames('border-white border-opacity-50', addBorders(index))}>
               <button
