@@ -11,10 +11,15 @@ describe('MultiChoice', () => {
   const answers = answerFabricator.times(3);
 
   it('renders a multi choice component', () => {
-    const onValuesChanged = () => {
-      // Do nothing
-    };
-    render(<MultiChoice items={answers} isPickOne={false} onValuesChanged={onValuesChanged} />);
+    render(
+      <MultiChoice
+        items={answers}
+        isPickOne={false}
+        onValuesChanged={() => {
+          // Do nothing
+        }}
+      />
+    );
 
     const multiChoice = screen.getByTestId(multiChoiceDataTestIds.base);
 
@@ -43,6 +48,7 @@ describe('MultiChoice', () => {
           within(multiChoice).getAllByRole('presentation').at(1)?.click();
         });
 
+        // The checked state of an item should NOT have `opacity-50` class
         expect(within(multiChoice).getByText(answers[0].text)).not.toHaveClass('opacity-50');
         expect(within(multiChoice).getByText(answers[1].text)).not.toHaveClass('opacity-50');
         expect(selectedValues).toHaveLength(2);
@@ -67,6 +73,7 @@ describe('MultiChoice', () => {
           within(multiChoice).getAllByRole('presentation').at(0)?.click();
         });
 
+        // The checked state of an item should NOT have `opacity-50` class
         expect(within(multiChoice).getByText(answers[0].text)).not.toHaveClass('opacity-50');
         expect(selectedValues).toHaveLength(1);
       });

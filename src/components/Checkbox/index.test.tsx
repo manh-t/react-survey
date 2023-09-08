@@ -22,6 +22,7 @@ describe('Checkbox', () => {
 
       const checkBox = screen.getByTestId(checkboxDataTestIds.base);
 
+      expect(checkBox).toBeVisible();
       expect(within(checkBox).getByRole('checkbox')).not.toBeChecked();
     });
   });

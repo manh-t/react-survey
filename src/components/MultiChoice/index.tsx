@@ -30,6 +30,7 @@ const MultiChoice = ({ items, isPickOne, onValuesChanged }: MultiChoiceProps): J
 
   const toggleCheckbox = (answer: Answer) => {
     let newSelectedValues = [];
+
     if (isSelected(answer)) {
       newSelectedValues = selectedValues.filter((currentAnswer) => currentAnswer.id !== answer.id);
     } else {
@@ -39,6 +40,7 @@ const MultiChoice = ({ items, isPickOne, onValuesChanged }: MultiChoiceProps): J
         newSelectedValues = [...selectedValues, answer];
       }
     }
+
     setSelectedValues(newSelectedValues);
     onValuesChanged(newSelectedValues);
   };
