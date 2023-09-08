@@ -2,6 +2,7 @@ import React from 'react';
 
 import { act, render, screen } from '@testing-library/react';
 
+import { answerDataTestIds } from 'components/Answer';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { SurveyState } from 'store/reducers/Survey';
 import TestWrapper from 'tests/TestWrapper';
@@ -88,7 +89,7 @@ describe('QuestionScreen', () => {
 
     const currentIndex = screen.getByTestId(questionScreenTestIds.index);
     const questionTitle = screen.getByTestId(questionScreenTestIds.title);
-    const answerComponent = screen.getByTestId(questionScreenTestIds.answer);
+    const answerComponent = screen.getByTestId(answerDataTestIds.base);
     const closeButton = screen.getByTestId(questionScreenTestIds.closeButton);
     const nextButton = screen.getByTestId(questionScreenTestIds.nextButton);
 

@@ -2,175 +2,111 @@ import React from 'react';
 
 import { render, screen } from '@testing-library/react';
 
-import { Question } from 'types/question';
+import { appSliderDataTestIds } from 'components/AppSlider';
+import { dropdownDataTestIds } from 'components/Dropdown';
+import { multiChoiceDataTestIds } from 'components/MultiChoice';
+import { multiInputsDataTestIds } from 'components/MultiInputs';
+import { npsDataTestIds } from 'components/Nps';
+import { ratingDataTestIds } from 'components/Rating';
+import { textAreaDataTestIds } from 'components/TextArea';
+import { questionFabricator } from 'tests/fabricator';
 
-import Answer from '.';
+import Answer, { answerDataTestIds } from '.';
 
 describe('Answer', () => {
   describe('given the display type is star', () => {
     it('renders Rating component', () => {
-      const question: Question = {
-        id: 'id',
-        resourceType: 'question',
-        displayType: 'star',
-        answers: [],
-      };
-      const dataTestId = 'answer';
-      render(<Answer question={question} data-test-id={dataTestId} />);
+      const question = questionFabricator();
 
-      const star = screen.getByTestId(dataTestId);
+      render(<Answer question={question} />);
+
+      const star = screen.getByTestId(ratingDataTestIds.base);
 
       expect(star).toBeVisible();
-      expect(star).toHaveAttribute('id', 'rating-id');
     });
   });
 
   describe('given the display type is choice', () => {
     it('renders MultiChoice component', () => {
-      const question: Question = {
-        id: 'id',
-        resourceType: 'question',
-        displayType: 'choice',
-        answers: [],
-      };
-      const dataTestId = 'answer';
-      render(<Answer question={question} data-test-id={dataTestId} />);
+      const question = questionFabricator({ displayType: 'choice' });
 
-      const multiChoice = screen.getByTestId(dataTestId);
+      render(<Answer question={question} />);
+
+      const multiChoice = screen.getByTestId(multiChoiceDataTestIds.base);
 
       expect(multiChoice).toBeVisible();
-      expect(multiChoice).toHaveAttribute('id', 'multi-choice-id');
     });
   });
 
   describe('given the display type is nps', () => {
     it('renders Nps component', () => {
-      const question: Question = {
-        id: 'id',
-        resourceType: 'question',
-        displayType: 'nps',
-        answers: [],
-      };
-      const dataTestId = 'answer';
-      render(<Answer question={question} data-test-id={dataTestId} />);
+      const question = questionFabricator({ displayType: 'nps' });
 
-      const nps = screen.getByTestId(dataTestId);
+      render(<Answer question={question} />);
+
+      const nps = screen.getByTestId(npsDataTestIds.base);
 
       expect(nps).toBeVisible();
-      expect(nps).toHaveAttribute('id', 'nps-id');
     });
   });
 
   describe('given the display type is textarea', () => {
     it('renders TextArea component', () => {
-      const question: Question = {
-        id: 'id',
-        resourceType: 'question',
-        displayType: 'textarea',
-        answers: [
-          {
-            id: 'id',
-            resourceType: 'answer',
-            text: '',
-          },
-        ],
-      };
-      const dataTestId = 'answer';
-      render(<Answer question={question} data-test-id={dataTestId} />);
+      const question = questionFabricator({ displayType: 'textarea' });
 
-      const textArea = screen.getByTestId(dataTestId);
+      render(<Answer question={question} />);
+
+      const textArea = screen.getByTestId(textAreaDataTestIds.base);
 
       expect(textArea).toBeVisible();
-      expect(textArea).toHaveAttribute('id', 'text-area-id');
     });
   });
 
   describe('given the display type is textfield', () => {
     it('renders MultiInputs component', () => {
-      const question: Question = {
-        id: 'id',
-        resourceType: 'question',
-        displayType: 'textfield',
-        answers: [
-          {
-            id: 'id',
-            resourceType: 'answer',
-            text: '',
-          },
-        ],
-      };
-      const dataTestId = 'answer';
-      render(<Answer question={question} data-test-id={dataTestId} />);
+      const question = questionFabricator({ displayType: 'textfield' });
 
-      const multiInputs = screen.getByTestId(dataTestId);
+      render(<Answer question={question} />);
+
+      const multiInputs = screen.getByTestId(multiInputsDataTestIds.base);
 
       expect(multiInputs).toBeVisible();
-      expect(multiInputs).toHaveAttribute('id', 'multi-inputs-id');
     });
   });
 
   describe('given the display type is dropdown', () => {
     it('renders Dropdown component', () => {
-      const question: Question = {
-        id: 'id',
-        resourceType: 'question',
-        displayType: 'dropdown',
-        answers: [
-          {
-            id: 'id',
-            resourceType: 'answer',
-            text: '',
-          },
-        ],
-      };
-      const dataTestId = 'answer';
-      render(<Answer question={question} data-test-id={dataTestId} />);
+      const question = questionFabricator({ displayType: 'dropdown' });
 
-      const dropdown = screen.getByTestId(dataTestId);
+      render(<Answer question={question} />);
+
+      const dropdown = screen.getByTestId(dropdownDataTestIds.base);
 
       expect(dropdown).toBeVisible();
-      expect(dropdown).toHaveAttribute('id', 'dropdown-id');
     });
   });
 
   describe('given the display type is slider', () => {
     it('renders Dropdown component', () => {
-      const question: Question = {
-        id: 'id',
-        resourceType: 'question',
-        displayType: 'slider',
-        answers: [
-          {
-            id: 'id',
-            resourceType: 'answer',
-            text: '',
-          },
-        ],
-      };
-      const dataTestId = 'answer';
-      render(<Answer question={question} data-test-id={dataTestId} />);
+      const question = questionFabricator({ displayType: 'slider' });
 
-      const slider = screen.getByTestId(dataTestId);
+      render(<Answer question={question} />);
+
+      const slider = screen.getByTestId(appSliderDataTestIds.base);
 
       expect(slider).toBeVisible();
-      expect(slider).toHaveAttribute('id', 'slider-id');
     });
   });
 
   describe('given the display type is intro', () => {
-    it('renders Dropdown component', () => {
-      const question: Question = {
-        id: 'id',
-        resourceType: 'question',
-        displayType: 'intro',
-        answers: [],
-      };
-      const dataTestId = 'answer';
-      render(<Answer question={question} data-test-id={dataTestId} />);
+    it('does NOT render any components', () => {
+      const question = questionFabricator({ displayType: 'intro' });
 
-      const intro = screen.getByTestId(dataTestId);
+      render(<Answer question={question} />);
 
-      expect(intro).toBeVisible();
+      const intro = screen.getByTestId(answerDataTestIds.base);
+
+      expect(intro).toBeEmptyDOMElement();
     });
   });
 });

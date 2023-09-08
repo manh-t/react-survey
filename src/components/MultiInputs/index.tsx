@@ -4,13 +4,16 @@ import TextInput from 'components/TextInput';
 import { Answer } from 'types/answer';
 import { AnswerRequest } from 'types/request/surveySubmitRequest';
 
+export const multiInputsDataTestIds = {
+  base: 'multi-inputs__base',
+};
+
 interface MultiInputProps {
   questionId: string;
   items: Answer[];
   onValuesChanged?: (answers: AnswerRequest[]) => void;
-  'data-test-id'?: string;
 }
-const MultiInputs = ({ questionId, items, onValuesChanged, ...rest }: MultiInputProps): JSX.Element => {
+const MultiInputs = ({ questionId, items, onValuesChanged }: MultiInputProps): JSX.Element => {
   const [selectedValues, setSelectedValues] = useState<AnswerRequest[]>([]);
 
   const handleValuesChanged = (answer: Answer, content: string) => {
@@ -35,7 +38,7 @@ const MultiInputs = ({ questionId, items, onValuesChanged, ...rest }: MultiInput
   }, [questionId, items]);
 
   return (
-    <div id={`multi-inputs-${questionId}`} {...rest}>
+    <div data-test-id={multiInputsDataTestIds.base}>
       {items.map((item) => (
         <div key={item.id}>
           <TextInput

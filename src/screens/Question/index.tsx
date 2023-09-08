@@ -11,7 +11,6 @@ import { useAppSelector } from 'hooks';
 export const questionScreenTestIds = {
   index: 'question__index',
   title: 'question__title',
-  answer: 'question__answer',
   closeButton: 'question__close-button',
   nextButton: 'question__next-button',
 };
@@ -62,7 +61,7 @@ const QuestionScreen = (): JSX.Element => {
           {currentQuestion && (
             <div className="mt-16">
               <p>{currentQuestion.displayType}</p>
-              <Answer question={currentQuestion} data-test-id={questionScreenTestIds.answer} />
+              <Answer question={currentQuestion} />
             </div>
           )}
         </div>
