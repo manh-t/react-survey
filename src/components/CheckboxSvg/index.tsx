@@ -4,10 +4,16 @@ export const checkboxSvgDataTestIds = {
   base: 'checkbox-svg__base',
 };
 
-const CheckboxSvg = (): JSX.Element => {
+interface CheckboxSvgProps {
+  className?: string;
+}
+
+const DEFAULT_CLASSNAMES = 'absolute pointer-events-none hidden peer-checked:block mt-1 outline-none';
+
+const CheckboxSvg = ({ className = DEFAULT_CLASSNAMES }: CheckboxSvgProps): JSX.Element => {
   return (
     <svg
-      className="absolute pointer-events-none hidden peer-checked:block mt-1 outline-none"
+      className={className}
       xmlns="http://www.w3.org/2000/svg"
       width="28"
       height="30"
