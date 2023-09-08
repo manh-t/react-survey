@@ -39,6 +39,7 @@ describe('Nps', () => {
         within(nps).getByText(answers[5].text).click();
       });
 
+      // The selected state of an item should NOT have `opacity-50` class
       expect(within(nps).getByText(answers[0].text)).not.toHaveClass('opacity-50');
       expect(within(nps).getByText(answers[1].text)).not.toHaveClass('opacity-50');
       expect(within(nps).getByText(answers[2].text)).not.toHaveClass('opacity-50');
