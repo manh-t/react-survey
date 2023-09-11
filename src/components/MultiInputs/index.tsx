@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import TextInput from 'components/TextInput';
 import { Answer } from 'types/answer';
@@ -13,7 +13,7 @@ interface MultiInputProps {
   items: Answer[];
   onValuesChanged?: (answers: AnswerRequest[]) => void;
 }
-const MultiInputs = ({ questionId, items, onValuesChanged }: MultiInputProps): JSX.Element => {
+const MultiInputs = ({ items, onValuesChanged }: MultiInputProps): JSX.Element => {
   const [selectedValues, setSelectedValues] = useState<AnswerRequest[]>([]);
 
   const handleValuesChanged = (answer: Answer, content: string) => {
@@ -25,17 +25,6 @@ const MultiInputs = ({ questionId, items, onValuesChanged }: MultiInputProps): J
     setSelectedValues(newSelectedValues);
     onValuesChanged?.(newSelectedValues);
   };
-
-  useEffect(() => {
-    const newSelectedValues: AnswerRequest[] = [];
-    for (let i = 0; i < items.length; i++) {
-      newSelectedValues.push({
-        id: items[i].id,
-        answer: '',
-      });
-    }
-    setSelectedValues(newSelectedValues);
-  }, [questionId, items]);
 
   return (
     <div data-test-id={multiInputsDataTestIds.base}>

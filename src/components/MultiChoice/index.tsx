@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import classNames from 'classnames';
 
@@ -44,10 +44,6 @@ const MultiChoice = ({ items, isPickOne, onValuesChanged }: MultiChoiceProps): J
     setSelectedValues(newSelectedValues);
     onValuesChanged(newSelectedValues);
   };
-
-  useEffect(() => {
-    setSelectedValues([]);
-  }, []);
 
   return (
     <div className="flex flex-col w-full" data-test-id={multiChoiceDataTestIds.base}>

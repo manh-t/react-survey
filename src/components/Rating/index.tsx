@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Answer } from 'types/answer';
 import { DisplayType } from 'types/question';
@@ -45,10 +45,6 @@ const Rating = ({ items, displayType, onValueChanged }: RatingProps): JSX.Elemen
       return selectedIndex >= index ? '' : 'opacity-50';
     }
   };
-
-  useEffect(() => {
-    setSelectedIndex(0);
-  }, []);
 
   return (
     <div

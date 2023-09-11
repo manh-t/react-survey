@@ -67,7 +67,6 @@ const Answer = ({ question }: AnswerProps): JSX.Element => {
       case DisplayType.Dropdown:
         return (
           <Dropdown
-            questionId={question.id}
             items={question.answers}
             onValueChanged={() => {
               // TODO

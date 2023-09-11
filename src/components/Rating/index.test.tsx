@@ -22,8 +22,6 @@ describe('Rating', () => {
       // Do nothing
     };
 
-    console.log(answers);
-
     render(<Rating onValueChanged={onValueChanged} {...ratingProps} />);
 
     const rating = screen.getByTestId(ratingDataTestIds.base);
@@ -43,7 +41,6 @@ describe('Rating', () => {
         displayType: DisplayType.Star,
         onValueChanged: onValueChanged,
       };
-      console.log(answers);
 
       render(<Rating {...ratingProps} />);
 

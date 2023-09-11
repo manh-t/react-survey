@@ -12,7 +12,6 @@ describe('Dropdown', () => {
 
   it('renders a dropdown component', () => {
     const dropdownProps = {
-      questionId: 'question-id',
       items: answers,
       onValueChanged: () => {
         // Do nothing
@@ -33,7 +32,6 @@ describe('Dropdown', () => {
         selectedValue = answer.text ?? '';
       };
       const dropdownProps = {
-        questionId: 'question-id',
         items: answers,
         onValueChanged: onValueChanged,
       };

@@ -1,6 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { Fabricator, sequence } from '@travelperksl/fabricator';
 
+import { Survey } from 'types/survey';
+
 export const testTypeName = faker.person.fullName();
 export const testTypeAge = faker.number.int();
 export const testTypeFabricator = Fabricator({
@@ -86,7 +88,7 @@ export const questionResponseFabricator = Fabricator({
 });
 
 // Models
-export const surveyFabricator = Fabricator({
+export const surveyFabricator = Fabricator<Survey>({
   id: faker.string.uuid(),
   resourceType: 'survey',
   title: faker.string.sample(),

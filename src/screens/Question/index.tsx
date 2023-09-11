@@ -42,7 +42,7 @@ const QuestionScreen = (): JSX.Element => {
   return (
     <MainView backgroundUrl={currentQuestion?.coverImageUrl}>
       <div className="flex flex-col h-full">
-        <button className="mt-8 mr-8 p-1 self-end" data-test-id={questionScreenTestIds.closeButton} onClick={goBack}>
+        <button className="mt-8 mr-8 p-1 self-end text-white" data-test-id={questionScreenTestIds.closeButton} onClick={goBack}>
           <CloseButton />
         </button>
         <div className="w-1/2 self-center flex-1 flex flex-col justify-center">
@@ -60,7 +60,6 @@ const QuestionScreen = (): JSX.Element => {
           </p>
           {currentQuestion && (
             <div className="mt-16">
-              <p>{currentQuestion.displayType}</p>
               <Answer question={currentQuestion} />
             </div>
           )}
