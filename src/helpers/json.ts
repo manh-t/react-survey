@@ -6,13 +6,13 @@ export type JSONValue = string | number | boolean | JSONObject | JSONArray;
 export type JSONArray = Array<JSONValue>;
 
 export interface JSONObject {
-  [key: string]: JSONValue;
+  [key: string]: JSONValue | undefined;
 }
 
 const convertKeys = (
   json: JSONValue | JSONObject | JSONArray,
   convertKeyCallback: (key: string) => string,
-  convertJsonCallback: (json: JSONValue | JSONObject | JSONArray) => JSONValue | JSONObject | JSONArray
+  convertJsonCallback: (json: JSONValue | JSONObject | JSONArray | undefined) => JSONValue | JSONObject | JSONArray
 ) => {
   if (Array.isArray(json)) {
     return json.map((jsonObject) => convertJsonCallback(jsonObject as JSONValue));
