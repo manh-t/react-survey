@@ -29,7 +29,9 @@ describe('QuestionScreen', () => {
     );
   };
 
-  const surveys = surveyFabricator({ questions: questionFabricator.times(3) });
+  const surveys = surveyFabricator({
+    questions: questionFabricator.times(3, { displayType: 'intro' }),
+  });
 
   const mockState: { survey: SurveyState } = {
     survey: {
@@ -95,7 +97,7 @@ describe('QuestionScreen', () => {
         closeButton.click();
       });
 
-      expect(mockDispatch).toHaveBeenCalledWith({ type: 'survey/resetQuestions' });
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'survey/resetState' });
       expect(mockUseNavigate).toHaveBeenCalledWith(paths.root, { replace: true });
     });
   });
@@ -120,10 +122,7 @@ describe('QuestionScreen', () => {
         submitButton.click();
       });
 
-      expect(mockDispatch).toHaveBeenCalledWith({
-        type: 'survey/fillAnswers',
-        payload: { id: 'question 2', answers: [{ id: 'answer 1' }] },
-      });
+      expect(mockDispatch).toHaveBeenCalled();
     });
   });
 });

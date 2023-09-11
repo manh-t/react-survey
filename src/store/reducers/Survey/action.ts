@@ -6,7 +6,7 @@ import { JSONObject } from 'helpers/json';
 import { QuestionRequest, SurveySubmitRequest } from 'types/request/surveySubmitRequest';
 import { Survey } from 'types/survey';
 
-import { SurveyState } from '.';
+import { SurveyState, initialState } from '.';
 
 export const surveyReducers = {
   fillAnswers: (state: SurveyState, action: PayloadAction<QuestionRequest>) => {
@@ -14,8 +14,8 @@ export const surveyReducers = {
     state.questionRequests = [...newQuestionRequests, action.payload];
     return state;
   },
-  resetQuestions: (state: SurveyState) => {
-    state.questionRequests = [];
+  resetState: (state: SurveyState) => {
+    state = initialState;
     return state;
   },
 };

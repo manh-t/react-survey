@@ -22,7 +22,6 @@ describe('SurveyScreen', () => {
   beforeEach(() => {
     (useAppSelector as jest.Mock).mockImplementation((callback) => callback(mockState));
     (useAppDispatch as jest.Mock).mockImplementation(() => mockDispatch);
-    jest.spyOn(React, 'useEffect').mockImplementation(() => jest.fn());
   });
 
   afterEach(() => {

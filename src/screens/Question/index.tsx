@@ -38,11 +38,25 @@ const QuestionScreen = (): JSX.Element => {
     );
   };
 
+  const isAnswerAdded = (): boolean => {
+    if (currentQuestion?.displayType === 'intro' || currentQuestion?.displayType === 'outro') {
+      return true;
+    }
+
+    return questionRequests.some((value) => value.id === currentQuestion?.id);
+  };
+
   const onNextClick = () => {
+    if (!isAnswerAdded()) {
+      toast.warn('Please answer the question first!', { position: 'top-center' });
+      return;
+    }
+
     const nextQuestionIndex = questionIndex + 1;
     if (nextQuestionIndex >= (survey?.questions?.length ?? 0)) {
       return;
     }
+
     setCurrentQuestion(survey?.questions?.at(nextQuestionIndex));
     setQuestionIndex(nextQuestionIndex);
   };
@@ -57,15 +71,17 @@ const QuestionScreen = (): JSX.Element => {
   };
 
   function handleOnClose() {
-    dispatch(surveyAction.resetQuestions());
+    dispatch(surveyAction.resetState());
     navigate(paths.root, { replace: true });
   }
 
   useEffect(() => {
     if (isSubmitSuccess) {
       navigate(questionCompletePath());
+      dispatch(surveyAction.resetState());
     }
-  }, [isSubmitSuccess, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSubmitSuccess]);
 
   useEffect(() => {
     if (isError) {
@@ -106,7 +122,7 @@ const QuestionScreen = (): JSX.Element => {
           </div>
           {questionIndex === (survey?.questions?.length ?? 0) - 1 ? (
             <div className="mr-8 mb-8 self-end">
-              <ElevatedButton isFullWidth={false} onClick={onSubmitClick}>
+              <ElevatedButton isFullWidth={false} onClick={onSubmitClick} data-test-id={questionScreenTestIds.submitButton}>
                 Submit
               </ElevatedButton>
             </div>

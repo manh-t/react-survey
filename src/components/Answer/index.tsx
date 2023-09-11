@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import isEmpty from 'lodash/isEmpty';
 
@@ -27,13 +27,10 @@ const Answer = ({ question, onAnswerChanged }: AnswerProps): JSX.Element => {
 
   const onValueChanged = (answer: number | AnswerType | AnswerRequest) => {
     if (typeof answer === 'number') {
-      console.log(`number ${answer}`);
       onAnswerChanged([{ id: question.answers[answer - 1].id, answer: '' }]);
     } else if (instanceOfAnswer(answer)) {
-      console.log(`answer ${answer}`);
       onAnswerChanged([{ id: answer.id, answer: '' }]);
     } else if (instanceOfAnswerRequest(answer)) {
-      console.log(`answer request ${answer}`);
       onAnswerChanged([answer]);
     }
   };
@@ -41,7 +38,6 @@ const Answer = ({ question, onAnswerChanged }: AnswerProps): JSX.Element => {
   const onValuesChanged = (answers: AnswerType[] | AnswerRequest[]) => {
     if (!isEmpty(answers)) {
       if (instanceOfAnswer(answers[0])) {
-        console.log(`answers ${answers}`);
         const answerRequests: AnswerRequest[] = answers.map((answer) => ({
           id: answer.id,
           answer: '',
@@ -49,11 +45,35 @@ const Answer = ({ question, onAnswerChanged }: AnswerProps): JSX.Element => {
 
         onAnswerChanged(answerRequests);
       } else if (instanceOfAnswerRequest(answers[0])) {
-        console.log(`answerRequests ${answers}`);
         onAnswerChanged(answers as AnswerRequest[]);
       }
     }
   };
+
+  useEffect(() => {
+    // Set default answers
+    switch (displayTypeEnum) {
+      case DisplayType.Heart:
+      case DisplayType.Smiley:
+      case DisplayType.Thumbs:
+      case DisplayType.Star:
+        onValueChanged({ id: question.answers[0].id, answer: '' });
+        break;
+      case DisplayType.Nps:
+        const answerRequests: AnswerRequest[] = question.answers
+          .slice(0, Math.round(question.answers.length / 2) + 1)
+          .map((answer) => ({ id: answer.id, answer: '' }));
+        onValuesChanged(answerRequests);
+        break;
+      case DisplayType.Dropdown:
+        onValueChanged({ id: question.answers[0].id, answer: '' });
+        break;
+      case DisplayType.Slider:
+        onValueChanged({ id: question.answers[0].id, answer: '' });
+        break;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [question]);
 
   const answerComponent = (): JSX.Element => {
     switch (displayTypeEnum) {
