@@ -11,7 +11,7 @@ export const multiInputsDataTestIds = {
 interface MultiInputProps {
   questionId: string;
   items: Answer[];
-  onValuesChanged?: (answers: AnswerRequest[]) => void;
+  onValuesChanged: (answers: AnswerRequest[]) => void;
 }
 const MultiInputs = ({ items, onValuesChanged }: MultiInputProps): JSX.Element => {
   const [selectedValues, setSelectedValues] = useState<AnswerRequest[]>([]);
@@ -23,7 +23,7 @@ const MultiInputs = ({ items, onValuesChanged }: MultiInputProps): JSX.Element =
       newSelectedValues[itemIndex].answer = content;
     }
     setSelectedValues(newSelectedValues);
-    onValuesChanged?.(newSelectedValues);
+    onValuesChanged(newSelectedValues);
   };
 
   return (

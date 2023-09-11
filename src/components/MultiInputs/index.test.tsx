@@ -10,7 +10,15 @@ describe('MultiInputs', () => {
   it('renders a multi inputs component', () => {
     const answers = answerFabricator.times(3);
 
-    render(<MultiInputs questionId="question id" items={answers} />);
+    render(
+      <MultiInputs
+        questionId="question id"
+        items={answers}
+        onValuesChanged={() => {
+          // Do nothing
+        }}
+      />
+    );
 
     const multiInputs = screen.getByTestId(multiInputsDataTestIds.base);
 
