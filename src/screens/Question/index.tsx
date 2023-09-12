@@ -70,10 +70,10 @@ const QuestionScreen = (): JSX.Element => {
     );
   };
 
-  function handleOnClose() {
+  const handleOnClose = () => {
     dispatch(surveyAction.resetState());
     navigate(paths.root, { replace: true });
-  }
+  };
 
   useEffect(() => {
     if (isSubmitSuccess) {

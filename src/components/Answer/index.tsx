@@ -57,6 +57,8 @@ const Answer = ({ question, onAnswerChanged }: AnswerProps): JSX.Element => {
       case DisplayType.Smiley:
       case DisplayType.Thumbs:
       case DisplayType.Star:
+      case DisplayType.Slider:
+      case DisplayType.Dropdown:
         onValueChanged({ id: question.answers[0].id, answer: '' });
         break;
       case DisplayType.Nps:
@@ -64,12 +66,6 @@ const Answer = ({ question, onAnswerChanged }: AnswerProps): JSX.Element => {
           .slice(0, Math.round(question.answers.length / 2) + 1)
           .map((answer) => ({ id: answer.id, answer: '' }));
         onValuesChanged(answerRequests);
-        break;
-      case DisplayType.Dropdown:
-        onValueChanged({ id: question.answers[0].id, answer: '' });
-        break;
-      case DisplayType.Slider:
-        onValueChanged({ id: question.answers[0].id, answer: '' });
         break;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
