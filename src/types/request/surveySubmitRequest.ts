@@ -8,7 +8,7 @@ interface QuestionRequest {
   answers: AnswerRequest[];
 }
 
-interface AnswerRequest {
+export interface AnswerRequest {
   id: string;
   answer?: string;
 }

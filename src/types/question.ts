@@ -1,3 +1,5 @@
+import capitalize from 'lodash/capitalize';
+
 import { Resource } from 'types/resource';
 
 import { Answer } from './answer';
@@ -18,20 +20,21 @@ export interface Question extends Resource {
 }
 
 export enum DisplayType {
-  Intro = 'intro',
-  Star = 'star',
-  Heart = 'heart',
-  Smiley = 'smiley',
-  Thumbs = 'thumbs',
-  Choice = 'choice',
-  Nps = 'nps',
-  Textarea = 'textarea',
-  Textfield = 'textfield',
-  Dropdown = 'dropdown',
-  Outro = 'outro',
-  Unknown = '',
+  Intro,
+  Star,
+  Heart,
+  Smiley,
+  Thumbs,
+  Choice,
+  Nps,
+  Slider,
+  Textarea,
+  Textfield,
+  Dropdown,
+  Outro,
+  Unknown,
 }
 
 export const getDisplayTypeEnum = (question: Question): DisplayType => {
-  return question.displayType ? (<never>DisplayType)[question.displayType] : DisplayType.Unknown;
+  return DisplayType[capitalize(question.displayType) as keyof typeof DisplayType] ?? DisplayType.Unknown;
 };

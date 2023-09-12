@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Slider from 'rc-slider';
 
@@ -14,9 +14,9 @@ interface SliderProps {
 }
 
 const AppSlider = ({ min = 1, max = 100, step = 1, onValueChanged }: SliderProps): JSX.Element => {
-  const handleOnChange = (value: number) => {
-    onValueChanged(value);
-  };
+  useEffect(() => {
+    onValueChanged(min);
+  }, [min, onValueChanged]);
 
   return (
     <div className="flex w-full h-[56px] justify-center items-center" data-test-id={appSliderDataTestIds.base}>
@@ -45,7 +45,7 @@ const AppSlider = ({ min = 1, max = 100, step = 1, onValueChanged }: SliderProps
         min={min}
         max={max}
         step={step}
-        onChange={(value) => handleOnChange(value as number)}
+        onChange={(value) => onValueChanged(value as number)}
       />
     </div>
   );
