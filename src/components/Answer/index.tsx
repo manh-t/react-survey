@@ -7,7 +7,7 @@ import MultiInputs from 'components/MultiInputs';
 import Nps from 'components/Nps';
 import Rating from 'components/Rating';
 import TextArea from 'components/TextArea';
-import { Answer } from 'types/answer';
+import { Answer as AnswerType } from 'types/answer';
 import { DisplayType, Question, getDisplayTypeEnum } from 'types/question';
 import { AnswerRequest } from 'types/request/surveySubmitRequest';
 
@@ -21,12 +21,12 @@ interface AnswerProps {
 const Answer = ({ question }: AnswerProps): JSX.Element => {
   const displayTypeEnum = getDisplayTypeEnum(question);
 
-  const onValueChanged = (answer: number | Answer | AnswerRequest) => {
+  const onValueChanged = (answer: number | AnswerType | AnswerRequest) => {
     // TODO
     console.log(answer);
   };
 
-  const onValuesChanged = (answers: Answer[] | AnswerRequest[]) => {
+  const onValuesChanged = (answers: AnswerType[] | AnswerRequest[]) => {
     // TODO
     console.log(answers);
   };
