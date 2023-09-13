@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import { ReactComponent as ArrowBack } from 'assets/images/icons/arrow-back.svg';
 import ElevatedButton from 'components/ElevatedButton';
 import LoadingDialog from 'components/LoadingDialog';
 import MainView from 'components/MainView';
+import { showGeneralErrorToast } from 'helpers/toast';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { questionPath } from 'routes';
 import { getSurveyAsyncThunk } from 'store/reducers/Survey';
@@ -38,7 +38,7 @@ const SurveyScreen = (): JSX.Element => {
 
   useEffect(() => {
     if (isError) {
-      toast.error('There is something wrong. Please try again later!', { position: 'top-center' });
+      showGeneralErrorToast();
     }
   }, [isError]);
 

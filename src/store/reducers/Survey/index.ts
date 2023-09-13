@@ -1,28 +1,33 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { SurveySubmitRequest } from 'types/request/surveySubmitRequest';
+import { QuestionRequest } from 'types/request/surveySubmitRequest';
 import { Survey } from 'types/survey';
 
-import { getSurveyThunkCreator } from './action';
+import { getSurveyThunkCreator, submitSurveyThunkCreator, surveyReducers } from './action';
 
 export interface SurveyState {
   survey?: Survey;
   isLoading: boolean;
   isError: boolean;
-  surveySubmitRequest?: SurveySubmitRequest;
+  questionRequests: QuestionRequest[];
+  isSubmitSuccess: boolean;
 }
 
 export const initialState: SurveyState = {
-  isLoading: true,
+  isLoading: false,
   isError: false,
+  questionRequests: [],
+  isSubmitSuccess: false,
 };
 
 export const getSurveyAsyncThunk = createAsyncThunk('survey/getSurvey', getSurveyThunkCreator);
 
+export const submitSurveyAsyncThunk = createAsyncThunk('survey/submitSurvey', submitSurveyThunkCreator);
+
 export const surveySlice = createSlice({
   name: 'survey',
   initialState,
-  reducers: {},
+  reducers: surveyReducers,
   extraReducers: (builder) => {
     builder.addCase(getSurveyAsyncThunk.pending, (state) => {
       state.isLoading = true;
@@ -35,6 +40,20 @@ export const surveySlice = createSlice({
     });
     builder.addCase(getSurveyAsyncThunk.rejected, (state) => {
       state.isLoading = false;
+      state.isError = true;
+    });
+    builder.addCase(submitSurveyAsyncThunk.pending, (state) => {
+      state.isLoading = true;
+      state.isError = false;
+    });
+    builder.addCase(submitSurveyAsyncThunk.fulfilled, (state) => {
+      state.isLoading = false;
+      state.isSubmitSuccess = true;
+      state.questionRequests = [];
+    });
+    builder.addCase(submitSurveyAsyncThunk.rejected, (state) => {
+      state.isLoading = false;
+      state.isSubmitSuccess = false;
       state.isError = true;
     });
   },

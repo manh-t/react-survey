@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Slider from 'rc-slider';
 
@@ -14,10 +14,6 @@ interface SliderProps {
 }
 
 const AppSlider = ({ min = 1, max = 100, step = 1, onValueChanged }: SliderProps): JSX.Element => {
-  useEffect(() => {
-    onValueChanged(min);
-  }, [min, onValueChanged]);
-
   return (
     <div className="flex w-full h-[56px] justify-center items-center" data-test-id={appSliderDataTestIds.base}>
       <Slider

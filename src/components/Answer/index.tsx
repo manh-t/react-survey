@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
+import isEmpty from 'lodash/isEmpty';
 
 import AppSlider from 'components/AppSlider';
 import Dropdown from 'components/Dropdown';
@@ -7,9 +9,9 @@ import MultiInputs from 'components/MultiInputs';
 import Nps from 'components/Nps';
 import Rating from 'components/Rating';
 import TextArea from 'components/TextArea';
-import { Answer as AnswerType } from 'types/answer';
+import { Answer as AnswerType, instanceOfAnswer } from 'types/answer';
 import { DisplayType, Question, getDisplayTypeEnum } from 'types/question';
-import { AnswerRequest } from 'types/request/surveySubmitRequest';
+import { AnswerRequest, instanceOfAnswerRequest } from 'types/request/surveySubmitRequest';
 
 export const answerDataTestIds = {
   base: 'answer__base',
@@ -17,19 +19,60 @@ export const answerDataTestIds = {
 
 interface AnswerProps {
   question: Question;
+  onAnswerChanged: (answers: AnswerRequest[]) => void;
 }
-const Answer = ({ question }: AnswerProps): JSX.Element => {
+
+const Answer = ({ question, onAnswerChanged }: AnswerProps): JSX.Element => {
   const displayTypeEnum = getDisplayTypeEnum(question);
 
   const onValueChanged = (answer: number | AnswerType | AnswerRequest) => {
-    // TODO
-    console.log(answer);
+    if (typeof answer === 'number') {
+      onAnswerChanged([{ id: question.answers[answer - 1].id, answer: '' }]);
+    } else if (instanceOfAnswer(answer)) {
+      onAnswerChanged([{ id: answer.id, answer: '' }]);
+    } else if (instanceOfAnswerRequest(answer)) {
+      onAnswerChanged([answer]);
+    }
   };
 
   const onValuesChanged = (answers: AnswerType[] | AnswerRequest[]) => {
-    // TODO
-    console.log(answers);
+    if (!isEmpty(answers)) {
+      if (instanceOfAnswer(answers[0])) {
+        const answerRequests: AnswerRequest[] = answers.map((answer) => ({
+          id: answer.id,
+          answer: '',
+        }));
+
+        onAnswerChanged(answerRequests);
+      } else if (instanceOfAnswerRequest(answers[0])) {
+        onAnswerChanged(answers as AnswerRequest[]);
+      }
+    }
   };
+
+  useEffect(() => {
+    const setDefaultAnswers = () => {
+      switch (displayTypeEnum) {
+        case DisplayType.Heart:
+        case DisplayType.Smiley:
+        case DisplayType.Thumbs:
+        case DisplayType.Star:
+        case DisplayType.Slider:
+        case DisplayType.Dropdown:
+          onValueChanged({ id: question.answers[0].id, answer: '' });
+          break;
+        case DisplayType.Nps:
+          const answerRequests: AnswerRequest[] = question.answers
+            .slice(0, Math.round(question.answers.length / 2) + 1)
+            .map((answer) => ({ id: answer.id, answer: '' }));
+          onValuesChanged(answerRequests);
+          break;
+      }
+    };
+
+    setDefaultAnswers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [question]);
 
   const answerComponent = (): JSX.Element => {
     switch (displayTypeEnum) {

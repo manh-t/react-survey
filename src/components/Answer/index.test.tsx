@@ -18,7 +18,14 @@ describe('Answer', () => {
     it('renders Rating component', () => {
       const question = questionFabricator();
 
-      render(<Answer question={question} />);
+      render(
+        <Answer
+          question={question}
+          onAnswerChanged={() => {
+            // Do nothing
+          }}
+        />
+      );
 
       const star = screen.getByTestId(ratingDataTestIds.base);
 
@@ -30,7 +37,14 @@ describe('Answer', () => {
     it('renders MultiChoice component', () => {
       const question = questionFabricator({ displayType: 'choice' });
 
-      render(<Answer question={question} />);
+      render(
+        <Answer
+          question={question}
+          onAnswerChanged={() => {
+            // Do nothing
+          }}
+        />
+      );
 
       const multiChoice = screen.getByTestId(multiChoiceDataTestIds.base);
 
@@ -42,7 +56,14 @@ describe('Answer', () => {
     it('renders Nps component', () => {
       const question = questionFabricator({ displayType: 'nps' });
 
-      render(<Answer question={question} />);
+      render(
+        <Answer
+          question={question}
+          onAnswerChanged={() => {
+            // Do nothing
+          }}
+        />
+      );
 
       const nps = screen.getByTestId(npsDataTestIds.base);
 
@@ -54,7 +75,14 @@ describe('Answer', () => {
     it('renders TextArea component', () => {
       const question = questionFabricator({ displayType: 'textarea' });
 
-      render(<Answer question={question} />);
+      render(
+        <Answer
+          question={question}
+          onAnswerChanged={() => {
+            // Do nothing
+          }}
+        />
+      );
 
       const textArea = screen.getByTestId(textAreaDataTestIds.base);
 
@@ -66,7 +94,14 @@ describe('Answer', () => {
     it('renders MultiInputs component', () => {
       const question = questionFabricator({ displayType: 'textfield' });
 
-      render(<Answer question={question} />);
+      render(
+        <Answer
+          question={question}
+          onAnswerChanged={() => {
+            // Do nothing
+          }}
+        />
+      );
 
       const multiInputs = screen.getByTestId(multiInputsDataTestIds.base);
 
@@ -78,7 +113,14 @@ describe('Answer', () => {
     it('renders Dropdown component', () => {
       const question = questionFabricator({ displayType: 'dropdown' });
 
-      render(<Answer question={question} />);
+      render(
+        <Answer
+          question={question}
+          onAnswerChanged={() => {
+            // Do nothing
+          }}
+        />
+      );
 
       const dropdown = screen.getByTestId(dropdownDataTestIds.base);
 
@@ -90,7 +132,14 @@ describe('Answer', () => {
     it('renders Dropdown component', () => {
       const question = questionFabricator({ displayType: 'slider' });
 
-      render(<Answer question={question} />);
+      render(
+        <Answer
+          question={question}
+          onAnswerChanged={() => {
+            // Do nothing
+          }}
+        />
+      );
 
       const slider = screen.getByTestId(appSliderDataTestIds.base);
 
@@ -102,7 +151,14 @@ describe('Answer', () => {
     it('does NOT render any components', () => {
       const question = questionFabricator({ displayType: 'intro' });
 
-      render(<Answer question={question} />);
+      render(
+        <Answer
+          question={question}
+          onAnswerChanged={() => {
+            // Do nothing
+          }}
+        />
+      );
 
       const intro = screen.getByTestId(answerDataTestIds.base);
 

@@ -17,11 +17,13 @@ const MultiInputs = ({ items, onValuesChanged }: MultiInputProps): JSX.Element =
   const [selectedValues, setSelectedValues] = useState<AnswerRequest[]>([]);
 
   const handleValuesChanged = (answer: Answer, content: string) => {
-    const newSelectedValues = selectedValues;
-    const itemIndex = newSelectedValues.findIndex((value) => value.id === answer.id);
-    if (itemIndex !== -1) {
-      newSelectedValues[itemIndex].answer = content;
-    }
+    const newSelectedValues = [
+      ...selectedValues.filter((value) => value.id !== answer.id),
+      {
+        id: answer.id,
+        answer: content,
+      },
+    ];
     setSelectedValues(newSelectedValues);
     onValuesChanged(newSelectedValues);
   };

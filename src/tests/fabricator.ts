@@ -122,4 +122,6 @@ export const surveyStateFabricator = Fabricator({
   survey: () => surveyFabricator(),
   isLoading: true,
   isError: false,
+  questionRequests: [],
+  isSubmitSuccess: false,
 });
