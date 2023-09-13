@@ -8,6 +8,7 @@ import Answer from 'components/Answer';
 import ElevatedButton from 'components/ElevatedButton';
 import LoadingDialog from 'components/LoadingDialog';
 import MainView from 'components/MainView';
+import { showGeneralErrorToast } from 'helpers/toast';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { paths, questionCompletePath } from 'routes';
 import { submitSurveyAsyncThunk, surveyAction } from 'store/reducers/Survey';
@@ -85,7 +86,7 @@ const QuestionScreen = (): JSX.Element => {
 
   useEffect(() => {
     if (isError) {
-      toast.error('There is something wrong. Please try again later!', { position: 'top-center' });
+      showGeneralErrorToast();
     }
   }, [isError]);
 
