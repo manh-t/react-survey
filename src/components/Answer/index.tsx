@@ -51,23 +51,26 @@ const Answer = ({ question, onAnswerChanged }: AnswerProps): JSX.Element => {
   };
 
   useEffect(() => {
-    // Set default answers
-    switch (displayTypeEnum) {
-      case DisplayType.Heart:
-      case DisplayType.Smiley:
-      case DisplayType.Thumbs:
-      case DisplayType.Star:
-      case DisplayType.Slider:
-      case DisplayType.Dropdown:
-        onValueChanged({ id: question.answers[0].id, answer: '' });
-        break;
-      case DisplayType.Nps:
-        const answerRequests: AnswerRequest[] = question.answers
-          .slice(0, Math.round(question.answers.length / 2) + 1)
-          .map((answer) => ({ id: answer.id, answer: '' }));
-        onValuesChanged(answerRequests);
-        break;
-    }
+    const setDefaultAnswers = () => {
+      switch (displayTypeEnum) {
+        case DisplayType.Heart:
+        case DisplayType.Smiley:
+        case DisplayType.Thumbs:
+        case DisplayType.Star:
+        case DisplayType.Slider:
+        case DisplayType.Dropdown:
+          onValueChanged({ id: question.answers[0].id, answer: '' });
+          break;
+        case DisplayType.Nps:
+          const answerRequests: AnswerRequest[] = question.answers
+            .slice(0, Math.round(question.answers.length / 2) + 1)
+            .map((answer) => ({ id: answer.id, answer: '' }));
+          onValuesChanged(answerRequests);
+          break;
+      }
+    };
+
+    setDefaultAnswers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [question]);
 
