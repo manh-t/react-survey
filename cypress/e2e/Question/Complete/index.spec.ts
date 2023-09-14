@@ -19,7 +19,7 @@ describe('Question Complete screen', () => {
         fixture: 'Survey/Submit/valid.json',
       });
     });
-    it('navigates to the Home screen after 3 seconds', () => {
+    it('navigates to the Home screen', () => {
       cy.visit('/surveys/d5de6a8f8f5f1cfe51bc/questions/complete');
 
       cy.location().should((location) => {
