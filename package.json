@@ -1,8 +1,9 @@
 {
   "name": "manh-react-survey",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": true,
   "dependencies": {
+    "@lottiefiles/react-lottie-player": "3.5.3",
     "@reduxjs/toolkit": "1.9.5",
     "@travelperksl/fabricator": "7.0.1",
     "@types/lodash": "4.14.195",
@@ -75,6 +76,7 @@
     "danger": "11.2.6",
     "danger-plugin-istanbul-coverage": "1.6.2",
     "eslint": "8.12.0",
+    "jest-canvas-mock": "2.5.2",
     "postcss": "8.4.24",
     "postcss-import": "15.1.0",
     "prettier": "2.6.0",

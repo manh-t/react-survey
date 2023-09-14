@@ -56,6 +56,8 @@ describe('survey slice', () => {
     const mockEmptyState = {
       isLoading: true,
       isError: false,
+      questionRequests: [],
+      isSubmitSuccess: false,
     };
 
     describe('getSurveyAsyncThunk.pending', () => {

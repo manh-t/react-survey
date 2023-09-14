@@ -10,8 +10,11 @@ import TextArea, { textAreaDataTestIds } from '.';
 describe('TextArea', () => {
   it('renders a text area component', () => {
     const answers: Answer[] = answerFabricator.times(2);
+    const onValueChanged = () => {
+      // Do nothing
+    };
 
-    render(<TextArea items={answers} />);
+    render(<TextArea items={answers} onValueChange={onValueChanged} />);
 
     const textArea = screen.getByTestId(textAreaDataTestIds.base);
 

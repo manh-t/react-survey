@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Answer } from 'types/answer';
 import { DisplayType } from 'types/question';
@@ -8,13 +8,12 @@ export const ratingDataTestIds = {
 };
 
 interface RatingProps {
-  questionId: string;
   items: Answer[];
   displayType: DisplayType;
   onValueChanged: (answer: Answer) => void;
 }
 
-const Rating = ({ questionId, items, displayType, onValueChanged }: RatingProps): JSX.Element => {
+const Rating = ({ items, displayType, onValueChanged }: RatingProps): JSX.Element => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleOnSelectRating = (index: number, answer: Answer) => {
@@ -46,10 +45,6 @@ const Rating = ({ questionId, items, displayType, onValueChanged }: RatingProps)
       return selectedIndex >= index ? '' : 'opacity-50';
     }
   };
-
-  useEffect(() => {
-    setSelectedIndex(0);
-  }, [questionId]);
 
   return (
     <div

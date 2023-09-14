@@ -3,6 +3,7 @@ import { RouteObject } from 'react-router-dom';
 
 import DashBoardScreen from 'screens/Dashboard';
 import QuestionScreen from 'screens/Question';
+import QuestionCompleteScreen from 'screens/Question/Complete';
 import SignInScreen from 'screens/SignIn';
 import SurveyScreen from 'screens/Survey';
 
@@ -15,6 +16,12 @@ export const paths = {
   signIn: '/sign-in',
   survey: '/surveys/:id',
   question: `/surveys/:id/${questionPath}`,
+  questionComplete: `/surveys/:id/${questionPath}/complete`,
+};
+
+export const questionCompletePath = (): string => {
+  const questionCompletePaths = paths.questionComplete.split('/');
+  return questionCompletePaths[questionCompletePaths.length - 1];
 };
 
 const routes: RouteObject[] = [
@@ -32,6 +39,10 @@ const routes: RouteObject[] = [
       {
         path: paths.question,
         element: <QuestionScreen />,
+      },
+      {
+        path: paths.questionComplete,
+        element: <QuestionCompleteScreen />,
       },
     ],
   },
