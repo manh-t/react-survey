@@ -3,6 +3,7 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react';
 
 import { answerDataTestIds } from 'components/Answer';
+import { confirmDialogDataTestIds } from 'components/Dialog/Confirm';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { paths } from 'routes';
 import { SurveyState } from 'store/reducers/Survey';
@@ -88,7 +89,7 @@ describe('QuestionScreen', () => {
   });
 
   describe('given the close button is clicked', () => {
-    it('navigates back to the Home screen', () => {
+    it('shows the confirm dialog', () => {
       render(<TestComponent />);
 
       const closeButton = screen.getByTestId(questionScreenTestIds.closeButton);
@@ -97,8 +98,50 @@ describe('QuestionScreen', () => {
         closeButton.click();
       });
 
-      expect(mockDispatch).toHaveBeenCalledWith({ type: 'survey/resetState' });
-      expect(mockUseNavigate).toHaveBeenCalledWith(paths.root, { replace: true });
+      expect(screen.getByTestId(confirmDialogDataTestIds.base)).toBeVisible();
+    });
+  });
+
+  describe('given the dialog is opened', () => {
+    describe('given the Yes button is clicked', () => {
+      it('navigates back to the Home screen', () => {
+        render(<TestComponent />);
+
+        const closeButton = screen.getByTestId(questionScreenTestIds.closeButton);
+
+        act(() => {
+          closeButton.click();
+        });
+
+        const dialogPositiveButton = screen.getByTestId(confirmDialogDataTestIds.positiveButton);
+
+        act(() => {
+          dialogPositiveButton.click();
+        });
+
+        expect(mockDispatch).toHaveBeenCalledWith({ type: 'survey/resetState' });
+        expect(mockUseNavigate).toHaveBeenCalledWith(paths.root, { replace: true });
+      });
+    });
+
+    describe('given the Cancel button is clicked', () => {
+      it('closes the dialog', () => {
+        render(<TestComponent />);
+
+        const closeButton = screen.getByTestId(questionScreenTestIds.closeButton);
+
+        act(() => {
+          closeButton.click();
+        });
+
+        const dialogNegativeButton = screen.getByTestId(confirmDialogDataTestIds.negativeButton);
+
+        act(() => {
+          dialogNegativeButton.click();
+        });
+
+        expect(screen.queryByTestId(confirmDialogDataTestIds.base)).not.toBeInTheDocument();
+      });
     });
   });
 
