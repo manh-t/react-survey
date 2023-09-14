@@ -21,6 +21,8 @@ describe('ConfirmDialog', () => {
       const confirmDialog = screen.getByTestId(confirmDialogDataTestIds.base);
 
       expect(confirmDialog).toBeVisible();
+      expect(confirmDialog).toHaveTextContent('Title');
+      expect(confirmDialog).toHaveTextContent('Test Content');
     });
   });
 
